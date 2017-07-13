@@ -1,19 +1,40 @@
 import { Component } from '@angular/core';
+import { IonicPage,NavController } from 'ionic-angular';
+import { SuperTabsController} from 'ionic2-super-tabs';
 
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
-import { HomePage } from '../home/home';
+
+
+@IonicPage({
+  segment: 'home/:type'
+})
 
 @Component({
-  templateUrl: 'tabs.html'
+  selector: 'page-tabs',
+ templateUrl: 'tabs.html'
 })
+
+
 export class TabsPage {
 
-  tab1Root = HomePage;
-  tab2Root = AboutPage;
-  tab3Root = ContactPage;
+  page1: any = 'HomePage';
+  page2: any = 'CalendarPage';
+  page3: any = 'ChecklistPage';
+  page4: any = 'ChartPage';
+  page5: any = 'CommunityPage';
 
-  constructor() {
-
+ 
+  constructor(public navCtrl: NavController, private superTabsCtrl: SuperTabsController) {
+    
   }
+
+  ngAfterViewInit() {
+    // this.superTabsCtrl.increaseBadge('page1', 10);
+    // this.superTabsCtrl.enableTabSwipe('page3', false);
+    this.superTabsCtrl.enableTabsSwipe(true);
+  }
+
+  onTabSelect(tab: { index: number; id: string; }) {
+    console.log(`Selected tab: `, tab);
+  }
+  
 }

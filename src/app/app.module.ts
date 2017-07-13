@@ -1,40 +1,80 @@
-import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { environment } from '../environments/environment';
 import { MyApp } from './app.component';
+import { IonicPageModule } from 'ionic-angular';
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
+
+
+
+// angularfire
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireModule } from 'angularfire2';
+import { AuthProvider } from '../providers/auth/auth';
+
+// pages
+import { AuthPage } from '../pages/auth/auth';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+// auth components
+import { EmailSignInComponent } from '../components/email-sign-in/email-sign-in';
+import { EmailSignUpComponent } from '../components/email-sign-up/email-sign-up';
+
+
+// added module
+import { Calendar } from '@ionic-native/calendar'
+import { SuperTabsModule } from 'ionic2-super-tabs';
+
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage
+
+    // pages
+   AuthPage,
+   TabsPage,
+   
+    // components
+    EmailSignInComponent,
+    EmailSignUpComponent,
+    
+   
+
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    SuperTabsModule.forRoot(),
+
+    // auth/db modules
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage
+
+    // pages
+    AuthPage,
+    TabsPage,
+    //components
+    EmailSignInComponent,
+    EmailSignUpComponent
+    
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    Calendar,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+
+    // auth provider
+    AuthProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }

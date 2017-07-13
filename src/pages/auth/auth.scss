@@ -1,0 +1,25 @@
+
+
+.slide-box { 
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  
+}
+.login-box { 
+  position: fixed;
+  z-index: 2; 
+  width: 100%;
+  bottom: 10%;
+   
+}
+.green-box { 
+  position: absolute;
+  z-index: 2; /* put .green-box above .dashed-box */
+  background: lightgreen;
+  width: 20%;
+  left: 65%;
+  top: -25px;
+  height: 7em;
+  opacity: 0.9;
+}

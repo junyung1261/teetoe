@@ -1,5 +1,28 @@
-<ion-tabs>
-  <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>
-  <ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>
-  <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>
-</ion-tabs>
+
+
+
+<ion-header no-shadow no-border >
+  <ion-navbar color="light" >
+
+    <button ion-button menuToggle color="black">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <img src=”logo.svg” >
+  </ion-navbar>
+
+ 
+</ion-header>
+<ion-content no-bounce fullscreen >
+
+ 
+
+  <super-tabs  id="mainTabs" [config]="{ sideMenu: 'left' }"  toolbarColor="light" toolbarBackground="dark" indicatorColor="yellow" badgeColor="yellow" tabsPlacement="bottom"  (tabSelect)="onTabSelect($event)" >
+    <super-tab [root]="page1"   icon= 'home'        id="page1"></super-tab>
+    <super-tab [root]="page2"   icon= 'calendar'    id="page2"></super-tab>
+    <super-tab [root]="page3"   icon= 'book'        id="page3"></super-tab>
+    <super-tab [root]="page4"   icon= 'pie'         id="page4"></super-tab>
+    <super-tab [root]="page5"   icon= 'body'        id="page5"></super-tab>
+    
+
+  </super-tabs>
+</ion-content>
