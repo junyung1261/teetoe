@@ -4,8 +4,27 @@
 
 <ion-content padding>
 
+   <div class="progress-wrapper">
+    <div class="current" [ngStyle]="getOverlayStyle()" style="padding-bottom:1.3em">오늘 할 공부</div>
+    <div class="current" [ngStyle]="getOverlayStyle()" style="padding-top:1.3em">{{ current }}/{{ max }}</div>
 
-<ui-knob *ngIf="_KnobValue" [options]="_KnobOptions" [(value)]="_KnobValue"></ui-knob>
+        <round-progress 
+            [current]="current" 
+            [max]="max" 
+            [color]="'#45ccce'"
+            [background]="'#eaeaea'"
+            [radius]="100"
+            [stroke]="10"
+            [semicircle]="false"
+            [rounded]="true"
+            [clockwise]="true"
+            [responsive]="false"
+            [duration]="800"
+            [animation]="'easeInOutQuart'"
+            [animationDelay]="1500"
+            ></round-progress>
+   
+</div>
 
   The world is your oyster.
   <p>

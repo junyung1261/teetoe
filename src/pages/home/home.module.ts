@@ -1,22 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { HomePage } from "./home";
-import { Knob } from '../../app/knob';
-
-
+import { RoundProgressModule } from 'angular-svg-round-progressbar';
 
 @NgModule({
   declarations: [
     HomePage,
-    Knob
     
   ],
   imports: [
-    IonicPageModule.forChild(HomePage),
-    
-  ],
-  
+    RoundProgressModule,
+    IonicPageModule.forChild(HomePage)
+  ]
 })
 export class Module {}
-
-

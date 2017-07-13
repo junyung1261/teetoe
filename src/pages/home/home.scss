@@ -1,6 +1,20 @@
 page-home {
  
-    
+    .progress-wrapper {
+   position: relative;
+    -webkit-box-align:center;
+    -webkit-box-pack:center;
+    display:-webkit-box;
+}
+  .current {
+  position: absolute;
+  color: #bbb;
+  -webkit-box-align:center;
+  -webkit-box-pack:center;
+  display:-webkit-box;
+  font-weight: 100;
+  line-height: 1;
+}
  
  
 }

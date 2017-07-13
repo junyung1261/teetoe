@@ -6,12 +6,12 @@ import { SharedModule }  from "../../app/shared.module";
 
 @NgModule({
   declarations: [
-    TabsPage,
-   
+    TabsPage
   ],
   imports: [
     IonicPageModule.forChild(TabsPage),
     SharedModule
   ]
+  
 })
 export class Module {}

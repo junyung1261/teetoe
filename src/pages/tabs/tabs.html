@@ -1,13 +1,26 @@
 
 
 
-<ion-header no-shadow no-border >
-  <ion-navbar color="light" >
+<ion-header no-shadow no-border  >
+  <ion-navbar color="light"  >
 
     <button ion-button menuToggle color="black">
       <ion-icon name="menu"></ion-icon>
     </button>
-    <img src=”logo.svg” >
+    
+    <ion-row justify-content-center style="padding-left:1.5em">
+       <img src="assets/img/logo-black2.png"  height="40px" >
+    </ion-row>
+
+    
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openModal()">
+        <ion-icon name="options"></ion-icon>
+      </button>
+       <button ion-button icon-only (click)="openModal()">
+        <ion-icon name="options"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
  
@@ -16,7 +29,7 @@
 
  
 
-  <super-tabs  id="mainTabs" [config]="{ sideMenu: 'left' }"  toolbarColor="light" toolbarBackground="dark" indicatorColor="yellow" badgeColor="yellow" tabsPlacement="bottom"  (tabSelect)="onTabSelect($event)" >
+  <super-tabs  id="mainTabs" toolbarColor="light" toolbarBackground="dark" indicatorColor="yellow" badgeColor="yellow" tabsPlacement="bottom"  (tabSelect)="onTabSelect($event)" >
     <super-tab [root]="page1"   icon= 'home'        id="page1"></super-tab>
     <super-tab [root]="page2"   icon= 'calendar'    id="page2"></super-tab>
     <super-tab [root]="page3"   icon= 'book'        id="page3"></super-tab>

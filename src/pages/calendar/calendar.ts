@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage } from 'ionic-angular';
 
 
@@ -10,10 +10,9 @@ import { NavController, NavParams, IonicPage } from 'ionic-angular';
 })
 export class CalendarPage {
 
-    rootNavCtrl: NavController;
-
-    eventSource;
-    viewTitle;
+    
+    private eventSource: any;
+    private viewTitle: any;
 
     isToday:boolean;
     calendar = {
@@ -47,7 +46,7 @@ export class CalendarPage {
         }
     };
 
-    constructor(private navController:NavController) {
+    constructor(private navController:NavController, public navParams: NavParams) {
 
     }
 

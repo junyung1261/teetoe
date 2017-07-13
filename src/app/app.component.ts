@@ -11,7 +11,6 @@ import { AuthPage } from '../pages/auth/auth';
 import { TabsPage } from '../pages/tabs/tabs';
 
 
-
 @Component({
   templateUrl: 'app.html'
 })
@@ -31,11 +30,11 @@ export class MyApp {
     afAuth.authState.subscribe(user => {
       if (!user) {
         // you can modify here the page for non. auth users
-        this.rootPage = AuthPage
+        this.nav.setRoot('TabsPage');
         return;
       }
       // page for auth. users
-      this.rootPage = TabsPage
+      this.nav.setRoot('TabsPage');
     });
 
     platform.ready().then(() => {

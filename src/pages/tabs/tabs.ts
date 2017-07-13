@@ -10,7 +10,8 @@ import { SuperTabsController} from 'ionic2-super-tabs';
 
 @Component({
   selector: 'page-tabs',
- templateUrl: 'tabs.html'
+  templateUrl: 'tabs.html'
+ 
 })
 
 
@@ -29,7 +30,7 @@ export class TabsPage {
 
   ngAfterViewInit() {
     // this.superTabsCtrl.increaseBadge('page1', 10);
-    // this.superTabsCtrl.enableTabSwipe('page3', false);
+    //this.superTabsCtrl.enableTabSwipe('page2', false);
     this.superTabsCtrl.enableTabsSwipe(true);
   }
 

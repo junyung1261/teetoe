@@ -1,0 +1,43 @@
+
+
+<ion-content padding>
+
+
+  The world is your oyster.
+  <p>
+    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
+  </p>
+  <button ion-button type="button" (click)="signOutClicked()" clear>Sign Out</button>
+
+
+    <div [ngSwitch]="section">
+ 
+      <ion-list *ngSwitchCase="'one'">
+        <ion-item *ngFor="let something of somethings">
+          <ion-thumbnail item-left>
+            <img src="https://avatars.io/instagram/unknown">
+          </ion-thumbnail>
+          <h2>Something</h2>
+        </ion-item>
+      </ion-list>
+ 
+      <ion-list *ngSwitchCase="'two'">
+        <ion-item *ngFor="let something of somethings">
+          <ion-thumbnail item-left>
+            <img src="https://avatars.io/instagram/unknown">
+          </ion-thumbnail>
+          <h2>Something</h2>
+        </ion-item>
+      </ion-list>
+ 
+      <ion-list *ngSwitchCase="'three'">
+        <ion-item *ngFor="let something of somethings">
+          <ion-thumbnail item-left>
+            <img src="https://avatars.io/instagram/unknown">
+          </ion-thumbnail>
+          <h2>Something</h2>
+        </ion-item>
+      </ion-list>
+ 
+    </div>
+</ion-content>

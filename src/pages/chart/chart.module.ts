@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ChartPage } from "./chart";
-
+import { SharedModule } from "../../app/shared.module"
 
 
 @NgModule({
@@ -10,6 +10,7 @@ import { ChartPage } from "./chart";
     
   ],
   imports: [
+    SharedModule,
     IonicPageModule.forChild(ChartPage),
     
   ],

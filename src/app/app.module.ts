@@ -5,10 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { environment } from '../environments/environment';
 import { MyApp } from './app.component';
-import { IonicPageModule } from 'ionic-angular';
-
-
-
 
 // angularfire
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -17,19 +13,13 @@ import { AngularFireModule } from 'angularfire2';
 import { AuthProvider } from '../providers/auth/auth';
 
 // pages
-import { AuthPage } from '../pages/auth/auth';
-import { TabsPage } from '../pages/tabs/tabs';
+
 
 // auth components
-import { EmailSignInComponent } from '../components/email-sign-in/email-sign-in';
-import { EmailSignUpComponent } from '../components/email-sign-up/email-sign-up';
-
-
 
 // added module
 
 import { SuperTabsModule } from 'ionic2-super-tabs';
-
 
 
 @NgModule({
@@ -37,23 +27,16 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
     MyApp,
 
     // pages
-   AuthPage,
-   TabsPage,
-   
+ 
     // components
-    EmailSignInComponent,
-    EmailSignUpComponent,
     
-   
-
+    
   ],
   imports: [
     BrowserModule,
-    
     IonicModule.forRoot(MyApp),
     SuperTabsModule.forRoot(),
   
-
     // auth/db modules
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
@@ -64,12 +47,9 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
     MyApp,
 
     // pages
-    AuthPage,
-    TabsPage,
+ 
     //components
-    EmailSignInComponent,
-    EmailSignUpComponent
-    
+  
   ],
   providers: [
     StatusBar,
