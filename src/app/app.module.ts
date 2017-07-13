@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, LOCALE_ID } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -25,9 +25,11 @@ import { EmailSignInComponent } from '../components/email-sign-in/email-sign-in'
 import { EmailSignUpComponent } from '../components/email-sign-up/email-sign-up';
 
 
+
 // added module
-import { Calendar } from '@ionic-native/calendar'
+
 import { SuperTabsModule } from 'ionic2-super-tabs';
+
 
 
 @NgModule({
@@ -47,8 +49,10 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
   ],
   imports: [
     BrowserModule,
+    
     IonicModule.forRoot(MyApp),
     SuperTabsModule.forRoot(),
+  
 
     // auth/db modules
     AngularFireModule.initializeApp(environment.firebase),
@@ -70,9 +74,9 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
   providers: [
     StatusBar,
     SplashScreen,
-    Calendar,
+    
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-
+    { provide: LOCALE_ID, useValue: "kr-KO" },
     // auth provider
     AuthProvider
   ]
