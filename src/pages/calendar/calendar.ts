@@ -14,6 +14,8 @@ export class CalendarPage {
     private eventSource: any;
     private viewTitle: any;
 
+   //[dateFormatter]="calendar.dateFormatter"
+    
     isToday:boolean;
     calendar = {
         mode: 'month',
@@ -23,13 +25,14 @@ export class CalendarPage {
                 return date.getDate().toString();
             },
             formatMonthViewDayHeader: function(date:Date) {
-                return 'MonMH';
+                var day: String[] =['일', '월', '화', '수', '목', '금', '토'] ;
+                 return day[date.getDay()];
             },
             formatMonthViewTitle: function(date:Date) {
-                return 'testMT';
+                return (date.getFullYear()%100).toString()+'년 '+(date.getMonth()+1).toString()+'월';
             },
             formatWeekViewDayHeader: function(date:Date) {
-                return 'MonWH';
+                return date.getHours;
             },
             formatWeekViewTitle: function(date:Date) {
                 return 'testWT';
@@ -38,7 +41,7 @@ export class CalendarPage {
                 return 'testWH';
             },
             formatDayViewHourColumn: function(date:Date) {
-                return 'testDH';
+                return "오전 \n sdf" + date.getHours().toString();
             },
             formatDayViewTitle: function(date:Date) {
                 return 'testDT';
@@ -130,4 +133,8 @@ export class CalendarPage {
     };
   
   
+
+
+
 }
+

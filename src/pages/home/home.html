@@ -3,15 +3,15 @@
 
 
 <ion-content padding>
-
-   <div class="progress-wrapper">
-    <div class="current" [ngStyle]="getOverlayStyle()" style="padding-bottom:1.3em">오늘 할 공부</div>
+<ion-card>
+   <div class="progress-wrapper"  (click)="changeRange()">
+    <div class="current" [ngStyle]="getOverlayStyle()" style="padding-bottom:1.3em">{{name}}</div>
     <div class="current" [ngStyle]="getOverlayStyle()" style="padding-top:1.3em">{{ current }}/{{ max }}</div>
 
         <round-progress 
             [current]="current" 
             [max]="max" 
-            [color]="'#45ccce'"
+            [color]="color"
             [background]="'#eaeaea'"
             [radius]="100"
             [stroke]="10"
@@ -21,10 +21,11 @@
             [responsive]="false"
             [duration]="800"
             [animation]="'easeInOutQuart'"
-            [animationDelay]="1500"
+            [animationDelay]="delay"
             ></round-progress>
    
 </div>
+</ion-card>
 
   The world is your oyster.
   <p>

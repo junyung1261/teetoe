@@ -15,6 +15,7 @@
     <calendar [eventSource]="eventSource"
               [calendarMode]="calendar.mode"
               [currentDate]="calendar.currentDate"
+              
               (onCurrentDateChanged)="onCurrentDateChanged($event)"
               (onEventSelected)="onEventSelected($event)"
               (onTitleChanged)="onViewTitleChanged($event)"
@@ -22,3 +23,4 @@
               step="30">
     </calendar>
 </ion-content>
+
