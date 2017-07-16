@@ -27,10 +27,10 @@ export class MyApp {
 
     // here we determine, if user is aunthenticated/have data in our db
     // thats we make before platform ready
-    afAuth.authState.subscribe(user => {
+    this.afAuth.authState.subscribe(user => {
       if (!user) {
         // you can modify here the page for non. auth users
-        this.nav.setRoot('TabsPage');
+        this.nav.setRoot('AuthPage');
         return;
       }
       // page for auth. users

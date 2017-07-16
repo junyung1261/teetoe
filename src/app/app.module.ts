@@ -10,17 +10,21 @@ import { MyApp } from './app.component';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
-import { AuthProvider } from '../providers/auth/auth';
+
 
 // pages
 
+import { SignModule }  from "../app/sign.module";
 
 // auth components
-
-// added module
-
+import { IonicStorageModule } from '@ionic/storage';
 import { SuperTabsModule } from 'ionic2-super-tabs';
 
+// providers
+import { AuthProvider } from '../providers/auth/auth';
+import { UserProvider } from '../providers/user/user';
+import { UtilProvider } from '../providers/util/util';
+import { CommunityProvider } from '../providers/community/community';
 
 @NgModule({
   declarations: [
@@ -29,14 +33,15 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
     // pages
  
     // components
-    
+   
     
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    SignModule,
+    IonicStorageModule.forRoot(),
     SuperTabsModule.forRoot(),
-  
     // auth/db modules
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
@@ -49,7 +54,7 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
     // pages
  
     //components
-  
+    
   ],
   providers: [
     StatusBar,
@@ -58,7 +63,13 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     //{ provide: LOCALE_ID, useValue: "kr-KO" },
     // auth provider
-    AuthProvider
-  ]
+    AuthProvider,
+    UserProvider,
+    UtilProvider,
+    CommunityProvider
+
+
+  ],
+
 })
 export class AppModule { }
