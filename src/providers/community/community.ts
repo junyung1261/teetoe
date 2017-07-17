@@ -9,6 +9,7 @@ import firebase from 'firebase/app';
 @Injectable()
 export class CommunityProvider {
 
+    
     constructor(private userProvider: UserProvider, private afdb: AngularFireDatabase){
 
     }

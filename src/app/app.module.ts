@@ -11,14 +11,19 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
 
+// plugin
+import { Camera } from '@ionic-native/camera';
+
 
 // pages
 
 import { SignModule }  from "../app/sign.module";
 
+
 // auth components
 import { IonicStorageModule } from '@ionic/storage';
 import { SuperTabsModule } from 'ionic2-super-tabs';
+
 
 // providers
 import { AuthProvider } from '../providers/auth/auth';
@@ -40,6 +45,7 @@ import { CommunityProvider } from '../providers/community/community';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     SignModule,
+   
     IonicStorageModule.forRoot(),
     SuperTabsModule.forRoot(),
     // auth/db modules
@@ -59,7 +65,7 @@ import { CommunityProvider } from '../providers/community/community';
   providers: [
     StatusBar,
     SplashScreen,
-    
+    Camera,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     //{ provide: LOCALE_ID, useValue: "kr-KO" },
     // auth provider

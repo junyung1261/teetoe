@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { AlertController, Platform } from 'ionic-angular';
+import { AlertController, ToastController, Platform } from 'ionic-angular';
 import { Camera, CameraOptions  } from '@ionic-native/camera';
-import { Toast } from '@ionic-native/toast';
+
 
 @Injectable()
 export class UtilProvider {
 
     constructor(private platform: Platform, private alertCtrl: AlertController, 
-                private toast: Toast, private camera: Camera){
+                private toastCtrl: ToastController, private camera: Camera){
 
 
         
@@ -23,14 +23,14 @@ export class UtilProvider {
         alert.present();
     }
 
-    getToast(message, duration){
-       this.toast.show(message,'3000','center').subscribe(
-           toast=>{
-               console.log(toast);
-           }
-       );
-        
-    }
+    getToast(message: string) {
+    return this.toastCtrl.create({
+      message: message,
+      duration: 2000
+    })
+  }
+
+ 
 
     dataURItoBlob(dataURI){
         var byteString = atob(dataURI.split(',')[1]);
@@ -52,10 +52,10 @@ export class UtilProvider {
         let base64Picture;
         const options: CameraOptions = {
         quality: 100,
-        destinationType: this.camera.DestinationType.DATA_URL,
+        destinationType: 0,
         sourceType: sourceType,
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE,
+        encodingType: 0,
+        mediaType: 0,
         allowEdit: allowEdit
         };
         let promise = new Promise((resolve, reject)=>{

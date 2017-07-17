@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
-import { ViewController, NavController, ActionSheetController } from 'ionic-angular';
+import { ViewController, NavController, ActionSheetController, IonicPage } from 'ionic-angular';
 import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
 import { CommunityProvider } from '../../providers/community/community';
 import { UtilProvider } from '../../providers/util/util';
+
+
+@IonicPage()
+
 
 @Component({
     selector: 'page-post',

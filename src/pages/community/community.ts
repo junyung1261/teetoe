@@ -3,7 +3,7 @@ import { NavController, NavParams, IonicPage, ModalController } from 'ionic-angu
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FirebaseListObservable } from 'angularfire2/database';
-
+import { PostPageModal } from '../post/post';
 import { CommunityProvider } from '../../providers/community/community';
 import { UserProvider } from '../../providers/user/user';
 
@@ -13,7 +13,7 @@ import firebase from 'firebase/app';
 
 @Component({
   selector: 'page-community',
-  templateUrl: 'community.html',
+  templateUrl: 'community.html'
   
 })
 export class CommunityPage {
