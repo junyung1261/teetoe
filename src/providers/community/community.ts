@@ -3,7 +3,7 @@ import { UserProvider } from '../user/user'
 import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth  } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
-
+import firebase from 'firebase/app';
 
 
 @Injectable()

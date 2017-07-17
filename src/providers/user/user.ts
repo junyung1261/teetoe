@@ -3,21 +3,25 @@ import { Storage } from '@ionic/storage';
 
 import { AngularFireAuth  } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
 
 @Injectable()
 export class UserProvider {
    
-  constructor(public afAuth: AngularFireAuth, public storage: Storage, public afdb: AngularFireDatabase) { }
+  constructor(public afAuth: AngularFireAuth, public storage: Storage, public afDB: AngularFireDatabase) { }
+
 
   saveUser(userData){
       this.storage.set('userInfo',JSON.stringify(userData));
   }
+
+
   getUid(){
       let promise = new Promise((res,rej)=>{
           this.storage.get('usesrInfo')
           .then(value => {
-              let uid = JSON.parse(value).auth.uid;
+              let uid = this.afAuth.auth.currentUser.uid;
+              console.log(uid);
               res(uid);
           });
       })
@@ -29,7 +33,7 @@ export class UserProvider {
       return this.getUid()
       .then(uid => {
           let url = `/users/${uid}`;
-          let user = this.afdb.object(url);
+          let user = this.afDB.object(url);
           return user.set(userData);
       });
   }
@@ -37,9 +41,10 @@ export class UserProvider {
   updateProfile(obj){
       return this.getUid()
       .then(uid => {
-          return this.afdb.object(`users/${uid}/`).update(obj);
+          return this.afDB.object(`users/${uid}/`).update(obj);
       });
   }
+  
     uploadPicture(file){
         return this.getUid()
         .then(uid => {
@@ -67,7 +72,7 @@ export class UserProvider {
         if(username){
             query['equalTo'] = username;
         }
-        let users = this.afdb.list('/users',{
+        let users = this.afDB.list('/users',{
             query: query
         });
         return users;
@@ -76,7 +81,7 @@ export class UserProvider {
     getFollwers(){
         return this.getUid()
         .then(uid => {
-            return this.afdb.list(`/users/${uid}/followers`);
+            return this.afDB.list(`/users/${uid}/followers`);
         });
     }
 

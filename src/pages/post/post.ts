@@ -1,10 +1,12 @@
-import {Component} from '@angular/core';
-import {ViewController, NavController, ActionSheetController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { ViewController, NavController, ActionSheetController } from 'ionic-angular';
 import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
-import {CommunityProvider} from '../../providers/community/community';
-import {UtilProvider} from '../../providers/util/util';
+import { CommunityProvider } from '../../providers/community/community';
+import { UtilProvider } from '../../providers/util/util';
+
 @Component({
-    templateUrl: 'build/pages/post/post.html'
+    selector: 'page-post',
+    templateUrl: 'post.html'
 })
 export class PostPageModal {
     postContent:string;

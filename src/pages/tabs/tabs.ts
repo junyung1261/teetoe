@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage,NavController } from 'ionic-angular';
+import { IonicPage,NavController, NavParams } from 'ionic-angular';
 import { SuperTabsController} from 'ionic2-super-tabs';
 
 
@@ -24,7 +24,7 @@ export class TabsPage {
   page5: any = 'CommunityPage';
 
  
-  constructor(public navCtrl: NavController, private superTabsCtrl: SuperTabsController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private superTabsCtrl: SuperTabsController) {
     
   }
 

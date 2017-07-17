@@ -7,7 +7,6 @@ import { CommunityProvider } from '../../providers/community/community';
 
 @Component({
     selector: 'post',
-    
     templateUrl: 'post.html'
 })
 

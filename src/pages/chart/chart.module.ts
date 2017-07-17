@@ -13,7 +13,7 @@ import { SharedModule } from "../../app/shared.module"
     SharedModule,
     IonicPageModule.forChild(ChartPage),
     
-  ],
+  ]
   
 })
 export class Module {}

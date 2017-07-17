@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
+import { UserProvider } from '../../providers/user/user';
 import { ToastController } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 
@@ -23,6 +24,7 @@ export class EmailSignUpComponent {
   constructor(
     private formBuilder: FormBuilder,
     public auth: AuthProvider,
+    public user: UserProvider,
     public toastCtrl: ToastController,
     public viewCtrl: ViewController) {
 
@@ -30,6 +32,7 @@ export class EmailSignUpComponent {
     this.emailSignUpForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
+      
     });
   }
 
@@ -59,6 +62,7 @@ export class EmailSignUpComponent {
           this.createToast('Signed up with email: ' + this.emailSignUpForm.value.email).present()
           // closing dialog
           this.viewCtrl.dismiss()
+          
         },
         /**
          * Handle Authentication errors

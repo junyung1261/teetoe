@@ -3,16 +3,18 @@ import { NavController, NavParams, IonicPage, ModalController } from 'ionic-angu
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FirebaseListObservable } from 'angularfire2/database';
-import { PostPageModal } from '../post/post';
+
 import { CommunityProvider } from '../../providers/community/community';
 import { UserProvider } from '../../providers/user/user';
 
+import firebase from 'firebase/app';
 
 @IonicPage()
 
 @Component({
   selector: 'page-community',
-  templateUrl: 'community.html'
+  templateUrl: 'community.html',
+  
 })
 export class CommunityPage {
   posts:any;
@@ -30,7 +32,7 @@ export class CommunityPage {
   }
 
   openPost() {
-    let modal = this.modalCtrl.create(PostPageModal);
+    let modal = this.modalCtrl.create('PostPageModal');
     modal.present();
   }
 }

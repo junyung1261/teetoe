@@ -29,7 +29,7 @@
 
  
 
-  <super-tabs  id="mainTabs" toolbarColor="light" toolbarBackground="dark" indicatorColor="yellow" badgeColor="yellow" tabsPlacement="bottom"  (tabSelect)="onTabSelect($event)" >
+  <super-tabs  id="mainTabs" [config]="{ sideMenu: 'left' }" toolbarColor="light" toolbarBackground="dark" indicatorColor="yellow" badgeColor="yellow" tabsPlacement="bottom"  (tabSelect)="onTabSelect($event)" >
     <super-tab [root]="page1"   icon= 'home'        id="page1"></super-tab>
     <super-tab [root]="page2"   icon= 'calendar'    id="page2"></super-tab>
     <super-tab [root]="page3"   icon= 'book'        id="page3"></super-tab>

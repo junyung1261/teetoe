@@ -47,7 +47,7 @@ export class MyApp {
 
 
      this.pages = [
-      { title: 'Home', component: TabsPage },
+      { title: 'Home', component: 'TabsPage' },
       { title: 'Logout', component: null }
     ];
   }

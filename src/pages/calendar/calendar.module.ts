@@ -10,7 +10,7 @@ import { NgCalendarModule  } from 'ionic2-calendar';
   imports: [
     NgCalendarModule,
     IonicPageModule.forChild(CalendarPage)
-  ],
+  ]
    
 })
 export class Module {}
