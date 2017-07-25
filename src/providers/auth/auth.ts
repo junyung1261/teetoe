@@ -10,8 +10,14 @@ import firebase from 'firebase/app';
 */
 @Injectable()
 export class AuthProvider {
+  public fireAuth:firebase.auth.Auth;
+  public userProfileRef:firebase.database.Reference;
 
-  constructor(public afAuth: AngularFireAuth) { }
+  constructor(public afAuth: AngularFireAuth) {
+
+    this.fireAuth = firebase.auth();
+    this.userProfileRef = firebase.database().ref('/userProfile');
+   }
 
   signInUser(newEmail: string, newPassword: string): firebase.Promise<any> {
     return this.afAuth.auth.signInWithEmailAndPassword(newEmail, newPassword);
@@ -20,9 +26,11 @@ export class AuthProvider {
   signUpUser(newEmail: string, newPassword: string): firebase.Promise<any> {
     return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPassword)
     .then( newUser => {
-     firebase.database().ref('/userProfile').child(newUser.uid)
-    .set({ newEmail: newEmail  });
-  });
+     this.userProfileRef.child(newUser.uid).set({
+        email: newEmail
+        
+      });
+    });
   }
 
   resetPassword(email: string): firebase.Promise<any> {

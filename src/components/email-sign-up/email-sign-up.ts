@@ -31,8 +31,8 @@ export class EmailSignUpComponent {
     // building the form
     this.emailSignUpForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
-      
+      password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
+      id: ['',Validators.compose([Validators.minLength(6), Validators.required])]
     });
   }
 
