@@ -9,7 +9,7 @@ import { MenuController } from 'ionic-angular/index';
 
 import { AuthPage } from '../pages/auth/auth';
 import { TabsPage } from '../pages/tabs/tabs';
-
+import { AccountPage } from '../pages/account/account';
 
 @Component({
   templateUrl: 'app.html'
@@ -48,6 +48,7 @@ export class MyApp {
 
      this.pages = [
       { title: 'Home', component: 'TabsPage' },
+      { title: 'MyInfo', component: 'AccountPage' },
       { title: 'Logout', component: null }
     ];
   }
@@ -55,8 +56,9 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
+    
     if(page.component == null) {this.auth.signOutUser()}
-
+    else if(page.component == 'AccountPage') {this.nav.push('AccountPage')}
     else this.nav.setRoot(page.component);
   }
 }

@@ -14,26 +14,29 @@ import { AngularFireModule } from 'angularfire2';
 // plugin
 import { Camera } from '@ionic-native/camera';
 
-
+import { HttpModule } from '@angular/http';
 // pages
 
-import { SignModule }  from "../app/sign.module";
 
 
-// auth components
+
+// module & sharedmodule
 import { IonicStorageModule } from '@ionic/storage';
 import { SuperTabsModule } from 'ionic2-super-tabs';
-
+import { SignModule }  from "../app/sign.module";
 
 // providers
 import { AuthProvider } from '../providers/auth/auth';
 import { UserProvider } from '../providers/user/user';
 import { UtilProvider } from '../providers/util/util';
 import { CommunityProvider } from '../providers/community/community';
+import { Image } from '../providers/image';
+import { Preloader } from '../providers/preloader';
+import { Database } from '../providers/database';
 
 @NgModule({
   declarations: [
-    MyApp,
+    MyApp
 
     // pages
  
@@ -45,6 +48,7 @@ import { CommunityProvider } from '../providers/community/community';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     SignModule,
+    HttpModule,
    
     IonicStorageModule.forRoot(),
     SuperTabsModule.forRoot(),
@@ -55,7 +59,7 @@ import { CommunityProvider } from '../providers/community/community';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    MyApp
 
     // pages
  
@@ -72,7 +76,10 @@ import { CommunityProvider } from '../providers/community/community';
     AuthProvider,
     UserProvider,
     UtilProvider,
-    CommunityProvider
+    CommunityProvider,
+     Image,
+    Database,
+    Preloader
 
 
   ],

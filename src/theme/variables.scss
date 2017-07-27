@@ -29,9 +29,13 @@ $colors: (
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #3F51B5,
-  yellow:     #FFEA00
-);
+  yellow:     #FFEA00,
 
+  teal:(
+      base: #009688,
+      contrast: #ffffff
+  )
+);
 
 // App iOS Variables
 // --------------------------------------------------

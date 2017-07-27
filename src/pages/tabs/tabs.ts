@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage,NavController, NavParams } from 'ionic-angular';
+import { IonicPage,NavController, NavParams, ModalController } from 'ionic-angular';
 import { SuperTabsController} from 'ionic2-super-tabs';
 
 
@@ -24,9 +24,8 @@ export class TabsPage {
   page5: any = 'CommunityPage';
 
  
-  constructor(public navCtrl: NavController, public navParams: NavParams,private superTabsCtrl: SuperTabsController) {
-    
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private superTabsCtrl: SuperTabsController, private modalCtrl: ModalController) {}
 
   ngAfterViewInit() {
     // this.superTabsCtrl.increaseBadge('page1', 10);
@@ -37,5 +36,11 @@ export class TabsPage {
   onTabSelect(tab: { index: number; id: string; }) {
     console.log(`Selected tab: `, tab);
   }
+
+  openPeoplePage(){
+    this.navCtrl.push('PeoplePage');
+
+  }
+
   
 }

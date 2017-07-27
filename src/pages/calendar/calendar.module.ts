@@ -13,4 +13,4 @@ import { NgCalendarModule  } from 'ionic2-calendar';
   ]
    
 })
-export class Module {}
+export class CalendarPageModule {}

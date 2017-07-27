@@ -1,19 +1,23 @@
 import { NgModule } from '@angular/core';
+import { ChartPage } from './chart';
 import { IonicPageModule } from 'ionic-angular';
-import { ChartPage } from "./chart";
-import { SharedModule } from "../../app/shared.module"
+
+// Import Chart 
+import {ChartsModule} from 'ng2-charts/charts/charts';
+
 
 
 @NgModule({
   declarations: [
     ChartPage,
-    
   ],
   imports: [
-    SharedModule,
     IonicPageModule.forChild(ChartPage),
-    
+    // Importing ChartsModule
+    ChartsModule
+  ],
+  exports: [
+    ChartPage
   ]
-  
 })
-export class Module {}
+export class ChartPageModule {}

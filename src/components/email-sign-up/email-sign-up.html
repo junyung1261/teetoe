@@ -13,12 +13,45 @@
       <ion-input type="email" formControlName="email" name="email" required clearInput></ion-input>
     </ion-item>
 
+
+  
+
     <ion-item>
-      <ion-label>Password</ion-label>
-      <ion-input type="password" formControlName="password" clearInput></ion-input>
+      <ion-label>비밀번호</ion-label>
+      <ion-input type="password" formControlName="password" clearInput ></ion-input>
     </ion-item>
 
+ 
+      <ion-item>
+        <ion-label>비밀번호 확인</ion-label>
+        <ion-input type="password" [(ngModel)]="confirmPassword" formControlName="confirmPassword" required show-password></ion-input>
+      </ion-item>
+     
+      <ion-item class='form-text error' *ngIf="emailSignUpForm.controls.confirmPassword.touched && emailSignUpForm.hasError('mismatchedPasswords') && emailSignUpForm.controls.password.valid">
+        <ion-label stacked>Passwords do not match</ion-label>
+      </ion-item>
+
+
+     <ion-item>
+      <ion-label>ID</ion-label>
+      <ion-input type="text" formControlName="userId" clearInput></ion-input>
+    </ion-item>
+
+     <ion-item>
+      <ion-label>닉네임</ion-label>
+      <ion-input type="text" formControlName="userName" clearInput></ion-input>
+    </ion-item>
     
+
+    <ion-item>
+  <ion-label>멘토/멘티 선택</ion-label>
+  <ion-select formControlName="isMentee">
+    <ion-option value="true">멘티</ion-option>
+    <ion-option value="false">멘토</ion-option>
+  </ion-select>
+</ion-item>
+  
+
 
     <button ion-button item-right type="submit" [disabled]="!emailSignUpForm.valid" block>Sign Up</button>
     <button ion-button type="button" (click)="cancelClicked()" block>Cancel</button>

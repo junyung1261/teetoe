@@ -47,6 +47,11 @@ export class UtilProvider {
     }
 
     
+
+
+
+    
+
     
     getPicture(sourceType = 0, allowEdit = true){
         let base64Picture;

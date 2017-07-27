@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ViewController, NavController, ActionSheetController, IonicPage } from 'ionic-angular';
-import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
+import { Camera } from '@ionic-native/camera';
 import { CommunityProvider } from '../../providers/community/community';
 import { UtilProvider } from '../../providers/util/util';
 
@@ -13,6 +13,11 @@ import { UtilProvider } from '../../providers/util/util';
     templateUrl: 'post.html'
 })
 export class PostPageModal {
+
+    public myPhotosRef: any;
+    public myPhoto: any;
+    public myPhotoURL: any;
+
     postContent:string;
     image = null;
     blobImage;
@@ -21,7 +26,8 @@ export class PostPageModal {
         private navController: NavController, 
         private socialProvider: CommunityProvider, 
         private util:UtilProvider,
-        private actionSheetCtrl: ActionSheetController) {
+        private actionSheetCtrl: ActionSheetController,
+        private camera: Camera) {
     }
 
     dismiss() {
@@ -44,6 +50,10 @@ export class PostPageModal {
             this.dismiss();
         });
     }
+
+
+   
+
 
     addImage() {
         this.presentPictureSource()

@@ -1,8 +1,8 @@
-<ion-card>
+<!-- <ion-card>
     <ion-item>
       <ion-avatar item-left>
         <img *ngIf="(poster | async)?.avatar" [src]="(poster | async)?.avatar">
-        <img *ngIf="!(poster | async)?.avatar" src="images/defaultAvatar.png">
+        <img *ngIf="!(poster | async)?.avatar" src="assets/img/noavatar.png">
       </ion-avatar>
       <h2>{{(poster | async)?.name}}</h2>
       <p><p>
@@ -17,4 +17,50 @@
     <ion-item-divider>
       {{(post | async)?.timestamp/1000 | amFromUnix| amTimeAgo }}
     </ion-item-divider>
-</ion-card>
+</ion-card> -->
+
+
+<ion-card>
+    <ion-item sticky>
+      <ion-avatar item-left>
+        <img *ngIf="(poster | async)?.avatar" [src]="(poster | async)?.avatar">
+        <img *ngIf="!(poster | async)?.avatar" src="assets/img/noavatar.png">
+      </ion-avatar>
+      <h2>{{(poster | async)?.name}}</h2>
+      <p> {{(post | async)?.timestamp/1000 | amFromUnix| amTimeAgo }}</p>
+    </ion-item>
+    
+        <ion-slides  pager>
+          <ion-slide *ngFor="let images of  post.images | async " [ngStyle]="{'background' : 'url(' + images.url + ')'}">
+          </ion-slide>
+        </ion-slides>
+      
+    <ion-card-content>
+      <p>
+        {{(post | async)?.content}}
+      </p>
+    </ion-card-content>
+    
+    <ion-row>
+        <ion-col>
+          <button ion-button icon-left clear color="gray">
+            <ion-icon name="md-heart"></ion-icon>
+            <div>{{post.like}}</div>
+          </button>
+        </ion-col>
+        
+        <ion-col>
+          <button ion-button icon-left clear color="gray">
+            <ion-icon name="md-chatboxes"></ion-icon>
+            <div>{{post.comment}}</div>
+          </button>
+        </ion-col>
+
+        <ion-col center text-center> 
+          <button *ngIf="user == (post | async)?.from" ion-button icon-left clear color="pink">     
+            <div>del</div>
+          </button>
+        </ion-col>
+    </ion-row>
+
+  </ion-card>

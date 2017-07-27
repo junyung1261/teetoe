@@ -45,6 +45,45 @@ export class UserProvider {
       });
   }
   
+
+
+
+uploadImage(imageString) : Promise<any>
+   {
+      let image       : string  = 'profile-' + new Date().getTime() + '.jpg',
+          storageRef  : any,
+          parseUpload : any;
+         
+
+      return new Promise((resolve, reject) =>
+      {
+         storageRef       = firebase.storage().ref(`profile/${image}`);
+         parseUpload      = storageRef.put(imageString, 'data_url');
+
+         parseUpload.on('state_changed', (_snapshot) =>
+         {
+            // We could log the progress here IF necessary
+            // console.log('snapshot progess ' + _snapshot);
+         },
+         (_err) =>
+         {
+            reject(_err);
+         },
+         (success) =>
+         {
+            resolve(parseUpload.snapshot);
+         });
+      });
+   }
+
+
+
+
+
+
+
+
+  
     uploadPicture(file){
         return this.getUid()
         .then(uid => {
@@ -67,7 +106,7 @@ export class UserProvider {
 
     searchUser(username){
         let query = {
-            orderbyChild: 'username'
+            orderbyChild: 'name'
         };
         if(username){
             query['equalTo'] = username;

@@ -17,8 +17,8 @@ import { MomentModule } from 'angular2-moment';
     IonicPageModule.forChild(CommunityPage)
   ],
   exports: [
-    PostCmp
-    
+    PostCmp,
+    CommunityPage
   ]
 })
-export class Module {}
+export class CommunityPageModule {}
