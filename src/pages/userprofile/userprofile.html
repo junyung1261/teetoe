@@ -1,3 +1,12 @@
+<ion-header>
+  <ion-navbar primary>
+    <ion-title>
+      Profile
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
 <ion-content>
   <ion-card>
       <img *ngIf="user?.avatar" [src]="user?.avatar">
@@ -7,7 +16,7 @@
   <ion-card>
         <ion-item text-wrap>{{user?.username}}
          <ion-note item-right>
-           Username
+           UserID
          </ion-note> 
         </ion-item>
         <ion-item text-wrap><ion-icon secondary item-left name="person"></ion-icon>{{user?.name}}</ion-item>

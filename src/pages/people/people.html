@@ -14,8 +14,8 @@
   <ion-list>
     <ion-item text-wrap *ngFor="let user of users | async" [hidden]="uid === user?.$key">
       <ion-avatar item-left>
-        <img *ngIf="user?.avatar" [src]="user?.avatar">
-        <img *ngIf="!user?.avatar" src="assets/img/noavatar.png">
+        <img *ngIf="user?.photoURL" [src]="user?.photoURL">
+        <img *ngIf="!user?.photoURL" src="assets/img/noavatar.png">
       </ion-avatar>
       <h2>{{(user)?.name}}</h2>
       <button item-right secondary (click)="userProfile(user)">Profile</button>

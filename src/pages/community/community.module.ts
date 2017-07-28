@@ -3,8 +3,9 @@ import { IonicPageModule } from 'ionic-angular';
 import { CommunityPage } from "./community";
 
 import { PostCmp } from '../../components/post/post';
-
 import { MomentModule } from 'angular2-moment';
+import { ShrinkHeaderModule } from '../../components/shrink-header/shrink-header.module';
+
 @NgModule({
   declarations: [
     CommunityPage,
@@ -12,7 +13,7 @@ import { MomentModule } from 'angular2-moment';
    
   ],
   imports: [
-    
+    ShrinkHeaderModule,
     MomentModule,
     IonicPageModule.forChild(CommunityPage)
   ],

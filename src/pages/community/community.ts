@@ -20,6 +20,7 @@ export class CommunityPage {
   posts:any;
   userInput;
   feeds:any = [];
+  communityView: string = "free";
   constructor(private navCtrl: NavController, private socialProvider: CommunityProvider, 
               private userProvider: UserProvider,private af: AngularFireAuth, 
               private modalCtrl: ModalController, private afDB: AngularFireDatabase) {

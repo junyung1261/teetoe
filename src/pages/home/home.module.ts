@@ -11,6 +11,9 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
   imports: [
     RoundProgressModule,
     IonicPageModule.forChild(HomePage)
+  ],
+  exports: [
+    HomePage
   ]
 })
 export class Module {}

@@ -1,13 +1,32 @@
+<ion-header no-border  class="feed-header">
+  
+  <ion-toolbar no-border>
+       <ion-segment mode="md" [(ngModel)]="communityView" color="dark">
+      <ion-segment-button value="free">
+        자유
+      </ion-segment-button>
+      <ion-segment-button value="question">
+        질문
+      </ion-segment-button>
+      <ion-segment-button value="commonsense">
+        상식
+      </ion-segment-button>
+      
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
 
 
-<ion-content padding>
+
+<ion-content fullscreen=""  no-paddding shrink-header  [headerToHide]="'feed-header'">
 
 
     <ion-fab right bottom>
-    <button ion-fab color="danger" (click)="openPost()"><ion-icon name="add" ></ion-icon></button>
+      <button ion-fab color="danger" (click)="openPost()"><ion-icon name="add" ></ion-icon></button>
     </ion-fab>
 
-<post *ngFor="let feed of feeds" [feed]="feed">
-  </post>
+    <div *ngIf="communityView==='free'">
+      <comp-post *ngFor="let feed of feeds" [feed]="feed"></comp-post>
+    </div>
   
 </ion-content>

@@ -45,6 +45,7 @@ export class ChartPage {
             
             scale: {
                 ticks: {
+                    
                     beginAtZero: true,
                     max: 100
                 }
@@ -80,8 +81,8 @@ export class ChartPage {
     
    public lineChartData: Array<any> = [
    {data: this.chartData, label: 'Series A'},
-   {data: [28, 48, 40, 19, 86], label: 'Series B'},
-   {data: [18, 48, 77, 9, 100], label: 'Series C'}
+   {data: [70, 48, 40, 90, 86], label: 'Series B'},
+   {data: [40, 48, 77, 60, 100], label: 'Series C'}
  ];
  public lineChartLabels:Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
  

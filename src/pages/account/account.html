@@ -7,9 +7,9 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
-      <img *ngIf="user?.avatar" [src]="user?.avatar">
-      <img *ngIf="!user?.avatar" src="assets/img/noavatar.png">
+  <ion-card class="profile-image">
+      <img *ngIf="user?.photoURL" [src]="user?.photoURL">
+      <img *ngIf="!user?.photoURL" src="assets/img/noavatar.png">
       <div padding>
         <button full primary (click)="updatePicture()">Update Picture</button>
       </div>

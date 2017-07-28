@@ -23,14 +23,14 @@
 <ion-card>
     <ion-item sticky>
       <ion-avatar item-left>
-        <img *ngIf="(poster | async)?.avatar" [src]="(poster | async)?.avatar">
-        <img *ngIf="!(poster | async)?.avatar" src="assets/img/noavatar.png">
+        <img *ngIf="(poster | async)?.photoURL" [src]="(poster | async)?.photoURL">
+        <img *ngIf="!(poster | async)?.photoURL" src="assets/img/noavatar.png">
       </ion-avatar>
       <h2>{{(poster | async)?.name}}</h2>
       <p> {{(post | async)?.timestamp/1000 | amFromUnix| amTimeAgo }}</p>
     </ion-item>
     
-        <ion-slides  pager>
+        <ion-slides  pager *ngIf="(post | async)?.images" >
           <ion-slide *ngFor="let images of  post.images | async " [ngStyle]="{'background' : 'url(' + images.url + ')'}">
           </ion-slide>
         </ion-slides>
