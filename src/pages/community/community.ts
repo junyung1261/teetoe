@@ -19,22 +19,40 @@ import firebase from 'firebase/app';
 export class CommunityPage {
   posts:any;
   userInput;
+ 
   feeds:any = [];
+  limit:number = 5;
   communityView: string = "free";
   constructor(private navCtrl: NavController, private socialProvider: CommunityProvider, 
               private userProvider: UserProvider,private af: AngularFireAuth, 
               private modalCtrl: ModalController, private afDB: AngularFireDatabase) {
     
-    this.userProvider.getUid()
-    .then(uid => {
-       firebase.database().ref(`posts`)
-       .on('child_added', (snapshot) => {
-         this.feeds.unshift({$key:snapshot.key, $value: snapshot.val()});
-         console.log(snapshot.key, snapshot.val());
+   
+    firebase.database().ref(`/posts`).limitToLast(5)
+       .once('value', (snapshot) => {
+         snapshot.forEach( feed => {
+          this.feeds.unshift({$key:feed.key, $value: feed.val()});
+          console.log(feed.key, feed.val());
+          return false;
+         });
        });
-    });
+       
+ 
 
-    
+    /* this.itemRef = firebase.database().ref('/posts'); // or however you mark time
+        this.itemRef.on('value', itemList => {
+          let items = [];
+          itemList.forEach( item => {
+            items.unshift({$key:item.key, $value: item.val()});
+            return false;
+          });
+
+          this.feeds = items;
+          
+
+        });*/
+
+
 
     /*this.feeds = <FirebaseListObservable<any[]>> afDB.list('/posts').map((feeds) => {
           return feeds.map((feeds) => {
@@ -47,6 +65,27 @@ export class CommunityPage {
 
    
   }
+
+  onInfiniteScroll(infiniteScroll) {
+        this.limit += 5; // or however many more you want to load
+        firebase.database().ref(`/posts`).limitToLast(this.limit)
+       .once('value', (snapshot) => {
+         let items = [];
+         snapshot.forEach( feed => {
+          items.unshift({$key:feed.key, $value: feed.val()});
+          return false;
+         });
+          this.feeds = items;
+          
+          setTimeout(() => {
+          console.log('Async operation has ended');
+          infiniteScroll.complete();
+          }, 500);
+
+       });
+    }
+
+
 
   openPost() {
     let modal = this.modalCtrl.create('PostPageModal');

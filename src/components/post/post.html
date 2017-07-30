@@ -22,7 +22,7 @@
 
 <ion-card>
     <ion-item sticky>
-      <ion-avatar item-left>
+      <ion-avatar item-left (click)="userProfile(poster)">
         <img *ngIf="(poster | async)?.photoURL" [src]="(poster | async)?.photoURL">
         <img *ngIf="!(poster | async)?.photoURL" src="assets/img/noavatar.png">
       </ion-avatar>

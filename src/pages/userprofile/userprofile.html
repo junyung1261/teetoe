@@ -9,8 +9,8 @@
 
 <ion-content>
   <ion-card>
-      <img *ngIf="user?.avatar" [src]="user?.avatar">
-      <img *ngIf="!user?.avatar" src="images/defaultAvatar.png">
+      <img *ngIf="user?.photoURL" [src]="user?.photoURL">
+      <img *ngIf="!user?.photoURL" src="assets/img/noavatar.png">
   </ion-card>
 
   <ion-card>

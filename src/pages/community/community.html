@@ -26,7 +26,10 @@
     </ion-fab>
 
     <div *ngIf="communityView==='free'">
-      <comp-post *ngFor="let feed of feeds" [feed]="feed"></comp-post>
+       <comp-post *ngFor="let feed of feeds" [feed]="feed"></comp-post>
     </div>
-  
+     
+      <ion-infinite-scroll (ionInfinite)="onInfiniteScroll($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
 </ion-content>

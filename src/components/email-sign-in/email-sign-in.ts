@@ -12,6 +12,7 @@ import { ViewController } from 'ionic-angular';
  * @class EmailSignInComponent
  */
 @Component({
+  
   selector: 'sign-in',
   templateUrl: 'email-sign-in.html',
   providers: [FormBuilder]
