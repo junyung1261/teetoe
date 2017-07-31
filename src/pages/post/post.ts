@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController, NavController, ActionSheetController, IonicPage } from 'ionic-angular';
+import { ViewController, NavController, ActionSheetController, IonicPage} from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import { CommunityProvider } from '../../providers/community/community';
 import { UtilProvider } from '../../providers/util/util';
@@ -27,11 +27,12 @@ export class PostPageModal {
         private socialProvider: CommunityProvider, 
         private util:UtilProvider,
         private actionSheetCtrl: ActionSheetController,
-        private camera: Camera) {
+        private camera: Camera,
+        ) {
     }
 
-    dismiss() {
-        this.viewController.dismiss();
+    dismiss(value:boolean) {
+        this.viewController.dismiss({value});
     }
 
     sendPost() {
@@ -47,12 +48,11 @@ export class PostPageModal {
                 });
             }
             this.reset();
-            this.dismiss();
+            this.dismiss(true);
+            
         });
     }
 
-
-   
 
 
     addImage() {

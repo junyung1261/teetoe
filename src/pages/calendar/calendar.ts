@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage } from 'ionic-angular';
 
+import {
+  CalendarEvent,
+  CalendarEventAction,
+  CalendarEventTimesChangedEvent
+} from 'angular-calendar';
 
 
 @IonicPage()
@@ -9,9 +14,22 @@ import { NavController, NavParams, IonicPage } from 'ionic-angular';
   templateUrl: 'calendar.html'
 })
 export class CalendarPage {
+public today: Date = new Date(Date.now());
+   constructor(private navController:NavController, public navParams: NavParams) {
+        
+    }
 
-    
-    private eventSource: any;
+
+}
+
+
+
+
+
+
+
+ 
+   /* private eventSource: any;
     private viewTitle: any;
 
    //[dateFormatter]="calendar.dateFormatter"
@@ -133,8 +151,4 @@ export class CalendarPage {
     };
   
   
-
-
-
-}
-
+*/

@@ -21,21 +21,14 @@ export class CommunityPage {
   userInput;
  
   feeds:any = [];
-  limit:number = 5;
+  limit:number;
   communityView: string = "free";
   constructor(private navCtrl: NavController, private socialProvider: CommunityProvider, 
               private userProvider: UserProvider,private af: AngularFireAuth, 
               private modalCtrl: ModalController, private afDB: AngularFireDatabase) {
     
+    this.onIntialize();
    
-    firebase.database().ref(`/posts`).limitToLast(5)
-       .once('value', (snapshot) => {
-         snapshot.forEach( feed => {
-          this.feeds.unshift({$key:feed.key, $value: feed.val()});
-          console.log(feed.key, feed.val());
-          return false;
-         });
-       });
        
  
 
@@ -66,6 +59,19 @@ export class CommunityPage {
    
   }
 
+  onIntialize(){
+     this.limit=5;
+     firebase.database().ref(`/posts`).limitToLast(this.limit)
+       .once('value', (snapshot) => {
+        let items = [];
+         snapshot.forEach( feed => {
+          items.unshift({$key:feed.key, $value: feed.val()});
+          return false;
+         });
+          this.feeds = items;
+       });
+  }
+
   onInfiniteScroll(infiniteScroll) {
         this.limit += 5; // or however many more you want to load
         firebase.database().ref(`/posts`).limitToLast(this.limit)
@@ -85,10 +91,31 @@ export class CommunityPage {
        });
     }
 
+  doRefresh(refresher, segmentView){
+    this.limit = 5;
+    firebase.database().ref(`/posts`).limitToLast(this.limit)
+       .once('value', (snapshot) => {
+         snapshot.forEach( feed => {
+          this.feeds.unshift({$key:feed.key, $value: feed.val()});
+          console.log(feed.key, feed.val());
+          return false;
+         });
+       });
+       
+      
+     setTimeout(() => {
+      console.log('Async operation has ended');
+      refresher.complete();
+    }, 1000);
+  }
 
 
   openPost() {
     let modal = this.modalCtrl.create('PostPageModal');
-    modal.present();
+    modal.onDidDismiss(data =>{
+        if(data) this.onIntialize();
+    });
+    modal.present()
+    
   }
 }
