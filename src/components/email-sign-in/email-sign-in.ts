@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
-import { ToastController } from 'ionic-angular';
-import { ViewController } from 'ionic-angular';
+import { ToastController, ViewController, IonicPage } from 'ionic-angular';
 
 /**
  * 
@@ -11,6 +10,7 @@ import { ViewController } from 'ionic-angular';
  * @export
  * @class EmailSignInComponent
  */
+@IonicPage()
 @Component({
   
   selector: 'sign-in',

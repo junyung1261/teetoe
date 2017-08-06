@@ -1,23 +1,217 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, IonicPage } from 'ionic-angular';
 
+import { NavController, NavParams, IonicPage, ModalController } from 'ionic-angular';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ViewChild,
+  TemplateRef,
+  Input, Output, EventEmitter
+} from '@angular/core';
+import {
+  startOfDay,
+  endOfDay,
+  subDays,
+  addDays,
+  endOfMonth,
+  isSameDay,
+  isSameMonth,
+  addHours,
+  subWeeks,
+  addWeeks,
+  startOfMonth
+} from 'date-fns';
+import { Subject } from 'rxjs/Subject';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
   CalendarEventAction,
   CalendarEventTimesChangedEvent
 } from 'angular-calendar';
+import { CalendarDateFormatter, DateFormatterParams, CalendarUtils, CalendarMonthViewDay } from 'angular-calendar';
+import { GetMonthViewArgs, MonthView, getMonthView } from 'calendar-utils';
+import { CustomDateFormatter } from '../../providers/calendar/calendar.provider';
+
+
+
+const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3'
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF'
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA'
+  }
+};
 
 
 @IonicPage()
 @Component({
   selector: 'page-calendar',
-  templateUrl: 'calendar.html'
+  templateUrl: 'calendar.html',
+  providers: [
+    {
+      provide: CalendarDateFormatter,
+      useClass: CustomDateFormatter
+    }
+  ]
 })
+
+
 export class CalendarPage {
-public today: Date = new Date(Date.now());
-   constructor(private navController:NavController, public navParams: NavParams) {
+
+
+
+  @Output() viewChange: EventEmitter<string> = new EventEmitter();
+
+  @Output() viewDateChange: EventEmitter<Date> = new EventEmitter();
+
+view: string = 'month';
+locale: string = 'kr';
+activeDayIsOpen: boolean = false;
+public viewDate: Date = new Date();
+
+refresh: Subject<any> = new Subject();
+
+
+selectedDay: CalendarMonthViewDay;
+
+  
+ 
+
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    body.forEach(day => {
+      if (
+        this.selectedDay &&
+        day.date.getTime() === this.selectedDay.date.getTime()
+      ) {
+        day.cssClass = 'cal-day-selected';
+        this.selectedDay = day;
+      }
+    });
+  }
+
+
+
+
+
+events: CalendarEvent[] = [
+    {
+      start: subDays(startOfDay(new Date()), 1),
+      end: addDays(new Date(), 1),
+      title: 'A 3 day event',
+      color: colors.red,
+      
+    },
+    {
+      start: startOfDay(new Date()),
+      title: 'An event with no end date',
+      color: colors.yellow,
+     
+    },
+    {
+      start: subDays(endOfMonth(new Date()), 3),
+      end: addDays(endOfMonth(new Date()), 3),
+      title: 'A long event that spans 2 months',
+      color: colors.blue
+    },
+    {
+      start: addHours(startOfDay(new Date()), 2),
+      end: new Date(),
+      title: 'A draggable and resizable event',
+      color: colors.yellow,
+      
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
+      },
+      draggable: true
+    },
+    {
+      start: addHours(startOfDay(new Date()), 2),
+      end: new Date(),
+      title: 'A draggable and resizable event',
+      color: colors.yellow,
+      
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
+      },
+      draggable: true
+    },
+    
+  ];
+
+
+  constructor(private navCtrl: NavController,  
+              private modalCtrl: ModalController) {
+     
         
     }
+
+
+dayClicked({ date, events }: { date: Date; events: CalendarEvent[]; }, day:CalendarMonthViewDay): void {
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+        this.viewDate = date;
+      } else {
+        this.activeDayIsOpen = true;
+        this.viewDate = date;
+      }
+    }else if(date.getMonth > this.viewDate.getMonth){
+        this.viewDate = date;
+    }else{
+        this.viewDate = date;
+    }
+    if (this.selectedDay) {
+      delete this.selectedDay.cssClass;
+    }
+    day.cssClass = 'cal-day-selected';
+    this.selectedDay = day;
+  }
+
+
+  test(){
+      this.activeDayIsOpen = false;
+      this.refresh.next();
+      console.log('시발');
+  }
+  openPost() {
+      let modal = this.modalCtrl.create('CalendarAddEventComponent',{viewDate: this.viewDate});
+      console.log(this.viewDate);
+      modal.onDidDismiss(data =>{
+          if(data) this.addEvent();
+      });
+      modal.present()
+      
+  }
+
+  
+
+
+
+  addEvent(): void {
+    this.events.push({
+      title: 'New event',
+      start: startOfDay(this.selectedDay.date),
+      end: endOfDay(this.selectedDay.date),
+      color: colors.red,
+      draggable: true,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
+      }
+    });
+    this.refresh.next();
+  }
 
 
 }

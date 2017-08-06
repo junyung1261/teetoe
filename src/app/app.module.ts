@@ -18,12 +18,12 @@ import { HttpModule } from '@angular/http';
 // pages
 
 
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // module & sharedmodule
 import { IonicStorageModule } from '@ionic/storage';
 import { SuperTabsModule } from 'ionic2-super-tabs';
-import { SignModule }  from "../app/sign.module";
+
 
 // providers
 import { AuthProvider } from '../providers/auth/auth';
@@ -47,9 +47,8 @@ import { Database } from '../providers/database';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    SignModule,
     HttpModule,
-   
+    BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
     SuperTabsModule.forRoot(),
     // auth/db modules

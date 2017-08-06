@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { AccountPage } from './account';
+import { EmailSignUpComponent } from './email-sign-up';
 
 
 // auth components
@@ -9,18 +9,18 @@ import { AccountPage } from './account';
 
 @NgModule({
   declarations: [
-    AccountPage
+    EmailSignUpComponent,
     
   ],
   imports: [
     
-    IonicPageModule.forChild(AccountPage)
+    IonicPageModule.forChild(EmailSignUpComponent),
   ],
 
   exports: [
-    AccountPage
+    EmailSignUpComponent,
     
 
   ]
 })
-export class AccountPageModule {}
+export class EmailSignUpModule {}

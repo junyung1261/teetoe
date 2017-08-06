@@ -113,7 +113,8 @@ export class CommunityPage {
   openPost() {
     let modal = this.modalCtrl.create('PostPageModal');
     modal.onDidDismiss(data =>{
-        if(data) this.onIntialize();
+        
+        if(data.value) this.onIntialize();
     });
     modal.present()
     

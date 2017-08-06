@@ -12,7 +12,7 @@
         "ionic:serve": "ionic-app-scripts serve"
     },
     "dependencies": {
-        "@angular/animations": "^4.3.2",
+        "@angular/animations": "^4.1.3",
         "@angular/common": "4.1.3",
         "@angular/compiler": "4.1.3",
         "@angular/compiler-cli": "4.1.3",
@@ -29,6 +29,7 @@
         "@ionic-native/status-bar": "3.12.1",
         "@ionic-native/toast": "^4.1.0",
         "@ionic/storage": "2.0.1",
+        "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.29",
         "angular": "^1.6.5",
         "angular-calendar": "^0.19.0",
         "angular-svg-round-progressbar": "^1.1.0",
@@ -52,6 +53,7 @@
         "intl": "^1.2.5",
         "ionic-angular": "3.5.0",
         "ionic-plugin-keyboard": "^2.2.1",
+        "ionic2-calendar": "^0.3.7",
         "ionic2-super-tabs": "^3.0.2",
         "ionicons": "3.0.0",
         "ng2-charts": "^1.6.0",
@@ -61,9 +63,9 @@
     },
     "devDependencies": {
         "@ionic/app-scripts": "2.0.1",
-        "@ionic/cli-plugin-cordova": "1.5.0",
-        "@ionic/cli-plugin-ionic-angular": "1.4.0",
-        "ionic": "3.6.0",
+        "@ionic/cli-plugin-cordova": "1.6.1",
+        "@ionic/cli-plugin-ionic-angular": "1.4.1",
+        "ionic": "3.7.0",
         "typescript": "2.3.4"
     },
     "cordovaPlugins": [

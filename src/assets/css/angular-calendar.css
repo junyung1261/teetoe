@@ -29,12 +29,18 @@
   border-bottom: 0; }
 
 .cal-month-view .cal-cell-top {
-  min-height: 78px;
+  min-height: 5em;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1; }
+.platform-ios .cal-month-view .cal-cell-top {
+  min-height: 5.3em;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1; }
 
 .cal-month-view .cal-cell-row {
+ 
   display: -webkit-box;
   display: -ms-flexbox;
   -js-display: flex;
@@ -49,6 +55,7 @@
   display: -ms-flexbox;
   -js-display: flex;
   display: flex;
+  
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -58,8 +65,12 @@
           align-items: stretch; }
 
 .cal-month-view .cal-day-cell {
-  min-height: 100px; }
+  min-height: 6.49em; }
 
+.platform-ios .cal-month-view .cal-day-cell {
+  min-height: 6.77em;
+}
+ 
 .cal-month-view .cal-day-cell:not(:last-child) {
   border-right: 1px solid #e1e1e1; }
 
@@ -67,7 +78,7 @@
   border-bottom: 1px solid #e1e1e1; }
 
 .cal-month-view .cal-day-badge {
-  margin-top: 18px;
+  margin-bottom: -10px;
   margin-left: 10px;
   background-color: #b94a48;
   display: inline-block;
@@ -86,7 +97,7 @@
   font-size: 1.2em;
   font-weight: 400;
   opacity: 0.5;
-  margin-top: 15px;
+  margin-top: 10px;
   margin-right: 15px;
   float: right;
   margin-bottom: 10px; }
@@ -98,7 +109,7 @@
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
-  margin: 3px;
+  margin-top: -20px;
   line-height: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -108,11 +119,11 @@
       flex-wrap: wrap; }
 
 .cal-month-view .cal-event {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   display: inline-block;
-  margin: 2px; }
+  margin: 0.086em; }
 
 .cal-month-view .cal-day-cell.cal-in-month.cal-has-events {
   cursor: pointer; }
@@ -226,6 +237,11 @@
     border: solid 1px #e1e1e1;
     overflow-x: scroll;
     position: relative; }
+  .cal-day-view .cal-hour-cols {
+    width: 10%;
+    border: solid 1px #e1e1e1;
+    overflow-x: scroll;
+    position: relative; }  
   .cal-day-view .cal-hour:nth-child(odd) {
     background-color: #fafafa; }
   .cal-day-view mwl-calendar-day-view-hour-segment,
@@ -271,6 +287,7 @@
   .cal-day-view .cal-all-day-event {
     padding: 8px;
     border: solid 1px; }
+    
 
 .cal-tooltip {
   position: absolute;

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { AuthPage } from './auth';
-import { SignModule } from '../../app/sign.module'
-
+import { EmailSignUpModule } from '../../components/email-sign-up/email-sign-up.module'
+import { EmailSignInModule } from '../../components/email-sign-in/email-sign-in.module'
 // auth components
 
 
@@ -13,7 +13,8 @@ import { SignModule } from '../../app/sign.module'
     
   ],
   imports: [
-    SignModule,
+    EmailSignUpModule,
+    EmailSignInModule,
     IonicPageModule.forChild(AuthPage),
   ],
 

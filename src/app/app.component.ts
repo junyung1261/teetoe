@@ -7,9 +7,6 @@ import { AuthProvider } from '../providers/auth/auth';
 import { MenuController } from 'ionic-angular/index';
 
 
-import { AuthPage } from '../pages/auth/auth';
-import { TabsPage } from '../pages/tabs/tabs';
-import { AccountPage } from '../pages/account/account';
 
 @Component({
   templateUrl: 'app.html'
