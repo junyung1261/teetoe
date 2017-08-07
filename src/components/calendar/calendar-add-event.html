@@ -1,23 +1,44 @@
 <ion-header>
     <ion-navbar>
         <ion-buttons left>
-            <button ion-button icon-only (click)="this.viewController.dismiss()">
+            <button ion-button icon-only (click)="dismiss()">
                 <ion-icon name="arrow-back"></ion-icon>
             </button>
         </ion-buttons>
         <ion-title>
-            {{ title }}
+            {{ headerTitle }}
         </ion-title>    
     </ion-navbar>
 </ion-header>
 
 <ion-content fullscreen>
 
+<ion-list>
+  <ion-item-sliding *ngFor=" let event of events">
+    <ion-item>
+      {{event.title}}
+    </ion-item>
+    <ion-item-options side="left">
+      <button ion-button (click)="deleteEvent(event)" color="danger">
+          <ion-icon name="trash"></ion-icon>
+      </button>
+      
+    </ion-item-options>
 
+    <ion-item-options side="right">
+      <button ion-button (click)="unread(item)">Unread</button>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
 </ion-content>
 
 <ion-footer>
     <ion-toolbar>
-        <button (click)="sendPost()" full>Post</button>
+        <ion-input type="text" placeholder="일정을 입력해주세요"   [(ngModel)]="newEventTitle"></ion-input>
+        <ion-buttons end>
+        <button ion-button (click)="pushEvent()" full>
+            <ion-icon name="add"></ion-icon>
+        </button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-footer>

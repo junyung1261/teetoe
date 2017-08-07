@@ -85,11 +85,8 @@ selectedDay: CalendarMonthViewDay;
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     
     body.forEach(day => {
-      if (
-        day.date.getFullYear() === this.viewDate.getFullYear() &&
-        day.date.getMonth() === this.viewDate.getMonth() &&
-        day.date.getDate() === this.viewDate.getDate()
-      ) {
+    
+      if (isSameDay(this.viewDate, day.date)) {
         day.cssClass = 'cal-day-selected';
         this.selectedDay = day;
         
@@ -188,11 +185,26 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[]; }, day:Calen
   }
   openPost() {
       let today = this.selectedDay;
-      
+      let defaultEvents = this.selectedDay.events.slice();
+      let defaultEvents2 = this.selectedDay.events.slice();
       let modal = this.modalCtrl.create('CalendarAddEventComponent',{viewDate: today.date, viewDateEvents: today.events});
         
       modal.onDidDismiss(data =>{
-          if(data) this.addEvent();
+          console.log(data.length);
+          data.forEach( ev =>{
+              if(defaultEvents.indexOf(ev)+1) defaultEvents.splice(defaultEvents.indexOf(ev),1);
+          });
+          console.log(defaultEvents2.length);
+           defaultEvents2.forEach( ev => {
+            if(data.indexOf(ev)+1) data.splice(data.indexOf(ev),1);
+          });
+          console.log(defaultEvents.length);
+          defaultEvents.forEach( ev =>{
+             if(this.events.indexOf(ev)+1) this.events.splice(this.events.indexOf(ev),1);
+          });
+          console.log(data.length);
+          this.addEvent(data);
+          
       });
       modal.present()
       
@@ -202,18 +214,12 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[]; }, day:Calen
 
 
 
-  addEvent(): void {
-    this.events.push({
-      title: 'New event',
-      start: startOfDay(this.selectedDay.date),
-      end: endOfDay(this.selectedDay.date),
-      color: colors.red,
-      draggable: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      }
-    });
+  addEvent(newEvents: CalendarEvent[]): void {
+    newEvents.forEach( ev =>{
+
+      this.events.push(ev);
+    })
+    
     this.refresh.next();
   }
 

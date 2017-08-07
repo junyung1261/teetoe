@@ -12,6 +12,39 @@ import {
   CalendarEventTimesChangedEvent
 } from 'angular-calendar';
 
+import {
+  startOfDay,
+  endOfDay,
+  subDays,
+  addDays,
+  endOfMonth,
+  isSameDay,
+  isSameMonth,
+  addHours,
+  subWeeks,
+  addWeeks,
+  startOfMonth
+} from 'date-fns';
+
+
+const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3'
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF'
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA'
+  }
+};
+
+
+
+
 @IonicPage()
 
 @Component({
@@ -21,14 +54,16 @@ import {
 })
 export class CalendarAddEventComponent {
    
+    item: number = 5;
     view = 'day';
     viewDate: Date;
     events: CalendarEvent[];
     public myPhotosRef: any;
     public myPhoto: any;
     public myPhotoURL: any;
-    title: string;
+    headerTitle: string;
     postContent:string;
+    newEventTitle:string;
     image = null;
     blobImage;
     constructor(
@@ -43,7 +78,7 @@ export class CalendarAddEventComponent {
           this.viewDate = navParams.get('viewDate');
           this.events = navParams.get('viewDateEvents')
         
-          this.title =this.dayViewTitle(this.viewDate) ;
+          this.headerTitle =this.dayViewTitle(this.viewDate) ;
     }
 
     
@@ -57,10 +92,23 @@ export class CalendarAddEventComponent {
         }).format(date);
     };
     
+    pushEvent(){
+        if(this.newEventTitle){
+        var newEvent: CalendarEvent = {start: startOfDay(this.viewDate), title: this.newEventTitle, color: colors.blue };
+        this.events.push(newEvent);
+        this.reset();
+        }
+    }
 
-    dismiss(data:boolean) {
-        
-        this.viewController.dismiss(data);
+    deleteEvent(event){
+            
+        this.events.splice(this.events.indexOf(event),1);
+    }
+
+    
+    dismiss() {
+        console.log("빠이");
+        this.viewController.dismiss(this.events);
     }
 
     sendPost() {
@@ -76,7 +124,7 @@ export class CalendarAddEventComponent {
                 });
             }
             this.reset();
-            this.dismiss(true);
+            
             
         });
     }
@@ -114,6 +162,7 @@ export class CalendarAddEventComponent {
 
 
     reset() {
+        this.newEventTitle="";
         this.postContent = "";
         this.image = null;
         this.blobImage = null;
