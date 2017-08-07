@@ -5,7 +5,7 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   TemplateRef,
-  Input, Output, EventEmitter
+  Input, Output, EventEmitter, OnInit
 } from '@angular/core';
 import {
   startOfDay,
@@ -81,16 +81,18 @@ refresh: Subject<any> = new Subject();
 selectedDay: CalendarMonthViewDay;
 
   
- 
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    
     body.forEach(day => {
       if (
-        this.selectedDay &&
-        day.date.getTime() === this.selectedDay.date.getTime()
+        day.date.getFullYear() === this.viewDate.getFullYear() &&
+        day.date.getMonth() === this.viewDate.getMonth() &&
+        day.date.getDate() === this.viewDate.getDate()
       ) {
         day.cssClass = 'cal-day-selected';
         this.selectedDay = day;
+        
       }
     });
   }
@@ -98,7 +100,7 @@ selectedDay: CalendarMonthViewDay;
 
 
 
-
+ 
 events: CalendarEvent[] = [
     {
       start: subDays(startOfDay(new Date()), 1),
@@ -166,7 +168,7 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[]; }, day:Calen
         this.activeDayIsOpen = true;
         this.viewDate = date;
       }
-    }else if(date.getMonth > this.viewDate.getMonth){
+    }else if(date.getMonth() > this.viewDate.getMonth()){
         this.viewDate = date;
     }else{
         this.viewDate = date;
@@ -182,11 +184,13 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[]; }, day:Calen
   test(){
       this.activeDayIsOpen = false;
       this.refresh.next();
-      console.log('시발');
+     
   }
   openPost() {
-      let modal = this.modalCtrl.create('CalendarAddEventComponent',{viewDate: this.viewDate});
-      console.log(this.viewDate);
+      let today = this.selectedDay;
+      
+      let modal = this.modalCtrl.create('CalendarAddEventComponent',{viewDate: today.date, viewDateEvents: today.events});
+        
       modal.onDidDismiss(data =>{
           if(data) this.addEvent();
       });

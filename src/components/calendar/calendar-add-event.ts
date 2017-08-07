@@ -6,6 +6,11 @@ import { UtilProvider } from '../../providers/util/util';
 import { CalendarDateFormatter, DateFormatterParams, CalendarUtils, CalendarMonthViewDay } from 'angular-calendar';
 import { GetMonthViewArgs, MonthView, getMonthView } from 'calendar-utils';
 import { CustomDateFormatter } from '../../providers/calendar/calendar.provider';
+import {
+  CalendarEvent,
+  CalendarEventAction,
+  CalendarEventTimesChangedEvent
+} from 'angular-calendar';
 
 @IonicPage()
 
@@ -18,6 +23,7 @@ export class CalendarAddEventComponent {
    
     view = 'day';
     viewDate: Date;
+    events: CalendarEvent[];
     public myPhotosRef: any;
     public myPhoto: any;
     public myPhotoURL: any;
@@ -35,12 +41,15 @@ export class CalendarAddEventComponent {
         private navParams: NavParams
         ) {
           this.viewDate = navParams.get('viewDate');
+          this.events = navParams.get('viewDateEvents')
+        
           this.title =this.dayViewTitle(this.viewDate) ;
     }
 
     
     dayViewTitle = function (_a) {
-        var date = _a.date, locale = _a.locale;
+        
+        var date = _a, locale = _a.locale;
         return new Intl.DateTimeFormat(locale, {
             day: 'numeric',
             month: 'long',

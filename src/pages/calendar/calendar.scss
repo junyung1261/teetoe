@@ -9,5 +9,7 @@ page-calendar{
     .cal-day-selected:hover {
       background-color: deeppink !important;
     }
-
+ .odd-cell {
+      background-color: pink !important;
+    }
 }
