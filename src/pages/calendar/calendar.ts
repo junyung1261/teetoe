@@ -190,21 +190,34 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[]; }, day:Calen
       let modal = this.modalCtrl.create('CalendarAddEventComponent',{viewDate: today.date, viewDateEvents: today.events});
         
       modal.onDidDismiss(data =>{
-          console.log(data.length);
-          data.forEach( ev =>{
-              if(defaultEvents.indexOf(ev)+1) defaultEvents.splice(defaultEvents.indexOf(ev),1);
-          });
-          console.log(defaultEvents2.length);
-           defaultEvents2.forEach( ev => {
-            if(data.indexOf(ev)+1) data.splice(data.indexOf(ev),1);
-          });
-          console.log(defaultEvents.length);
-          defaultEvents.forEach( ev =>{
-             if(this.events.indexOf(ev)+1) this.events.splice(this.events.indexOf(ev),1);
-          });
-          console.log(data.length);
-          this.addEvent(data);
-          
+
+        //delete all events
+        if(data.length===0) {
+            defaultEvents.forEach( ev =>{
+            if(this.events.indexOf(ev)!==-1) this.events.splice(this.events.indexOf(ev),1);
+            });
+            this.activeDayIsOpen = false;
+            this.refresh.next();
+          }
+        //edit events
+        else{
+            
+            data.forEach( ev =>{
+                if(defaultEvents.indexOf(ev)!==-1) defaultEvents.splice(defaultEvents.indexOf(ev),1);
+            });
+            
+            defaultEvents2.forEach( ev => {
+                if(data.indexOf(ev)!==-1) data.splice(data.indexOf(ev),1);
+            });
+            
+            defaultEvents.forEach( ev =>{
+                if(this.events.indexOf(ev)!==-1) this.events.splice(this.events.indexOf(ev),1);
+            });
+            
+
+            this.addEvent(data);
+            }
+        
       });
       modal.present()
       

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ViewController, NavController, ActionSheetController, IonicPage, NavParams} from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { ViewController, NavController, ActionSheetController, IonicPage, NavParams, Content } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import { CommunityProvider } from '../../providers/community/community';
 import { UtilProvider } from '../../providers/util/util';
@@ -53,10 +53,11 @@ const colors: any = {
     
 })
 export class CalendarAddEventComponent {
-   
+   @ViewChild(Content) content: Content;
     item: number = 5;
     view = 'day';
     viewDate: Date;
+    segment: String = 'all';
     events: CalendarEvent[];
     public myPhotosRef: any;
     public myPhoto: any;
@@ -79,9 +80,13 @@ export class CalendarAddEventComponent {
           this.events = navParams.get('viewDateEvents')
         
           this.headerTitle =this.dayViewTitle(this.viewDate) ;
+          
     }
 
-    
+    toggle(){
+        this.content.resize();
+    }
+
     dayViewTitle = function (_a) {
         
         var date = _a, locale = _a.locale;
@@ -92,6 +97,27 @@ export class CalendarAddEventComponent {
         }).format(date);
     };
     
+    convert12H(a) { 
+        let time: Date = a; 
+        let getTime = time.getHours();
+        let getMin = time.getMinutes(); 
+        let str: string;
+        let min: string;
+        if (getTime < 12 ) { 
+            str = '오전 ';
+            } 
+        else { 
+            str = '오후 '; 
+            getTime %= 12;  
+            } 
+       
+        if (("" + getMin).length == 1) min = "0" + getMin.toString();
+
+         
+        let res = str + getTime.toString() + ':' + min;
+        return res; 
+    }
+
     pushEvent(){
         if(this.newEventTitle){
         var newEvent: CalendarEvent = {start: startOfDay(this.viewDate), title: this.newEventTitle, color: colors.blue };
