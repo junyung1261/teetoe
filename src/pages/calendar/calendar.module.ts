@@ -9,14 +9,14 @@ import {
   NgbTimepickerModule,
   NgbModalModule
 } from '@ng-bootstrap/ng-bootstrap';
-import { ClendarComponentModule } from '../../components/calendar/calendar-component.module';
+import { CalendarAddEventModule } from '../../components/calendar/calendar-add-event.module';
 //import { NgCalendarModule  } from 'ionic2-calendar';
 @NgModule({
   declarations: [
     CalendarPage
   ],
   imports: [
-    ClendarComponentModule,
+    CalendarAddEventModule,
     CommonModule,
     FormsModule,
     NgbModalModule.forRoot(),

@@ -102,26 +102,26 @@ events: CalendarEvent[] = [
     {
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
-      title: 'A 3 day event',
+      title: '집에 가기',
       color: colors.red,
       
     },
     {
       start: startOfDay(new Date()),
-      title: 'An event with no end date',
+      title: '공부하기',
       color: colors.yellow,
      
     },
     {
       start: subDays(endOfMonth(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
+      title: '영단어 100개',
       color: colors.blue
     },
     {
       start: addHours(startOfDay(new Date()), 2),
       end: new Date(),
-      title: 'A draggable and resizable event',
+      title: '딸딸이',
       color: colors.yellow,
       
       resizable: {
@@ -130,18 +130,7 @@ events: CalendarEvent[] = [
       },
       draggable: true
     },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: new Date(),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    },
+    
     
   ];
 
