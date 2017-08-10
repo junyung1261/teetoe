@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { ViewController, NavController, ActionSheetController, IonicPage, NavParams, Content } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import { CommunityProvider } from '../../providers/community/community';
@@ -11,6 +11,7 @@ import {
   CalendarEventAction,
   CalendarEventTimesChangedEvent
 } from 'angular-calendar';
+import { EventProvider } from '../../providers/event/event'
 
 import {
   startOfDay,
@@ -53,6 +54,7 @@ const colors: any = {
     
 })
 export class CalendarAddEventComponent {
+   @Input() eventRef;
    @ViewChild(Content) content: Content;
     item: number = 5;
     view = 'day';
@@ -74,7 +76,8 @@ export class CalendarAddEventComponent {
         private util:UtilProvider,
         private actionSheetCtrl: ActionSheetController,
         private camera: Camera,
-        private navParams: NavParams
+        private navParams: NavParams,
+        private eventProvider: EventProvider
         ) {
           this.viewDate = navParams.get('viewDate');
           this.events = navParams.get('viewDateEvents')
@@ -112,7 +115,7 @@ export class CalendarAddEventComponent {
             } 
        
         if (("" + getMin).length == 1) min = "0" + getMin.toString();
-
+        else min = getMin.toString();
          
         let res = str + getTime.toString() + ':' + min;
         return res; 
@@ -120,7 +123,10 @@ export class CalendarAddEventComponent {
 
     pushEvent(){
         if(this.newEventTitle){
-        var newEvent: CalendarEvent = {start: startOfDay(this.viewDate), title: this.newEventTitle, color: colors.blue };
+        
+        
+        var newEvent: CalendarEvent = {start: startOfDay(this.viewDate), title: this.newEventTitle, color: colors.blue, tracks: ['init'] };
+        this.eventProvider.createEvent(newEvent);
         this.events.push(newEvent);
         this.reset();
         }
@@ -129,6 +135,7 @@ export class CalendarAddEventComponent {
     deleteEvent(event){
             
         this.events.splice(this.events.indexOf(event),1);
+        this.eventProvider.deleteEvent(event.id);
     }
 
     

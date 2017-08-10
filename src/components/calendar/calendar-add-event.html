@@ -27,12 +27,13 @@
    
       
 <ion-list  *ngIf="segment==='all'">
-  <ion-item-sliding *ngFor=" let event of events" #slidingItem [attr.track]="angular">
+  <ion-item-sliding *ngFor=" let event of events" [attr.track]="event.tracks[0] | lowercase">
     <ion-item>
         <h3>{{event.title}}</h3>
           <p *ngIf="event.end">
             {{convert12H(event.start)}} &mdash;
-            {{convert12H(event.start)}}
+            {{convert12H(event.end)}}
+           
           </p>
           <p *ngIf="!event.end">
             시간을 지정해 주세요.

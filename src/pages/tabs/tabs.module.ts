@@ -11,6 +11,9 @@ import { SharedModule }  from "../../app/shared.module";
   imports: [
     IonicPageModule.forChild(TabsPage),
     SharedModule
+  ],
+  exports:[
+    TabsPage
   ]
   
 })

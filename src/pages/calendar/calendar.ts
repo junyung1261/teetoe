@@ -30,7 +30,7 @@ import {
 import { CalendarDateFormatter, DateFormatterParams, CalendarUtils, CalendarMonthViewDay } from 'angular-calendar';
 import { GetMonthViewArgs, MonthView, getMonthView } from 'calendar-utils';
 import { CustomDateFormatter } from '../../providers/calendar/calendar.provider';
-
+import { EventProvider } from '../../providers/event/event'
 
 
 const colors: any = {
@@ -75,12 +75,35 @@ locale: string = 'kr';
 activeDayIsOpen: boolean = false;
 public viewDate: Date = new Date();
 
+events: CalendarEvent[];
 refresh: Subject<any> = new Subject();
 
 
 selectedDay: CalendarMonthViewDay;
 
   
+ionViewDidEnter() {
+    this.eventProvider.getEventList().on('value', snapshot => {
+      this.events = [];
+        
+      snapshot.forEach( snap => {
+        
+        this.events.push({
+          id: snap.key,
+          title: snap.val().title,
+          start: new Date(snap.val().startAt),
+          color: snap.val().color,
+          tracks: snap.val().tracks,
+        });
+        
+        return false
+      });
+    });
+  }
+
+
+
+
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     
@@ -95,48 +118,9 @@ selectedDay: CalendarMonthViewDay;
   }
 
 
-
-
- 
-events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: '집에 가기',
-      color: colors.red,
-      
-    },
-    {
-      start: startOfDay(new Date()),
-      title: '공부하기',
-      color: colors.yellow,
-     
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: '영단어 100개',
-      color: colors.blue
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: new Date(),
-      title: '딸딸이',
-      color: colors.yellow,
-      
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    },
-    
-    
-  ];
-
-
   constructor(private navCtrl: NavController,  
-              private modalCtrl: ModalController) {
+              private modalCtrl: ModalController,
+              private eventProvider: EventProvider,) {
      
         
     }
@@ -164,67 +148,21 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[]; }, day:Calen
     }
     day.cssClass = 'cal-day-selected';
     this.selectedDay = day;
+    
   }
 
-
-  test(){
-      this.activeDayIsOpen = false;
-      this.refresh.next();
-     
-  }
   openPost() {
       let today = this.selectedDay;
-      let defaultEvents = this.selectedDay.events.slice();
-      let defaultEvents2 = this.selectedDay.events.slice();
       let modal = this.modalCtrl.create('CalendarAddEventComponent',{viewDate: today.date, viewDateEvents: today.events});
         
       modal.onDidDismiss(data =>{
-
-        //delete all events
-        if(data.length===0) {
-            defaultEvents.forEach( ev =>{
-            if(this.events.indexOf(ev)!==-1) this.events.splice(this.events.indexOf(ev),1);
-            });
-            this.activeDayIsOpen = false;
-            this.refresh.next();
-          }
-        //edit events
-        else{
-            
-            data.forEach( ev =>{
-                if(defaultEvents.indexOf(ev)!==-1) defaultEvents.splice(defaultEvents.indexOf(ev),1);
-            });
-            
-            defaultEvents2.forEach( ev => {
-                if(data.indexOf(ev)!==-1) data.splice(data.indexOf(ev),1);
-            });
-            
-            defaultEvents.forEach( ev =>{
-                if(this.events.indexOf(ev)!==-1) this.events.splice(this.events.indexOf(ev),1);
-            });
-            
-
-            this.addEvent(data);
-            }
-        
+        if(data.length===0) this.activeDayIsOpen=false;
       });
       modal.present()
       
   }
 
   
-
-
-
-  addEvent(newEvents: CalendarEvent[]): void {
-    newEvents.forEach( ev =>{
-
-      this.events.push(ev);
-    })
-    
-    this.refresh.next();
-  }
-
 
 }
 

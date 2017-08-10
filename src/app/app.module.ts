@@ -29,6 +29,7 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
 import { AuthProvider } from '../providers/auth/auth';
 import { UserProvider } from '../providers/user/user';
 import { UtilProvider } from '../providers/util/util';
+import { EventProvider } from '../providers/event/event'
 import { CommunityProvider } from '../providers/community/community';
 import { Image } from '../providers/image';
 import { Preloader } from '../providers/preloader';
@@ -75,6 +76,7 @@ import { Database } from '../providers/database';
     AuthProvider,
     UserProvider,
     UtilProvider,
+    EventProvider,
     CommunityProvider,
      Image,
     Database,
