@@ -23,6 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // module & sharedmodule
 import { IonicStorageModule } from '@ionic/storage';
 import { SuperTabsModule } from 'ionic2-super-tabs';
+import * as ionicGalleryModal from 'ionic-gallery-modal';
+import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 
 // providers
@@ -37,13 +39,12 @@ import { Database } from '../providers/database';
 
 @NgModule({
   declarations: [
-    MyApp
+    MyApp,
 
     // pages
  
     // components
-   
-    
+  
   ],
   imports: [
     BrowserModule,
@@ -52,6 +53,7 @@ import { Database } from '../providers/database';
     BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
     SuperTabsModule.forRoot(),
+    ionicGalleryModal.GalleryModalModule,
     // auth/db modules
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
@@ -59,12 +61,11 @@ import { Database } from '../providers/database';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp
-
+    MyApp,
     // pages
  
     //components
-    
+     
   ],
   providers: [
     StatusBar,
@@ -80,8 +81,11 @@ import { Database } from '../providers/database';
     CommunityProvider,
      Image,
     Database,
-    Preloader
-
+    Preloader,
+{
+    provide: HAMMER_GESTURE_CONFIG,
+    useClass: ionicGalleryModal.GalleryModalHammerConfig,
+  },
 
   ],
 

@@ -90,6 +90,7 @@ ionViewDidEnter() {
         
         this.events.push({
           id: snap.key,
+          isDone: snap.val().isDone,
           title: snap.val().title,
           start: new Date(snap.val().startAt),
           color: snap.val().color,

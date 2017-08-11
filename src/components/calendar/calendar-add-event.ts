@@ -125,7 +125,13 @@ export class CalendarAddEventComponent {
         if(this.newEventTitle){
         
         
-        var newEvent: CalendarEvent = {start: startOfDay(this.viewDate), title: this.newEventTitle, color: colors.blue, tracks: ['init'] };
+        var newEvent: CalendarEvent = {
+            start: startOfDay(this.viewDate),
+            title: this.newEventTitle, 
+            color: colors.blue, 
+            tracks: ['init'],
+            isDone: false 
+        };
         this.eventProvider.createEvent(newEvent);
         this.events.push(newEvent);
         this.reset();
@@ -139,8 +145,9 @@ export class CalendarAddEventComponent {
     }
 
     
+
     dismiss() {
-        console.log("빠이");
+        
         this.viewController.dismiss(this.events);
     }
 
@@ -162,7 +169,10 @@ export class CalendarAddEventComponent {
         });
     }
 
-
+    openPost() {
+      this.navController.push('ScheduleDetailPage');
+      
+  }
 
     addImage() {
         this.presentPictureSource()

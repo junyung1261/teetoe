@@ -28,17 +28,28 @@
       
 <ion-list  *ngIf="segment==='all'">
   <ion-item-sliding *ngFor=" let event of events" [attr.track]="event.tracks[0] | lowercase">
-    <ion-item>
-        <h3>{{event.title}}</h3>
-          <p *ngIf="event.end">
+    <ion-item (click)="goToSessionDetail(session)">
+        
+        <h3>
+        <ion-icon *ngIf="event.isDone"  name="checkmark"></ion-icon>
+            {{event.title}}
+        </h3>
+        
+        <p *ngIf="event.end">
             {{convert12H(event.start)}} &mdash;
             {{convert12H(event.end)}}
-           
-          </p>
-          <p *ngIf="!event.end">
-            시간을 지정해 주세요.
-          </p>
-      
+        </p>
+                
+        <button (click)="segment='timeTable'" style="background: #fff">
+            <p *ngIf="!event.end">
+                시간을 지정해 주세요.
+            </p>
+        </button>
+        
+        <ion-avatar item-end (click)="openPost()">
+             <img *ngIf="event?.photoURL" [src]="user?.photoURL">
+             <img *ngIf="!event?.photoURL" src="assets/img/noavatar.png">
+        </ion-avatar>
     </ion-item>
     <ion-item-options side="left">
       <button ion-button (click)="deleteEvent(event)" color="danger">
