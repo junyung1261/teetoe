@@ -50,6 +50,7 @@ const colors: any = {
 
 
 @IonicPage()
+
 @Component({
   selector: 'page-calendar',
   templateUrl: 'calendar.html',
@@ -60,6 +61,7 @@ const colors: any = {
     }
   ]
 })
+
 
 
 export class CalendarPage {

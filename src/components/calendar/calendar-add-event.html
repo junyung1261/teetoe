@@ -6,10 +6,10 @@
             </button>
         </ion-buttons>
          <ion-segment [(ngModel)]="segment" color="dark">
-        <ion-segment-button value="all" (click)="toggle()">
+        <ion-segment-button value="all" >
             {{headerTitle}} 일정
         </ion-segment-button>
-        <ion-segment-button value="timeTable" (click)="toggle()">
+        <ion-segment-button value="timeTable" >
             타임 테이블
         </ion-segment-button>
     </ion-segment>  
@@ -22,7 +22,7 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content fullscreen="true" >
+<ion-content fullscreen="true" overflow-scroll="true">
 
    
       

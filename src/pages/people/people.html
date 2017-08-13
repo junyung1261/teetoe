@@ -8,11 +8,11 @@
 </ion-header>
 
 <ion-content class="about">
-  <ion-searchbar (ionInput)="getUser($event)" placeholder="Search with username">
+  <ion-searchbar (ionInput)="getUsers($event)" placeholder="Search with username">
   </ion-searchbar>
 
   <ion-list>
-    <ion-item text-wrap *ngFor="let user of users | async" [hidden]="uid === user?.$key">
+    <ion-item text-wrap *ngFor="let user of userList" [hidden]="uid === user?.$key">
       <ion-avatar item-left>
         <img *ngIf="user?.photoURL" [src]="user?.photoURL">
         <img *ngIf="!user?.photoURL" src="assets/img/noavatar.png">

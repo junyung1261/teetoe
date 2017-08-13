@@ -20,8 +20,6 @@ import {
   addWeeks,
   startOfMonth
 } from 'date-fns';
-import { Subject } from 'rxjs/Subject';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -35,7 +33,6 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 
 //*********** Import image gallery **************//
 import { GalleryModal } from 'ionic-gallery-modal';
-
 
 
 

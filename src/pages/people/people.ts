@@ -15,10 +15,13 @@ import { UtilProvider } from '../../providers/util/util';
   templateUrl: 'people.html'
 })
 export class PeoplePage {
-  users;
+  users: FirebaseListObservable<any[]>;;
   uid;
   followersObservable:FirebaseListObservable<any>;
   followers;
+  userArray : any=[]; 
+  userList : any=[]; // store firebase data to local array
+  loadedUserList:  any=[]; 
   constructor(private navController: NavController, 
               private userProvider:UserProvider,
               private communityProvider: CommunityProvider,
@@ -27,13 +30,44 @@ export class PeoplePage {
     .then(uid => {
       this.uid = uid;
     });
-    this.users = this.userProvider.searchUser("");
+    this.users = this.userProvider.getUser();
+    this.users.subscribe(user => {
+      this.userArray = user;
+            this.userList = this.userArray; // for ngFor loop 
+            this.loadedUserList = this.userArray; 
+            
+    });
+    
   }
 
-  getUser(ev) {
-    let username = ev.target.value;
-    this.users = this.userProvider.searchUser(username);
+
+  initializeItems(){
+    this.userList = this.loadedUserList;
   }
+
+  getUsers(searchbar) {
+    // Reset items back to all of the items
+    this.initializeItems();
+    // set q to the value of the searchbar
+    var q = searchbar.srcElement.value;
+    // if the value is an empty string don't filter the items
+    if (!q) {
+      return;
+    }
+    this.userList = this.userList.filter((v) => {
+      if(v.name && q) {
+        if (v.name.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
+    });
+
+    console.log(q, this.userList.length);
+
+  }
+
+  
 
   followUser(user) {
     this.communityProvider.followUser(user)

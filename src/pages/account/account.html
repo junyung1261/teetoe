@@ -15,9 +15,18 @@
       </div>
   </ion-card>
   <ion-card>
-    <ion-item>
+    <ion-item *ngIf="user?.id">
         <ion-label floating>UserId</ion-label>
-        <ion-input type="text" disabled=true [value]="user?.id"></ion-input>
+        <ion-input type="text" disabled=true [value]="user?.id" ></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="!user?.id">
+        <ion-input type="text" placeholder="ID를 생성해주세요" [(ngModel)]="test" ></ion-input>
+        
+        <button ion-button outline item-end (click)="createUserId(test)" >
+            <ion-icon name="add"></ion-icon>
+        </button>
+        
     </ion-item>
 
     <ion-item>

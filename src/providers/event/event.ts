@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import firebase from 'firebase';
+
 import {
   CalendarEvent,
   CalendarEventAction,
   CalendarEventTimesChangedEvent
 } from 'angular-calendar';
+
+import firebase from 'firebase/app';
 
 @Injectable()
 export class EventProvider {
@@ -28,6 +30,7 @@ export class EventProvider {
   }
 
   
+
   getEventDetail(eventId:string): firebase.database.Reference {
     return this.userProfileRef.child('/eventList').child(eventId);
   }

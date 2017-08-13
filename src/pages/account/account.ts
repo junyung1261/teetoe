@@ -76,4 +76,8 @@ export class AccountPage {
       toast.present();
     });
   }
+
+  createUserId(id: string){
+    this.userProvider.claimUsername(id);
+  }
 }
