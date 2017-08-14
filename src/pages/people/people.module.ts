@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { PeoplePage } from "./people";
 
+import { ShrinkHeaderModule } from '../../components/shrink-header/shrink-header.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,7 @@ import { PeoplePage } from "./people";
   ],
   imports: [
     
-    
+    ShrinkHeaderModule,
     IonicPageModule.forChild(PeoplePage)
   ],
   exports: [

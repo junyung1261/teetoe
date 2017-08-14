@@ -120,6 +120,8 @@ ionViewDidEnter() {
     });
   }
 
+  
+
 
   constructor(private navCtrl: NavController,  
               private modalCtrl: ModalController,
@@ -154,9 +156,17 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[]; }, day:Calen
     
   }
 
-  openPost() {
-      let today = this.selectedDay;
-      let modal = this.modalCtrl.create('CalendarAddEventComponent',{viewDate: today.date, viewDateEvents: today.events});
+
+  addEvent(date) {
+
+      let filter = this.events.filter(
+          function(value){
+              return isSameDay(date, value.start);
+          }
+      );
+
+      let today = date;
+      let modal = this.modalCtrl.create('CalendarAddEventComponent',{viewDate: today, viewDateEvents: filter});
         
       modal.onDidDismiss(data =>{
         if(data.length===0) this.activeDayIsOpen=false;

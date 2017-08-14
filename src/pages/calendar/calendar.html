@@ -14,7 +14,7 @@
                 >  
             <ion-icon name="arrow-dropleft"></ion-icon>
             </button>
-            <button ion-button    icon-only 
+            <button ion-button  icon-only 
                 mwlCalendarNextView
                 [view]="view"
                 [(viewDate)]="viewDate"
@@ -56,8 +56,8 @@
                     [class.active]="view === 'month'">
                     <ion-icon name="list"></ion-icon>
                 </button>
-                
-                <button ion-button icon-only (click)="openPost()" >
+                    
+                <button ion-button icon-only (click)="addEvent(viewDate)" >
                     <ion-icon name="create"></ion-icon>
                 </button>
             
@@ -82,7 +82,6 @@
     [activeDayIsOpen]="activeDayIsOpen"
     (dayClicked)="dayClicked($event.day, $event.day)"
     (beforeViewRender)="beforeMonthViewRender($event)"
-    
     (eventTimesChanged)="eventTimesChanged($event)"
     >
   </mwl-calendar-month-view>

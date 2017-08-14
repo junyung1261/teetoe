@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { NavController, NavParams, IonicPage, ModalController } from 'ionic-angular';
+import { NavController, NavParams, IonicPage, ModalController, ViewController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FirebaseListObservable } from 'angularfire2/database';
 import { CommunityProvider } from '../../providers/community/community';
@@ -19,24 +19,29 @@ export class PeoplePage {
   uid;
   followersObservable:FirebaseListObservable<any>;
   followers;
+  nowUser;
   userArray : any=[]; 
   userList : any=[]; // store firebase data to local array
   loadedUserList:  any=[]; 
-  constructor(private navController: NavController, 
+  constructor(private navController: NavController,
+              private viewController: ViewController,
               private userProvider:UserProvider,
               private communityProvider: CommunityProvider,
               private util: UtilProvider) {
     this.userProvider.getUid()
     .then(uid => {
       this.uid = uid;
+      this.nowUser = this.userProvider.whoAmI(uid);
     });
     this.users = this.userProvider.getUser();
     this.users.subscribe(user => {
+     
       this.userArray = user;
-            this.userList = this.userArray; // for ngFor loop 
-            this.loadedUserList = this.userArray; 
+      this.userList = this.userArray; // for ngFor loop 
+      this.loadedUserList = this.userArray; 
             
     });
+    
     
   }
 

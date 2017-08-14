@@ -10,7 +10,7 @@ export class UserProvider {
   public userProfileRef:firebase.database.Reference;
   public userIdLookUpRef:firebase.database.Reference;
   public rootRef:firebase.database.Reference;
-  private uid;
+  public nowUser;
   constructor(public afAuth: AngularFireAuth, 
             public storage: Storage, 
             public afDB: AngularFireDatabase, 
@@ -21,7 +21,7 @@ export class UserProvider {
         this.rootRef = firebase.database().ref();
         this.userProfileRef = firebase.database().ref(`users/${user.uid}`);
         this.userIdLookUpRef = firebase.database().ref(`userid_lookeup`);
-        this.uid = user.uid;
+        this.nowUser = user;
       }
     });
 
@@ -72,10 +72,12 @@ createToast(message: string) {
       });
   }
   
+  
+
 claimUsername(userId) {
     let toast1 = this.createToast("이미 존재하는 ID입니다.");
     let toast2 = this.createToast("ID가 생성되었습니다!");
-    let uid = this.uid;
+    let uid = this.nowUser.uid;
     this.userProfileRef.update({id: userId}, function(err) {
         if( err ) { 
             console.log(err);
@@ -153,6 +155,9 @@ uploadImage(imageString) : Promise<any>
         });
     }
 
+    whoAmI(uid){
+        return this.afDB.object(`/users/${uid}`);
+    }
 
     getUser(){
         
@@ -167,18 +172,20 @@ uploadImage(imageString) : Promise<any>
         return users;
     }
 
-    searchUser(username){
+    searchUser(userId){
         
        
         let users = this.afDB.list('/users',{
             query: {
-                orderByChild: 'name',
-                equalTo: username
+                orderByChild: 'id',
+                equalTo: userId
             }
         });
         
         return users;
     }
+
+
 
     getFollwers(){
         return this.getUid()
