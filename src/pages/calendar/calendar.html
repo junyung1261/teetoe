@@ -3,7 +3,7 @@
    <ion-navbar color="light"  >
 
   <ion-row>
-    <ion-col col-md-3>
+    <ion-col col-md-4>
         <ion-buttons first>
             <button ion-button  icon-only 
                 mwlCalendarPreviousView
@@ -36,7 +36,7 @@
         </ion-title>
     
 
-    <ion-col col-md-3>
+    <ion-col col-md-4>
         <div [ngSwitch]="view">
             <ion-buttons end>
             
@@ -69,19 +69,11 @@
    
 </ion-header>
 
-<ion-content fullsceen class="has-header">
-   <!--<calendar [eventSource]="eventSource"
-              [calendarMode]="calendar.mode"
-              [currentDate]="calendar.currentDate"
-              
-              (onCurrentDateChanged)="onCurrentDateChanged($event)"
-              (onEventSelected)="onEventSelected($event)"
-              (onTitleChanged)="onViewTitleChanged($event)"
-              (onTimeSelected)="onTimeSelected($event)"
-              step="30">
-    </calendar>-->
+<ion-content fullsceen > 
+  
     
-     <div [ngSwitch]="view">
+     <div [ngSwitch]="view" class = "postcard-container">
+         
   <mwl-calendar-month-view
     *ngSwitchCase="'month'"
     [viewDate]="viewDate"
@@ -94,6 +86,7 @@
     (eventTimesChanged)="eventTimesChanged($event)"
     >
   </mwl-calendar-month-view>
+
   <mwl-calendar-week-view
     *ngSwitchCase="'week'"
     [viewDate]="viewDate"
@@ -102,6 +95,7 @@
     (eventClicked)="handleEvent('Clicked', $event.event)"
     (eventTimesChanged)="eventTimesChanged($event)">
   </mwl-calendar-week-view>
+
   <mwl-calendar-day-view
     *ngSwitchCase="'day'"
     [viewDate]="viewDate"

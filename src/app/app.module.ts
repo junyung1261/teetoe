@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,7 +24,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicStorageModule } from '@ionic/storage';
 import { SuperTabsModule } from 'ionic2-super-tabs';
 import * as ionicGalleryModal from 'ionic-gallery-modal';
-import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 
 // providers
@@ -48,16 +47,18 @@ import { Database } from '../providers/database';
   ],
   imports: [
     BrowserModule,
+    ionicGalleryModal.GalleryModalModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
     BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
     SuperTabsModule.forRoot(),
-    ionicGalleryModal.GalleryModalModule,
+    
     // auth/db modules
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -72,6 +73,7 @@ import { Database } from '../providers/database';
     SplashScreen,
     Camera,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+   
     //{ provide: LOCALE_ID, useValue: "kr-KO" },
     // auth provider
     AuthProvider,
@@ -82,10 +84,7 @@ import { Database } from '../providers/database';
      Image,
     Database,
     Preloader,
-{
-    provide: HAMMER_GESTURE_CONFIG,
-    useClass: ionicGalleryModal.GalleryModalHammerConfig,
-  },
+
 
   ],
 

@@ -1,10 +1,17 @@
 page-calendar{
 
-.my-bar {
-  height: 40px;
+ .cal-month-view{
+  
+  display: block;
+    position: absolute;
+   
+    height: 100%;
+    width: 100%;
+   
 }
+  
 
-    
+
 .cal-day-selected,
     .cal-day-selected:hover {
       background-color: deeppink !important;

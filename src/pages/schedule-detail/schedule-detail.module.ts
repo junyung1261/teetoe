@@ -7,6 +7,7 @@ import { MomentModule } from 'angular2-moment';
 import { ShrinkHeaderModule } from '../../components/shrink-header/shrink-header.module';
 
 
+
 @NgModule({
   declarations: [
     ScheduleDetailPage,
@@ -14,13 +15,15 @@ import { ShrinkHeaderModule } from '../../components/shrink-header/shrink-header
    
   ],
   imports: [
+   
     
     IonicPageModule.forChild(ScheduleDetailPage)
   ],
   exports: [
     
     ScheduleDetailPage
-  ],
+  ]
+  
 
 })
 export class ScheduleDetailPageModule {}

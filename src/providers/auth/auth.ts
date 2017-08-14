@@ -17,14 +17,18 @@ export class AuthProvider {
     return this.afAuth.auth.signInWithEmailAndPassword(newEmail, newPassword);
   }
 
-  signUpUser(newEmail: string, newPassword: string, newName: string, newId: string, newIsMentee: boolean ): firebase.Promise<any> {
+
+  
+
+  signUpUser(newEmail: string, newPassword: string, newName: string, newIsMentee: boolean ): firebase.Promise<any> {
     return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPassword)
     .then( newUser => {
+     
      firebase.database().ref('/users').child(newUser.uid)
     .set({ email: newEmail, 
            name: newName,
-           id: newId,
-           isMentee: newIsMentee });
+           isMentee: newIsMentee })
+   
   });
   }
 

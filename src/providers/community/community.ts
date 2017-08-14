@@ -18,9 +18,9 @@ export class CommunityProvider {
         return this.userProvider.getUid()
         .then((uid:string) => {
             let otherUserID = userData.$key;
-            let followingList = this.afdb.object(`/users/${uid}/following`);
+            let followingList = this.afdb.object(`/user_follow/${uid}/following`);
             followingList.update({[otherUserID]: true});
-            let follwerList = this.afdb.object(`/users/${otherUserID}/followers`);
+            let follwerList = this.afdb.object(`/user_follow/${otherUserID}/followers`);
             return follwerList.update({[uid]: true});
         });
     }

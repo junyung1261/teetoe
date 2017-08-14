@@ -1,14 +1,41 @@
 import { Injectable, Inject } from '@angular/core';
 import { Storage } from '@ionic/storage';
-
+import { ToastController } from 'ionic-angular';
 import { AngularFireAuth  } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import firebase from 'firebase/app';
 
 @Injectable()
 export class UserProvider {
-   
-  constructor(public afAuth: AngularFireAuth, public storage: Storage, public afDB: AngularFireDatabase) { }
+  public userProfileRef:firebase.database.Reference;
+  public userIdLookUpRef:firebase.database.Reference;
+  public rootRef:firebase.database.Reference;
+  private uid;
+  constructor(public afAuth: AngularFireAuth, 
+            public storage: Storage, 
+            public afDB: AngularFireDatabase, 
+            public toastCtrl: ToastController) { 
+
+    firebase.auth().onAuthStateChanged( user => {
+      if (user) {
+        this.rootRef = firebase.database().ref();
+        this.userProfileRef = firebase.database().ref(`users/${user.uid}`);
+        this.userIdLookUpRef = firebase.database().ref(`userid_lookeup`);
+        this.uid = user.uid;
+      }
+    });
+
+  }
+
+
+  
+createToast(message: string) {
+    return this.toastCtrl.create({
+      message,
+      duration: 3000
+    })
+  }
+
 
 
   saveUser(userData){
@@ -45,7 +72,30 @@ export class UserProvider {
       });
   }
   
+claimUsername(userId) {
+    let toast1 = this.createToast("이미 존재하는 ID입니다.");
+    let toast2 = this.createToast("ID가 생성되었습니다!");
+    let uid = this.uid;
+    this.userProfileRef.update({id: userId}, function(err) {
+        if( err ) { 
+            console.log(err);
+            toast1.present();
+            return
+        }
+        else{
+            toast2.present();
+            firebase.database().ref('userid_lookup').update({[userId]:uid}, function(err) {
+                if( err ) { 
+                    throw new Error('username already taken'); }
+            });
+        }
+    });
 
+    
+      
+
+   
+}
 
 
 uploadImage(imageString) : Promise<any>
@@ -104,16 +154,29 @@ uploadImage(imageString) : Promise<any>
     }
 
 
-    searchUser(username){
-        let query = {
-            orderbyChild: 'name'
-        };
-        if(username){
-            query['equalTo'] = username;
-        }
+    getUser(){
+        
+       
         let users = this.afDB.list('/users',{
-            query: query
+            query: {
+                orderByChild: 'name',
+                
+            }
         });
+        
+        return users;
+    }
+
+    searchUser(username){
+        
+       
+        let users = this.afDB.list('/users',{
+            query: {
+                orderByChild: 'name',
+                equalTo: username
+            }
+        });
+        
         return users;
     }
 
