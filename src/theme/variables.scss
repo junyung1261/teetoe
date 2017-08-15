@@ -38,6 +38,18 @@ $colors: (
 );
 
 
+$primary: #ffca28;
+$primary-active: #ffd75b;
+$secondary: #55acee;
+$secondary-active: #6acdff;
+$dark: #333;
+$dark-active: #4c4c4c;
+$gray: #c3c3c3;
+$facebook: #3052a8;
+$facebook-active: #345cc0;
+$google: #dd4b39;
+$google-active: #ff563f;
+
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
@@ -49,7 +61,15 @@ $colors: (
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
+$loading-md-background: rgba(0, 0, 0, 0.5);
+$loading-md-spinner-color: #fff;
 
+$tabs-md-tab-icon-color: $gray;
+$tabs-md-tab-icon-color-active: $primary;
+$tabs-md-tab-icon-size: 28px;
+$tabs-md-border: 0;
+$searchbar-md-input-clear-icon-color: $primary;
+$searchbar-md-input-clear-icon-size: 22px;
 
 
 // App Windows Variables

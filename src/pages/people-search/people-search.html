@@ -1,0 +1,90 @@
+
+<ion-header no-border>
+  
+
+<ion-navbar  style="background: none; border-bottom: none"  >
+    <ion-title>
+      ID로 찾기
+    </ion-title>
+</ion-navbar>
+    
+</ion-header>
+
+<ion-content  fullscreen="true"   no-paddding  >
+  <ion-searchbar (search)="getUsers($event)"  placeholder="Search with username"  >
+  </ion-searchbar>
+
+
+
+ <ion-list class="avatar-list" *ngIf="userList && userList.length > 0">
+    <ion-item *ngFor="let user of userList" no-lines tappable (click)="viewUser(user.$key)">
+      <ion-fab middle right *ngIf="user.isMentee === account.isMentee" [hidden] = "excludedIds.indexOf(user.$key) != -1">
+        <!-- Show appropriate buttons depending on the status of this user in relation to the current user. -->
+        <!-- // Returns:
+        // 0 when user can be requested as friend.
+        // 1 when a friend request was already sent to this user.
+        // 2 when this user has a pending friend request. -->
+        <button ion-fab mini tappable (click)="sendFriendRequest(user); $event.stopPropagation();" *ngIf="getStatus(user) == 0">
+          <ion-icon name="md-add-circle" class="success"></ion-icon>
+        </button>
+        <button ion-fab mini tappable (click)="cancelFriendRequest(user); $event.stopPropagation();" *ngIf="getStatus(user) == 1">
+          <ion-icon name="md-close-circle" class="danger"></ion-icon>
+        </button>
+        <button ion-fab mini tappable (click)="acceptFriendRequest(user); $event.stopPropagation();" *ngIf="getStatus(user) == 2">
+          <ion-icon name="md-checkmark-circle" class="success"></ion-icon>
+        </button>
+        
+      </ion-fab>
+
+        <!--Mentee -> Mentor-->
+       <ion-fab middle right *ngIf="user.isMentee != account.isMentee && account.isMentee ==='true'" [hidden] = "excludedIds.indexOf(user.$key) != -1">
+        <!-- Show appropriate buttons depending on the status of this user in relation to the current user. -->
+        <!-- // Returns:
+        // 0 when user can be requested as friend.
+        // 1 when a friend request was already sent to this user.
+        // 2 when this user has a pending friend request. -->
+        <button ion-fab mini tappable (click)="sendMentorRequest(user); $event.stopPropagation();" *ngIf="getStatus(user) == 0">
+          <ion-icon name="md-close-circle" class="success"></ion-icon>
+        </button>
+        <button ion-fab mini tappable (click)="cancelMentorRequest(user); $event.stopPropagation();" *ngIf="getStatus(user) == 1">
+          <ion-icon name="md-close-circle" class="danger"></ion-icon>
+        </button>
+        <button ion-fab mini tappable (click)="acceptMentorRequest(user); $event.stopPropagation();" *ngIf="getStatus(user) == 2">
+          <ion-icon name="md-checkmark-circle" class="success"></ion-icon>
+        </button>
+        
+      </ion-fab>
+
+      <!--Mentor -> Meetee-->
+      <!--<ion-fab middle right *ngIf="user.isMentee != account.isMentee && account.isMentee ==='false'" [hidden] = "excludedIds.indexOf(user.$key) != -1">
+        Show appropriate buttons depending on the status of this user in relation to the current user. 
+         // Returns:
+        // 0 when user can be requested as friend.
+        // 1 when a friend request was already sent to this user.
+        // 2 when this user has a pending friend request. 
+        <button ion-fab mini tappable (click)="sendFriendRequest(user); $event.stopPropagation();" *ngIf="getStatus(user) == 0">
+          <ion-icon name="md-checkmark-circle" class="success"></ion-icon>
+        </button>
+        <button ion-fab mini tappable (click)="cancelFriendRequest(user); $event.stopPropagation();" *ngIf="getStatus(user) == 1">
+          <ion-icon name="md-close-circle" class="danger"></ion-icon>
+        </button>
+        <button ion-fab mini tappable (click)="acceptFriendRequest(user); $event.stopPropagation();" *ngIf="getStatus(user) == 2">
+          <ion-icon name="md-checkmark-circle" class="success"></ion-icon>
+        </button>
+        
+      </ion-fab> -->
+      
+      <ion-avatar item-left>
+        <img src="{{user.img}}">
+      </ion-avatar>
+      <h2>{{user.name}}</h2>
+      <p>@{{user.id}}</p>
+    </ion-item>
+  </ion-list>
+
+
+
+
+
+  
+</ion-content>

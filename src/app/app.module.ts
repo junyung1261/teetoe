@@ -25,6 +25,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { SuperTabsModule } from 'ionic2-super-tabs';
 import * as ionicGalleryModal from 'ionic-gallery-modal';
 
+// pipe
+
 
 // providers
 import { AuthProvider } from '../providers/auth/auth';
@@ -32,23 +34,39 @@ import { UserProvider } from '../providers/user/user';
 import { UtilProvider } from '../providers/util/util';
 import { EventProvider } from '../providers/event/event'
 import { CommunityProvider } from '../providers/community/community';
-import { Image } from '../providers/image';
 import { Preloader } from '../providers/preloader';
 import { Database } from '../providers/database';
+//import { LoginProvider } from '../providers/login';
+import { LogoutProvider } from '../providers/logout';
+import { LoadingProvider } from '../providers/loading';
+import { AlertProvider } from '../providers/alert';
+import { ImageProvider } from '../providers/image';
+import { DataProvider } from '../providers/data';
+import { FirebaseProvider } from '../providers/firebase';
+
+
+
+import { SearchPipe } from '../pipes/search';
+import { ConversationPipe } from '../pipes/conversation';
+import { DateFormatPipe } from '../pipes/date';
+import { GroupPipe } from '../pipes/group';
 
 @NgModule({
   declarations: [
     MyApp,
 
     // pages
- 
+    ConversationPipe,
+    SearchPipe,
+    DateFormatPipe,
+    GroupPipe
     // components
   
   ],
   imports: [
     BrowserModule,
     ionicGalleryModal.GalleryModalModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp,{mode: "ios"}),
     HttpModule,
     BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
@@ -81,10 +99,15 @@ import { Database } from '../providers/database';
     UtilProvider,
     EventProvider,
     CommunityProvider,
-     Image,
     Database,
     Preloader,
-
+    //LoginProvider, 
+    LogoutProvider, 
+    LoadingProvider, 
+    AlertProvider, 
+    ImageProvider, 
+    DataProvider, 
+    FirebaseProvider
 
   ],
 

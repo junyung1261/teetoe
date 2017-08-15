@@ -15,6 +15,7 @@
   background-color: #fafafa; }
 
 .cal-month-view .cal-header .cal-cell {
+  
   padding: 5px 0;
   overflow: hidden;
   -o-text-overflow: ellipsis;
@@ -27,6 +28,7 @@
   background-color: #ededed; }
 
 .cal-month-view .cal-days {
+  
   border: 1px solid #e1e1e1;
   border-bottom: 0; }
 
@@ -44,6 +46,7 @@
   display: flex; }
 
 .cal-month-view .cal-cell {
+  
   float: left;
   -webkit-box-flex: 1;
       -ms-flex: 1;
@@ -61,7 +64,8 @@
           align-items: stretch; }
 
 .cal-month-view .cal-day-cell {
-  min-height: 80px; }
+    min-height: 14vh;
+   }
 
 .cal-month-view .cal-day-cell:not(:last-child) {
   border-right: 1px solid #e1e1e1; }

@@ -42,5 +42,10 @@ export class TabsPage {
 
   }
 
+  openNoticePage(){
+    this.navCtrl.push('NoticePage');
+
+  }
+
   
 }

@@ -90,3 +90,97 @@ display:none;
     }
   }
 }
+
+//Empty List
+.empty-list {
+  position: absolute;
+  top: 20%;
+  width: 100%;
+  text-align: center;
+
+  h1,
+  p {
+    color: $gray;
+  }
+
+  h1 {
+    font-size: 3em;
+  }
+
+  p {
+    font-size: 1.125em;
+    width: 70vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  button {
+    background: $dark;
+  }
+
+  button.activated,
+  button:active {
+    background: $dark-active;
+  }
+}
+
+//Avatar List
+ion-list.avatar-list {
+  ion-item {
+    background: rgba(0, 0, 0, 0.3) !important;
+
+    h2 {
+      color: #fff;
+    }
+
+    h3 {
+      color: $dark-active;
+
+      ion-icon.selected {
+        color: $primary;
+      }
+    }
+
+    p {
+      color: $primary !important;
+      max-width: 68vw;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    ion-avatar {
+      img {
+        width: 2.5em !important;
+        height: 2.5em !important;
+      }
+    }
+  }
+
+  ion-item.selected,
+  ion-item:active {
+    opacity: 0.5;
+  }
+
+  ion-fab button,
+  ion-fab button.activated {
+    background: transparent !important;
+  }
+
+  ion-fab button.activated ion-icon {
+    opacity: 0.5 !important;
+  }
+
+  ion-fab button ion-icon {
+    font-size: 2em !important;
+    color: $primary;
+  }
+
+  ion-icon.success {
+    color: $primary;
+  }
+
+  ion-icon.danger {
+    color: color($colors, danger);
+  }
+}

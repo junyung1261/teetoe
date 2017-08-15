@@ -102,6 +102,7 @@ ionViewDidEnter() {
         return false
       });
     });
+    
   }
 
 
