@@ -43,22 +43,22 @@
                 <button ion-button icon-only *ngSwitchCase="'month'" 
                     (click)="view='week'"
                     [class.active]="view === 'week'">
-                    <ion-icon name="calendar"></ion-icon>
+                    <ion-icon name="calendar" class="dark"></ion-icon>
                 </button>
                 <button ion-button icon-only *ngSwitchCase="'week'" 
                     (click)="view='day'"
                     [class.active]="view === 'day'">
-                    <ion-icon name="grid"></ion-icon>
+                    <ion-icon name="grid" class="dark"></ion-icon>
                 </button>
                 <button ion-button icon-only *ngSwitchCase="'day'" 
                     
                     (click)="view='month'"
                     [class.active]="view === 'month'">
-                    <ion-icon name="list"></ion-icon>
+                    <ion-icon name="list" class="dark"></ion-icon>
                 </button>
                     
                 <button ion-button icon-only (click)="addEvent(viewDate)" >
-                    <ion-icon name="create"></ion-icon>
+                    <ion-icon name="create" class="dark"></ion-icon>
                 </button>
             
             </ion-buttons>

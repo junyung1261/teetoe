@@ -37,6 +37,7 @@ export class NoticePage {
           requests.socialRequests.forEach((user) => {
             this.dataProvider.getUser(user.from).subscribe((sender) => {
               this.addOrUpdateSocialRequest(sender, user.meta);
+             
             });
           });
         } else {
@@ -61,9 +62,10 @@ export class NoticePage {
 
   // Add or update friend request only if not yet friends.
   addOrUpdateSocialRequest(sender, meta) {
+     
     if (!this.socialRequests) {
       this.socialRequests = [sender];
-      this.socialRequests.meta = meta;
+      if(meta!=undefined) this.socialRequests.meta = meta;
     } else {
       var index = -1;
       for (var i = 0; i < this.socialRequests.length; i++) {
@@ -72,11 +74,12 @@ export class NoticePage {
         }
       }
       if (index > -1) {
-        if (!this.isFriends(sender.$key) || !this.isMentors(sender.$key))
+        if (!this.isFriends(sender.$key) || !this.isMatched(sender.$key))
           this.socialRequests[index] = sender;
-          this.socialRequests[index].meta = meta;
+          if(meta!=undefined) this.socialRequests[index].meta = meta;
       } else {
-        if (!this.isFriends(sender.$key) || !this.isMentors(sender.$key))
+        if (!this.isFriends(sender.$key) || !this.isMatched(sender.$key))
+         
           var data = sender;
           data.meta = meta;
           this.socialRequests.push(data);
@@ -93,14 +96,15 @@ export class NoticePage {
       var index = -1;
       for (var i = 0; i < this.requestsSent.length; i++) {
         if (this.requestsSent[i].$key == receiver.$key) {
+          //console.log(this.requestsSent[i].$key);
           index = i;
         }
       }
       if (index > -1) {
-        if (!this.isFriends(receiver.$key) || !this.isMentors(receiver.$key))
+        if (!this.isFriends(receiver.$key) && !this.isMatched(receiver.$key))
           this.requestsSent[index] = receiver;
       } else {
-        if (!this.isFriends(receiver.$key) || !this.isMentors(receiver.$key))
+        if (!this.isFriends(receiver.$key) && !this.isMatched(receiver.$key))
           this.requestsSent.push(receiver);
       }
     }
@@ -175,9 +179,9 @@ export class NoticePage {
     }
   }
 
-  isMentors(userId) {
-    if (this.account.mentors) {
-      if (this.account.mentors.indexOf(userId) == -1) {
+  isMatched(userId) {
+    if (this.account.mentors || this.account.mentees) {
+      if (this.account.mentors.indexOf(userId) == -1 || this.account.mentees.indexOf(userId) == -1) {
         return false;
       } else {
         return true;

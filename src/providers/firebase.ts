@@ -68,7 +68,7 @@ export class FirebaseProvider {
     var requestsSent;
     this.dataProvider.getRequests(loggedInUserId).take(1).subscribe((requests) => {
       requestsSent = requests.requestsSent;
-      requestsSent.splice(requestsSent.indexOf(userId), 1);
+      requestsSent.splice(requestsSent.indexOf({from: userId}), 1);
       // Update requestSent information.
       this.angularfireDatabase.object('/requests/' + loggedInUserId).update({
         requestsSent: requestsSent
@@ -101,7 +101,7 @@ export class FirebaseProvider {
     var friendRequests;
     this.dataProvider.getRequests(loggedInUserId).take(1).subscribe((requests) => {
       friendRequests = requests.socialRequests;
-      friendRequests.splice(friendRequests.indexOf(userId), 1);
+      friendRequests.splice(friendRequests.indexOf({from: userId}), 1);
       // Update friendRequests information.
       this.angularfireDatabase.object('/requests/' + loggedInUserId).update({
         socialRequests: friendRequests
@@ -216,7 +216,7 @@ export class FirebaseProvider {
     var requestsSent;
     this.dataProvider.getRequests(loggedInUserId).take(1).subscribe((requests) => {
       requestsSent = requests.requestsSent;
-      requestsSent.splice(requestsSent.indexOf(userId), 1);
+      requestsSent.splice(requestsSent.indexOf({from: userId}), 1);
       // Update requestSent information.
       this.angularfireDatabase.object('/requests/' + loggedInUserId).update({
         requestsSent: requestsSent
@@ -244,11 +244,11 @@ export class FirebaseProvider {
   deleteMentorRequest(userId) {
     let loggedInUserId = firebase.auth().currentUser.uid;
     this.loadingProvider.show();
-
+    
     var mentorRequests;
     this.dataProvider.getRequests(loggedInUserId).take(1).subscribe((requests) => {
       mentorRequests = requests.socialRequests;
-      mentorRequests.splice(mentorRequests.indexOf(userId), 1);
+      mentorRequests.splice(mentorRequests.indexOf({from: userId}), 1);
       // Update mentorRequests information.
       this.angularfireDatabase.object('/requests/' + loggedInUserId).update({
         socialRequests: mentorRequests
@@ -277,7 +277,7 @@ export class FirebaseProvider {
   acceptMentorRequest(userId) {
     let loggedInUserId = firebase.auth().currentUser.uid;
     // Delete mentor request.
-    this.deleteFriendRequest(userId);
+    this.deleteMentorRequest(userId);
 
     this.loadingProvider.show();
     this.dataProvider.getUser(loggedInUserId).take(1).subscribe((account) => {

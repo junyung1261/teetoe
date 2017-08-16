@@ -24,7 +24,7 @@ export class PeopleSearchPage {
   private account: any;
   private excludedIds: any;
   private requestsSent: any;
-  private friendRequests: any;
+  private socialRequests: any;
   private searchUser: any;
 
   uid;
@@ -80,10 +80,17 @@ ionViewDidLoad() {
             }
           });
         }
+        if (account.mentors){
+          account.mentors.forEach(mentor => {
+            if (this.excludedIds.indexOf(mentor) == -1) {
+              this.excludedIds.push(mentor);
+            }
+          });
+        }
         // Get requests of the currentUser.
         this.dataProvider.getRequests(account.$key).subscribe((requests) => {
           this.requestsSent = requests.requestsSent;
-          this.friendRequests = requests.friendRequests;
+          this.socialRequests = requests.socialRequests;
         });
       });
     });
@@ -129,9 +136,9 @@ ionViewDidLoad() {
         }
       }
     }
-    if (this.friendRequests) {
-      for (var i = 0; i < this.friendRequests.length; i++) {
-        if (this.friendRequests[i] == user.$key) {
+    if (this.socialRequests) {
+      for (var i = 0; i < this.socialRequests.length; i++) {
+        if (this.socialRequests[i].from == user.$key) {
           return 2;
         }
       }
