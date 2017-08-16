@@ -7,21 +7,36 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="profile-image">
-      <img *ngIf="user?.photoURL" [src]="user?.photoURL">
-      <img *ngIf="!user?.photoURL" src="assets/img/noavatar.png">
-      <div padding>
-        <button full primary (click)="updatePicture()">Update Picture</button>
-      </div>
-  </ion-card>
+  <div *ngIf="user">
+  <div class="profile">
+      <img src = "{{user.profileImg}}">
+      
+      <ion-fab right bottom>
+        <button ion-fab color="transparent" (click)="setPhoto()">
+          <ion-icon name="camera" class="dark"></ion-icon>
+        </button>
+      </ion-fab>
+
+      
+      
+  </div>
+
+  <h4>
+      <span tappable (click)="setName()">{{user.name}} </span>
+      <ion-icon name="md-create" *ngIf="user.isMentee == 'true'" class="firebase"></ion-icon>
+      <ion-icon name="md-school" *ngIf="user.isMentee == 'false'" class="facebook"></ion-icon>
+  </h4>
+  <p tappable *ngIf="user.id" class="username">@{{user.id}}</p>
+  <p tappable *ngIf="!user.id" (click)="setUserId()" class="dark"> ID를 생성해주세요</p>
+
   <ion-card>
-    <ion-item *ngIf="user?.id">
+    <ion-item *ngIf="user.id">
         <ion-label floating>UserId</ion-label>
-        <ion-input type="text" disabled=true [value]="user?.id" ></ion-input>
+        <ion-input type="text" disabled=true [value]="user.id" ></ion-input>
     </ion-item>
 
-    <ion-item *ngIf="!user?.id">
-        <ion-input type="text" placeholder="ID를 생성해주세요" [(ngModel)]="test" ></ion-input>
+    <ion-item *ngIf="!user.id">
+        <ion-input type="text" placeholder="" [(ngModel)]="test" ></ion-input>
         
         <button ion-button outline item-end (click)="createUserId(test)" >
             <ion-icon name="add"></ion-icon>
@@ -45,5 +60,6 @@
 
 <div padding>
   <button full dark (click)="logout()">Logout</button>
+</div>
 </div>
 </ion-content>

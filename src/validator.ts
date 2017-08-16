@@ -21,11 +21,19 @@ export namespace Validator {
   // In this example they are used by home.ts where the user are allowed to change their profile.
   // errorMessages are used by the AlertProvider class and is imported inside AlertProvider.errorMessages which is used by showErrorMessage().
   export const profileNameValidator = {
-    minLength: 5,
-    lengthError: { title: 'Name Too Short!', subTitle: 'Sorry, but name must be more than 4 characters.' },
-    pattern: /^[a-zA-Z0-9\s]*$/g,
+    maxLength: 20,
+    lengthError: { title: 'Name Too Short!', subTitle: 'Sorry, but name must be less than 20 characters.' },
+    pattern: /^[a-zA-Z0-9!@#$%^&*()_+-=\s]*$/g,
     patternError: { title: 'Invalid Name!', subTitle: 'Sorry, but the name you entered contains special characters.' }
   };
+
+  export const userIdValidator = {
+    minLength: 7,
+    lengthError: { title: 'Name Too Short!', subTitle: 'Sorry, but name must be more than 6 characters.' },
+    pattern: /^[a-z0-9]*$/g,
+    patternError: { title: 'Invalid Id!', subTitle: 'Sorry, but the name you entered contains special characters.' }
+  };
+
   export const profileEmailValidator = {
     pattern: /^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$/g,
     patternError: { title: 'Invalid Email Address!', subTitle: 'Sorry, but the email you have entered is invalid.' }

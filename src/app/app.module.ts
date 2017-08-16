@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { environment } from '../environments/environment';
 import { MyApp } from './app.component';
-
+import { Keyboard } from '@ionic-native/keyboard';
 // angularfire
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -66,7 +66,7 @@ import { GroupPipe } from '../pipes/group';
   imports: [
     BrowserModule,
     ionicGalleryModal.GalleryModalModule,
-    IonicModule.forRoot(MyApp,{mode: "ios"}),
+    IonicModule.forRoot(MyApp, {mode: 'ios', backButtonText: ''}),
     HttpModule,
     BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
@@ -90,7 +90,8 @@ import { GroupPipe } from '../pipes/group';
     StatusBar,
     SplashScreen,
     Camera,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    Keyboard,
+    { provide: ErrorHandler, useClass: IonicErrorHandler  },
    
     //{ provide: LOCALE_ID, useValue: "kr-KO" },
     // auth provider

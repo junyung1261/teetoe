@@ -34,7 +34,7 @@ const errorMessages = {
   invalidCharsPassword: Validator.profilePasswordValidator.patternError,
   passwordsDoNotMatch: { title: 'Change Password Failed!', subTitle: 'Sorry, but the passwords you entered do not match.' },
   updateProfile: { title: 'Update Profile Failed', subTitle: 'Sorry, but we\'ve encountered an error updating your profile.' },
-  usernameExists: { title: 'Username Already Exists!', subTitle: 'Sorry, but this username is already taken by another user.' },
+  userIdExists: { title: '이미 사용중인 ID', subTitle: 'Sorry, but this username is already taken by another user.' },
   // Image Error Messages
   imageUpload: { title: 'Image Upload Failed!', subTitle: 'Sorry but we\'ve encountered an error uploading selected image.' },
   // Group Error Messages
@@ -318,10 +318,10 @@ export class AlertProvider {
           buttons: ['OK']
         }).present();
         break;
-      case 'profile/error-same-username':
+      case 'profile/error-same-userid':
         this.alert = this.alertCtrl.create({
-          title: errorMessages.usernameExists["title"],
-          subTitle: errorMessages.usernameExists["subTitle"],
+          title: errorMessages.userIdExists["title"],
+          subTitle: errorMessages.userIdExists["subTitle"],
           buttons: ['OK']
         }).present();
         break;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { LoadingProvider } from './loading';
 import { AlertProvider } from './alert';
 import { DataProvider } from './data';
@@ -101,7 +101,14 @@ export class FirebaseProvider {
     var friendRequests;
     this.dataProvider.getRequests(loggedInUserId).take(1).subscribe((requests) => {
       friendRequests = requests.socialRequests;
-      friendRequests.splice(friendRequests.indexOf({from: userId}), 1);
+      var index = 0;
+      requests.socialRequests.forEach( snap => {
+          if(snap.from === userId) {
+            friendRequests.splice(index, 1);
+            return false;
+          }
+          index++;
+      })
       // Update friendRequests information.
       this.angularfireDatabase.object('/requests/' + loggedInUserId).update({
         socialRequests: friendRequests
@@ -216,7 +223,7 @@ export class FirebaseProvider {
     var requestsSent;
     this.dataProvider.getRequests(loggedInUserId).take(1).subscribe((requests) => {
       requestsSent = requests.requestsSent;
-      requestsSent.splice(requestsSent.indexOf({from: userId}), 1);
+      requestsSent.splice(requestsSent.indexOf(userId), 1);
       // Update requestSent information.
       this.angularfireDatabase.object('/requests/' + loggedInUserId).update({
         requestsSent: requestsSent
@@ -246,9 +253,18 @@ export class FirebaseProvider {
     this.loadingProvider.show();
     
     var mentorRequests;
+    
     this.dataProvider.getRequests(loggedInUserId).take(1).subscribe((requests) => {
       mentorRequests = requests.socialRequests;
-      mentorRequests.splice(mentorRequests.indexOf({from: userId}), 1);
+      var index = 0;
+      requests.socialRequests.forEach( snap => {
+          if(snap.from === userId) {
+            mentorRequests.splice(index, 1);
+            return false;
+          }
+          index++;
+      })
+      
       // Update mentorRequests information.
       this.angularfireDatabase.object('/requests/' + loggedInUserId).update({
         socialRequests: mentorRequests
@@ -278,18 +294,18 @@ export class FirebaseProvider {
     let loggedInUserId = firebase.auth().currentUser.uid;
     // Delete mentor request.
     this.deleteMentorRequest(userId);
-
+    
     this.loadingProvider.show();
     this.dataProvider.getUser(loggedInUserId).take(1).subscribe((account) => {
-      var mentors = account.mentors;
-      if (!mentors) {
-        mentors = [userId];
+      var mentees = account.mentees;
+      if (!mentees) {
+        mentees = [userId];
       } else {
-        mentors.push(userId);
+        mentees.push(userId);
       }
       // Add both users as mentors.
       this.dataProvider.getUser(loggedInUserId).update({
-        mentees: mentors
+        mentees: mentees
       }).then((success) => {
         this.dataProvider.getUser(userId).take(1).subscribe((account) => {
           var mentors = account.mentors;

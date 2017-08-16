@@ -23,8 +23,8 @@
 <ion-card>
     <ion-item sticky >
       <ion-avatar item-left (click)="userProfile(poster)">
-        <img *ngIf="(poster | async)?.photoURL" [src]="(poster | async)?.photoURL">
-        <img *ngIf="!(poster | async)?.photoURL" src="assets/img/noavatar.png">
+        <img src="{{(poster|async)?.profileImg}}" >
+        
       </ion-avatar>
       <h2>{{(poster | async)?.name}}</h2>
       <p> {{(post | async)?.timestamp/1000 | amFromUnix| amTimeAgo }}</p>

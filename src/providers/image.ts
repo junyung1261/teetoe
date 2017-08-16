@@ -87,9 +87,9 @@ export class ImageProvider {
         'contentType': imgBlob.type
       };
       // Generate filename and upload to Firebase Storage.
-      firebase.storage().ref().child('images/' + user.userId + '/' + this.generateFilename()).put(imgBlob, metadata).then((snapshot) => {
+      firebase.storage().ref().child('images/' + user.$key + '/' + this.generateFilename()).put(imgBlob, metadata).then((snapshot) => {
         // Delete previous profile photo on Storage if it exists.
-        this.deleteImageFile(user.img);
+        this.deleteImageFile(user.profileImg);
         // URL of the uploaded image!
         let url = snapshot.metadata.downloadURLs[0];
         let profile = {
@@ -100,8 +100,8 @@ export class ImageProvider {
         firebase.auth().currentUser.updateProfile(profile)
           .then((success) => {
             // Update User Data on Database.
-            this.angularfireDatabase.object('/accounts/' + user.userId).update({
-              img: url
+            this.angularfireDatabase.object('/users/' + user.$key).update({
+              profileImg: url
             }).then((success) => {
               this.loadingProvider.hide();
               this.alertProvider.showProfileUpdatedMessage();

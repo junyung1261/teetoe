@@ -57,7 +57,7 @@
           <button ion-fab mini tappable (click)="message(friend.$key); $event.stopPropagation();"><ion-icon name="md-text" class="success"></ion-icon></button>
         </ion-fab>
         <ion-avatar item-left>
-          <img src="{{friend.img}}">
+          <img src="{{friend.profileImg}}">
         </ion-avatar>
         <h2>{{friend.name}}</h2>
         <p>@{{friend.username}}</p>
@@ -73,15 +73,15 @@
     </div>
     <ion-list class="avatar-list" *ngIf="mentors && mentors.length > 0">
       
-      <ion-item *ngFor="let friend of mentors | friendFilter:searchFriend" no-lines tappable (click)="viewUser(friend.$key)">
+      <ion-item *ngFor="let mentor of mentors | friendFilter:searchFriend" no-lines tappable (click)="viewUser(mentor.$key)">
         <ion-fab middle right>
-          <button ion-fab mini tappable (click)="message(friend.$key); $event.stopPropagation();"><ion-icon name="md-text" class="success"></ion-icon></button>
+          <button ion-fab mini tappable (click)="message(mentor.$key); $event.stopPropagation();"><ion-icon name="md-text" class="success"></ion-icon></button>
         </ion-fab>
         <ion-avatar item-left>
-          <img src="{{friend.img}}">
+          <img src="{{mentor.profileImg}}">
         </ion-avatar>
-        <h2>{{friend.name}}</h2>
-        <p>@{{friend.username}}</p>
+        <h2>{{mentor.name}}</h2>
+        <p>@{{mentor.username}}</p>
       </ion-item>
     </ion-list>
   </div>
@@ -94,15 +94,15 @@
     </div>
     <ion-list class="avatar-list" *ngIf="mentees && mentees.length > 0">
       
-      <ion-item *ngFor="let friend of mentees | friendFilter:searchFriend" no-lines tappable (click)="viewUser(friend.$key)">
+      <ion-item *ngFor="let mentee of mentees | friendFilter:searchFriend" no-lines tappable (click)="viewUser(mentee.$key)">
         <ion-fab middle right>
-          <button ion-fab mini tappable (click)="message(friend.$key); $event.stopPropagation();"><ion-icon name="md-text" class="success"></ion-icon></button>
+          <button ion-fab mini tappable (click)="message(mentee.$key); $event.stopPropagation();"><ion-icon name="md-text" class="success"></ion-icon></button>
         </ion-fab>
         <ion-avatar item-left>
-          <img src="{{friend.img}}">
+          <img src="{{mentee.profileImg}}">
         </ion-avatar>
-        <h2>{{friend.name}}</h2>
-        <p>@{{friend.username}}</p>
+        <h2>{{mentee.name}}</h2>
+        <p>@{{mentee.username}}</p>
       </ion-item>
     </ion-list>
   </div>

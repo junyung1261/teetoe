@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
+
 import firebase from 'firebase/app';
 
 /*
@@ -27,7 +28,8 @@ export class AuthProvider {
      firebase.database().ref('/users').child(newUser.uid)
     .set({ email: newEmail, 
            name: newName,
-           isMentee: newIsMentee })
+           isMentee: newIsMentee,
+           profileImg: "assets/img/noavatar.png" })
    
   });
   }

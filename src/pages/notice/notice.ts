@@ -56,16 +56,18 @@ export class NoticePage {
         } */
         
         this.loadingProvider.hide();
+        
       });
     });
+    
   }
 
   // Add or update friend request only if not yet friends.
   addOrUpdateSocialRequest(sender, meta) {
-     
+    
     if (!this.socialRequests) {
       this.socialRequests = [sender];
-      if(meta!=undefined) this.socialRequests.meta = meta;
+      this.socialRequests.meta = meta;
     } else {
       var index = -1;
       for (var i = 0; i < this.socialRequests.length; i++) {
@@ -74,11 +76,11 @@ export class NoticePage {
         }
       }
       if (index > -1) {
-        if (!this.isFriends(sender.$key) || !this.isMatched(sender.$key))
+        if (!this.isFriends(sender.$key) && !this.isMatched(sender.$key))
           this.socialRequests[index] = sender;
-          if(meta!=undefined) this.socialRequests[index].meta = meta;
+           this.socialRequests[index].meta = meta;
       } else {
-        if (!this.isFriends(sender.$key) || !this.isMatched(sender.$key))
+        if (!this.isFriends(sender.$key) && !this.isMatched(sender.$key))
          
           var data = sender;
           data.meta = meta;
@@ -180,8 +182,8 @@ export class NoticePage {
   }
 
   isMatched(userId) {
-    if (this.account.mentors || this.account.mentees) {
-      if (this.account.mentors.indexOf(userId) == -1 || this.account.mentees.indexOf(userId) == -1) {
+    if (this.account.mentees) {
+      if (this.account.mentees.indexOf(userId) == -1) {
         return false;
       } else {
         return true;

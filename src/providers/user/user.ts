@@ -94,9 +94,6 @@ claimUsername(userId) {
     });
 
     
-      
-
-   
 }
 
 
@@ -127,12 +124,6 @@ uploadImage(imageString) : Promise<any>
          });
       });
    }
-
-
-
-
-
-
 
 
   
