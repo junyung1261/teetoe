@@ -24,7 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicStorageModule } from '@ionic/storage';
 import { SuperTabsModule } from 'ionic2-super-tabs';
 import * as ionicGalleryModal from 'ionic-gallery-modal';
-
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 // pipe
 
 
@@ -71,7 +71,7 @@ import { GroupPipe } from '../pipes/group';
     BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
     SuperTabsModule.forRoot(),
-    
+    IonicImageViewerModule,
     // auth/db modules
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,

@@ -9,7 +9,7 @@
 <ion-content>
   <div *ngIf="user">
   <div class="profile">
-      <img src = "{{user.profileImg}}">
+      <img src = "{{user.profileImg}}" imageViewer>
       
       <ion-fab right bottom>
         <button ion-fab color="transparent" (click)="setPhoto()">
@@ -17,8 +17,6 @@
         </button>
       </ion-fab>
 
-      
-      
   </div>
 
   <h4>

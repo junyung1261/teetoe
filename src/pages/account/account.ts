@@ -15,6 +15,8 @@ import { Keyboard } from '@ionic-native/keyboard';
 
 import * as firebase from 'firebase';
 import { Camera } from '@ionic-native/camera';
+import { IonicImageViewerModule } from 'ionic-img-viewer';
+
 
 @IonicPage()
 

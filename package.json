@@ -59,6 +59,7 @@
         "ionic": "^3.8.1",
         "ionic-angular": "3.6.0",
         "ionic-gallery-modal": "^0.2.2",
+        "ionic-img-viewer": "^2.6.1",
         "ionic-plugin-keyboard": "^2.2.1",
         "ionic2-calendar": "^0.3.7",
         "ionic2-super-tabs": "^4.0.1",

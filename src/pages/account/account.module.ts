@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { AccountPage } from './account';
-
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 
 // auth components
 
@@ -13,7 +13,7 @@ import { AccountPage } from './account';
     
   ],
   imports: [
-    
+    IonicImageViewerModule,
     IonicPageModule.forChild(AccountPage)
   ],
 
