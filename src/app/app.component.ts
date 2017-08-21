@@ -12,12 +12,11 @@ import { MenuController } from 'ionic-angular/index';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  
-  @ViewChild(Nav) nav: Nav;
+ 
   
   rootPage: any
   pages: Array<{title: string, component: any}>;
-
+@ViewChild(Nav) nav: Nav;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth, 
   private menu: MenuController, private auth: AuthProvider) {
@@ -27,11 +26,11 @@ export class MyApp {
     this.afAuth.authState.subscribe(user => {
       if (!user) {
         // you can modify here the page for non. auth users
-        this.nav.setRoot('AuthPage');
+        this.rootPage ='AuthPage';
         return;
       }
       // page for auth. users
-      this.nav.setRoot('TabsPage');
+      this.rootPage='TabsPage';
     });
 
     platform.ready().then(() => {
@@ -56,7 +55,7 @@ export class MyApp {
     
     if(page.component == null) {this.auth.signOutUser()}
     else if(page.component == 'AccountPage') {this.nav.push('AccountPage')}
-    else this.nav.setRoot(page.component);
+    else this.rootPage = page.component;
   }
 }
 

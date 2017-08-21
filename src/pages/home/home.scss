@@ -15,6 +15,73 @@ page-home {
   font-weight: 100;
   line-height: 1;
 }
- 
+ .col{
+
+border: solid black;
+}
+
+.row{
+  align-items: center;
+}
+   ion-card {
+    margin: 0px 0px 0px 0px !important;
+    width: 100% !important;
+    border: 0px;
+    position: relative;
+    
+  }
+  ion-card-header {
+
+  }
+
+  .knop-main {
+    position: absolute;
+    top: 29%;
+    left: 5%;
+    width: 100%;
+    
+    color: #fff;
+  }
+
+  .knop-side_1 {
+    position: absolute;
+    top: 35%;
+    left: 58%;
+    width: 100%;
+    
+    color: #fff;
+  }
+  .knop-side_2 {
+    position: absolute;
+    top: 35%;
+    left: 78%;
+    width: 100%;
+    
+    color: #fff;
+  }
+  .knop-side_3 {
+    position: absolute;
+    top: 59%;
+    left: 58%;
+    width: 100%;
+    
+    color: #fff;
+  }
+  .knop-side_4 {
+    position: absolute;
+    top: 59%;
+    left: 78%;
+    width: 100%;
+    
+    color: #fff;
+  }
+
+  .card-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 52%;
+    width: 100%;
+    color: #fff;
+  }
  
 }

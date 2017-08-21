@@ -15,11 +15,13 @@ $categories: (
   @return map-remove($categories);
 }
 
-calendar-add-event {
+page-calendar-add-event {
   @each $track, $value in auxiliary-categories() {
    ion-item-sliding[track=#{$track}] ion-label {
      border-left: 5px solid $value;
      padding-left: 10px;
    }
   }
+
+
 }

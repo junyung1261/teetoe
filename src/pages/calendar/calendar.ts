@@ -95,8 +95,10 @@ ionViewDidEnter() {
           isDone: snap.val().isDone,
           title: snap.val().title,
           start: new Date(snap.val().startAt),
+          end: new Date(snap.val().endAt),
           color: snap.val().color,
           tracks: snap.val().tracks,
+          mentor: snap.val().mentor
         });
         
         return false
@@ -159,7 +161,7 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[]; }, day:Calen
 
 
   addEvent(date) {
-
+    
       let filter = this.events.filter(
           function(value){
               return isSameDay(date, value.start);
@@ -167,7 +169,7 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[]; }, day:Calen
       );
 
       let today = date;
-      let modal = this.modalCtrl.create('CalendarAddEventComponent',{viewDate: today, viewDateEvents: filter});
+      let modal = this.modalCtrl.create('CalendarAddEventPage',{viewDate: today, viewDateEvents: filter});
         
       modal.onDidDismiss(data =>{
         if(data.length===0) this.activeDayIsOpen=false;

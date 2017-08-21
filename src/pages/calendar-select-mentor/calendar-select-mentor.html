@@ -1,0 +1,57 @@
+<div class="guide-modal">
+<ion-header>
+    <ion-navbar>
+        
+    </ion-navbar>
+</ion-header>
+<ion-content no-padding>
+     <div class="empty-list"  *ngIf="mentors && mentors.length == 0">
+      <h1><ion-icon name="md-contacts"></ion-icon></h1>
+      <p>Uh-oh! You have not added any friends right now.</p>
+      
+    </div>
+    <ion-list radio-group  class="avatar-list" *ngIf="event && mentors && mentors.length > 0">
+      
+       <ion-item  no-lines tappable >
+       
+       
+       <ion-label>
+        <h2>선택해제</h2>
+        <p></p>
+       </ion-label>
+      
+        <ion-radio item-end (ionSelect)="choseOne(null)" [checked]="!event.mentor"></ion-radio>
+        
+      </ion-item>
+      <ion-item *ngFor="let mentor of mentors" no-lines tappable (click)="viewUser(mentor.$key)">
+       
+        <ion-avatar item-left>
+          <img src="{{mentor.profileImg}}">
+        </ion-avatar>
+       <ion-label>
+        <h2>{{mentor.name}}</h2>
+        <p>@{{mentor.id}}</p>
+       </ion-label>
+      
+        <ion-radio item-end (ionSelect)="choseOne(mentor)" [checked]="event.mentor && mentor.$key === event.mentor.mentorID"></ion-radio>
+        
+      </ion-item>
+    </ion-list>
+</ion-content>
+
+<ion-footer>
+    <ion-grid>
+    <ion-row>
+      <ion-col width-50>
+        <button ion-button block  outline (click)="this.viewCtrl.dismiss()">Cancel</button>
+      </ion-col>
+
+      <ion-col width-50>
+        <button ion-button block  (click)="submitMentor()">Ok</button>
+      </ion-col>
+      
+    </ion-row>
+  </ion-grid>
+</ion-footer>
+
+</div>

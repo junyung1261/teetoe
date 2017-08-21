@@ -2,9 +2,42 @@
 
 
 
-<ion-content padding>
-<ion-card>
-   <div class="progress-wrapper"  (click)="changeRange()">
+<ion-content no-padding class="card-background-page">
+<ion-card  >
+  
+  <ion-card-header >
+    Card Header
+  </ion-card-header>  
+  <img src="assets/img/md-bg2.jpg"/>
+
+  <div class="knop-main">
+  <ui-knob *ngIf="_DHT22KnobHumidityValue" [options]="_DHT22KnobHumidityOptions[0]" [(value)]="_DHT22KnobHumidityValue[0]"  (click)="changeRange()"></ui-knob>
+  </div>
+
+  <div class="knop-side_1">
+  <ui-knob *ngIf="_DHT22KnobHumidityValue" [options]="_DHT22KnobHumidityOptions[1]" [(value)]="_DHT22KnobHumidityValue[1]"  (click)="changeRange()"></ui-knob>
+  </div>
+
+  <div class="knop-side_2">
+  <ui-knob *ngIf="_DHT22KnobHumidityValue" [options]="_DHT22KnobHumidityOptions[2]" [(value)]="_DHT22KnobHumidityValue[2]"  (click)="changeRange()"></ui-knob>
+  </div>
+
+  <div class="knop-side_3">
+  <ui-knob *ngIf="_DHT22KnobHumidityValue" [options]="_DHT22KnobHumidityOptions[3]" [(value)]="_DHT22KnobHumidityValue[3]"  (click)="changeRange()"></ui-knob>
+  </div>
+
+  <div class="knop-side_4">
+  <ui-knob *ngIf="_DHT22KnobHumidityValue" [options]="_DHT22KnobHumidityOptions[4]" [(value)]="_DHT22KnobHumidityValue[4]"  (click)="changeRange()"></ui-knob>
+  </div>
+  
+
+</ion-card>
+
+
+</ion-content>
+
+
+ <!--<div class="progress-wrapper"  (click)="changeRange()">
     <div class="current" [ngStyle]="getOverlayStyle()" style="padding-bottom:1.3em">{{name}}</div>
     <div class="current" [ngStyle]="getOverlayStyle()" style="padding-top:1.3em">{{ current }}/{{ max }}</div>
 
@@ -24,7 +57,4 @@
             [animationDelay]="delay"
             ></round-progress>
    
-</div>
-</ion-card>
-
-</ion-content>
+</div>-->

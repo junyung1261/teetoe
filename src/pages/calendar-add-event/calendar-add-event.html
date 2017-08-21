@@ -1,10 +1,11 @@
 <ion-header>
     <ion-navbar>
         <ion-buttons left>
-            <button ion-button icon-only (click)="dismiss()" >
+            <button ion-button icon-only (click)="dismiss()">
                 <ion-icon name="arrow-back"></ion-icon>
             </button>
         </ion-buttons>
+
          <ion-segment [(ngModel)]="segment" color="dark">
         <ion-segment-button value="all" (click)="toggle()">
             {{headerTitle}} 일정
@@ -28,27 +29,27 @@
       
 <ion-list  *ngIf="segment==='all'">
   <ion-item-sliding *ngFor=" let event of events" [attr.track]="event.tracks[0] | lowercase">
-    <ion-item (click)="goToSessionDetail(session)">
-        
+    <ion-item>
+        <div (click)="goToEventDetail(event)">
         <h3>
         <ion-icon *ngIf="event.isDone"  name="checkmark"></ion-icon>
             {{event.title}}
         </h3>
         
-        <p *ngIf="event.end">
+        <p *ngIf="event.end.getTime() !== event.start.getTime()">
             {{convert12H(event.start)}} &mdash;
             {{convert12H(event.end)}}
         </p>
-                
-        <button (click)="segment='timeTable'" style="background: #fff">
-            <p *ngIf="!event.end">
+               
+        <button *ngIf="event.start.getTime() === event.end.getTime()" (click)="segment='timeTable'" style="background: #fff" >
+            <p >
                 시간을 지정해 주세요.
             </p>
         </button>
-        
-        <ion-avatar item-end (click)="openPost()">
-             <img *ngIf="event?.photoURL" [src]="user?.photoURL">
-             <img *ngIf="!event?.photoURL" src="assets/img/noavatar.png">
+        </div>
+        <ion-avatar item-end (click)="selectMentor(event)">
+             <img *ngIf="event.mentor" [src]="event.mentor.avatar">
+             <img *ngIf="!event.mentor" src="assets/img/noavatar.png">
         </ion-avatar>
     </ion-item>
     <ion-item-options side="left">
@@ -60,7 +61,7 @@
 
     <ion-item-options side="right">
       <button ion-button (click)="unread(item)">
-          <ion-icon name="build"></ion-icon>
+          <ion-icon name="color-palette"></ion-icon>
       </button>
         <button ion-button (click)="unread(item)">
           <ion-icon name="camera"></ion-icon>

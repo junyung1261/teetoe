@@ -8,9 +8,9 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     
-    <ion-row justify-content-center style="padding-left:1.5em">
+    <ion-title >
        <img src="assets/img/logo-black2.png"  height="40px" >
-    </ion-row>
+    </ion-title>
 
       
     <ion-buttons end>
@@ -27,15 +27,30 @@
 </ion-header>
 <ion-content no-bounce fullscreen >
 
- 
 
-  <super-tabs  id="mainTabs" [config]="{ sideMenu: 'left' }" toolbarColor="light" toolbarBackground="dark" indicatorColor="yellow" badgeColor="yellow" tabsPlacement="bottom"  (tabSelect)="onTabSelect($event)" >
-    <super-tab [root]="page1"   icon= 'home'        id="page1"></super-tab>
-    <super-tab [root]="page2"   icon= 'calendar'    id="page2"></super-tab>
+  <super-tabs  
+    id="mainTabs" 
+    [config]="{ sideMenu: 'left' }" 
+    toolbarColor="light" 
+    toolbarBackground="dark" 
+    indicatorColor="yellow" 
+    badgeColor="yellow" 
+    tabsPlacement="bottom"  
+    (tabSelect)="onTabSelect($event)"
+     >
+    
+   
+      
+    <super-tab [root]="page1"   icon= 'home'        id="page1" ></super-tab>
+    <super-tab [root]="page2"   icon= 'calendar'    id="page2" ></super-tab>
     <super-tab [root]="page3"   icon= 'book'        id="page3"></super-tab>
     <super-tab [root]="page4"   icon= 'pie'         id="page4"></super-tab>
     <super-tab [root]="page5"   icon= 'body'        id="page5"></super-tab>
     
+   
 
   </super-tabs>
+
+  
+  
 </ion-content>

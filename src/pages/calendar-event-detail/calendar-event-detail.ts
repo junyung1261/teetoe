@@ -1,5 +1,5 @@
 import { Component, ViewChild, Input } from '@angular/core';
-import { ViewController, NavController, ActionSheetController, IonicPage, NavParams, Content } from 'ionic-angular';
+import { ViewController, NavController, ActionSheetController, IonicPage, NavParams, Content, ModalController } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import { CommunityProvider } from '../../providers/community/community';
 import { UtilProvider } from '../../providers/util/util';
@@ -49,18 +49,27 @@ const colors: any = {
 @IonicPage()
 
 @Component({
-    selector: 'calendar-add-event',
-    templateUrl: 'calendar-add-event.html',
+    selector: 'page-calendar-event-detail',
+    templateUrl: 'calendar-event-detail.html',
     
 })
-export class CalendarAddEventComponent {
-   @Input() eventRef;
+export class CalendarEventDetailPage {
+   
+public event1 = {
+    month: '1990-02-19',
+    timeStarts: '00:00',
+    timeEnds: '1990-02-20',
+    time:'07:00'
+  }
+
    @ViewChild(Content) content: Content;
     item: number = 5;
     view = 'day';
     viewDate: Date;
     segment: String = 'all';
-    events: CalendarEvent[];
+    event: CalendarEvent;
+    event_slice: CalendarEvent;
+    start: any;
     public myPhotosRef: any;
     public myPhoto: any;
     public myPhotoURL: any;
@@ -69,6 +78,13 @@ export class CalendarAddEventComponent {
     newEventTitle:string;
     image = null;
     blobImage;
+    end: any;
+    hours: number[];
+    callback: any;
+
+
+
+
     constructor(
         private viewController:ViewController, 
         private navController: NavController, 
@@ -77,19 +93,55 @@ export class CalendarAddEventComponent {
         private actionSheetCtrl: ActionSheetController,
         private camera: Camera,
         private navParams: NavParams,
-        private eventProvider: EventProvider
+        private eventProvider: EventProvider,
+       
         ) {
-          this.viewDate = navParams.get('viewDate');
-          this.events = navParams.get('viewDateEvents')
+         
+    
+    }
+
+    compare(){
+        let start = new Date(this.start);
+        let end = new Date(this.end);
         
-          this.headerTitle =this.dayViewTitle(this.viewDate) ;
-          
+        var swap = function (x){return x};
+        
+        
+        if(start.getTime() > end.getTime()) {
+            console.log(start.toISOString());
+            console.log(end.toISOString());
+            this.start = end.toISOString();
+            this.end = start.toISOString();
+            
+        }
+
+        this.event.start = new Date(start.getTime() + start.getTimezoneOffset() * 60000);
+        this.event.end = new Date(end.getTime() + end.getTimezoneOffset() * 60000);
+    }
+    ionViewWillEnter() {
+    this.event = this.navParams.data.event;
+    this.event_slice =  JSON.parse(JSON.stringify(this.event)); 
+    //this.callback = this.navParams.get("callback");
+    
+     ;   
+
+  
+    var eventTime = this.event;
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+
+    this.start = new Date(eventTime.start.getTime() - (eventTime.start.getTimezoneOffset() * 60000)).toISOString();
+    
+    this.end = new Date(eventTime.end.getTime() - (eventTime.end.getTimezoneOffset() * 60000)).toISOString();
     }
 
-    toggle(){
-        this.content.resize();
+    ionViewWillLeave(){
+        if(JSON.stringify(this.event_slice) !== JSON.stringify(this.event)) {
+            console.log('업뎃');
+            this.eventProvider.updateEvent(this.event);
+        }
+        
     }
-
+    
     dayViewTitle = function (_a) {
         
         var date = _a, locale = _a.locale;
@@ -121,34 +173,13 @@ export class CalendarAddEventComponent {
         return res; 
     }
 
-    pushEvent(){
-        if(this.newEventTitle){
-        
-        
-        var newEvent: CalendarEvent = {
-            start: startOfDay(this.viewDate),
-            title: this.newEventTitle, 
-            color: colors.blue, 
-            tracks: ['init'],
-            isDone: false 
-        };
-        this.eventProvider.createEvent(newEvent);
-        this.events.push(newEvent);
-        this.reset();
-        }
-    }
-
-    deleteEvent(event){
-            
-        this.events.splice(this.events.indexOf(event),1);
-        this.eventProvider.deleteEvent(event.id);
-    }
+   
 
     
 
     dismiss() {
         
-        this.viewController.dismiss(this.events);
+        //this.viewController.dismiss(this.events);
     }
 
     sendPost() {
@@ -170,6 +201,8 @@ export class CalendarAddEventComponent {
     }
 
     openPost() {
+    
+
       this.navController.push('ScheduleDetailPage');
       
   }

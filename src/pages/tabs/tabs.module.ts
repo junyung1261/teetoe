@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { TabsPage } from "./tabs";
-import { SharedModule }  from "../../app/shared.module";
 
+import { SuperTabsModule } from 'ionic2-super-tabs';
 
 @NgModule({
   declarations: [
@@ -10,7 +10,7 @@ import { SharedModule }  from "../../app/shared.module";
   ],
   imports: [
     IonicPageModule.forChild(TabsPage),
-    SharedModule
+    SuperTabsModule.forRoot()
   ],
   exports:[
     TabsPage

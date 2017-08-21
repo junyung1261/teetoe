@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
+import { LoadingProvider } from '../loading';
 
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent
-} from 'angular-calendar';
+import { DataProvider } from '../data';
+
 
 import firebase from 'firebase/app';
 
@@ -13,7 +11,7 @@ export class EventProvider {
   public userProfileRef:firebase.database.Reference;
   public scheduleRef:firebase.database.Reference;
   private uid;
-  constructor() {
+  constructor(public loadingProvider: LoadingProvider, public dataProvider: DataProvider) {
     firebase.auth().onAuthStateChanged( user => {
       if (user) {
         this.userProfileRef = firebase.database().ref(`users/${user.uid}`);
@@ -39,12 +37,12 @@ export class EventProvider {
     let ref;
     
       eventData.startAt=eventData.start.toJSON();
-      if(eventData.end) eventData.endAt=eventData.end.toJSON();
+      eventData.endAt=eventData.end.toJSON();
       ref= this.scheduleRef.push(eventData);
       console.log(eventData);
       let userSchedule = this.userProfileRef.child('schedule');
       userSchedule.update({[ref.key]:true});
-    
+      eventData.id = ref.key;
       return Promise.resolve(ref);
   }
 
@@ -54,6 +52,37 @@ export class EventProvider {
     updateObj[`schedule/${this.uid}/${eventData}`] = null;
     updateObj[`users/${this.uid}/schedule/${eventData}`] = null;
     return rootRef.update(updateObj);
+  }
+
+  updateEvent(eventData){
+    
+    
+    this.scheduleRef.child(eventData.id).update({
+      startAt: eventData.start, 
+      endAt: eventData.end,
+      title: eventData.title,
+      tracks: eventData.tracks,
+      color: eventData.color,
+     isDone: eventData.isDone
+    });
+  }
+
+  selectMentor(eventData){
+
+    
+   if(eventData.mentor!=null){
+      this.scheduleRef.child(eventData.id ).child('mentor').update({
+     mentorID: eventData.mentor.mentorID,
+     avatar: eventData.mentor.avatar
+    });
+   }
+  else{
+    this.scheduleRef.child(eventData.id).child('mentor').remove();
+  }
+    
+    
+
+
   }
   
   addGuest(guestName, eventId, eventPrice, guestPicture = null): firebase.Promise<any> {

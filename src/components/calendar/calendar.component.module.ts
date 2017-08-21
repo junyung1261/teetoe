@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { CalendarAddEventComponent } from './calendar-add-event'
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -21,7 +20,7 @@ import { DateTimePickerComponent } from './date-time-picker';
 
 @NgModule({
   declarations: [
-    CalendarAddEventComponent,
+    
     DateTimePickerComponent
   ],
   imports: [
@@ -29,17 +28,15 @@ import { DateTimePickerComponent } from './date-time-picker';
 
     CommonModule,
     FormsModule,
-    IonicPageModule.forChild(DateTimePickerComponent),
     NgbDatepickerModule.forRoot(),
     NgbTimepickerModule.forRoot(),
-    CalendarModule.forRoot(),
-    IonicPageModule.forChild(CalendarAddEventComponent),
+    CalendarModule
   ],
 
   exports: [
-    CalendarAddEventComponent,
+    
     DateTimePickerComponent
 
   ]
 })
-export class CalendarAddEventModule {}
+export class CalendarComponentModule {}

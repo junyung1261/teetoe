@@ -98,7 +98,7 @@ export class AccountPage {
 
   setUserId() {
     
-    this.alert = this.alertCtrl.create({
+    let alert = this.alertCtrl.create({
       
       title: 'Change Userid',
       message: "Please enter a new userid.",
@@ -147,13 +147,14 @@ export class AccountPage {
           }
         }
       ]
-    }).present({ keyboardClose: false});
+    });
+    alert.present({keyboardClose: false});
     
   }
 
   setName() {
     
-    this.alert = this.alertCtrl.create({
+    let alert = this.alertCtrl.create({
       title: 'Change Profile Name',
       message: "Please enter a new profile name.",
       inputs: [
@@ -215,7 +216,8 @@ export class AccountPage {
           }
         }
       ]
-    }).present({ keyboardClose: false});
+    });
+    alert.present({keyboardClose: false});
   }
   /*updateProfile() {
     let toast = this.util.getToast("Your Profile is updated");
