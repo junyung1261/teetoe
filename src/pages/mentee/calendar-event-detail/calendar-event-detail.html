@@ -1,0 +1,137 @@
+<ion-header>
+    <ion-navbar>
+       
+    </ion-navbar>
+</ion-header>
+
+<ion-content fullscreen="true" has-footer>
+<ion-list *ngIf="event">
+   
+
+
+    <ion-item>
+    <ion-label color="primary" stacked>일정</ion-label>
+        <ion-input placeholder="일정입력" [(ngModel)]="event.title" clearInput></ion-input>
+    </ion-item>
+
+          <ion-row>
+  <ion-col ion-item col-4>
+      <ion-label color="primary" stacked>시작</ion-label>
+      
+     <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="start"  (ionChange)="compare()" style="  margin-bottom:-5px;" minuteValues="0,10,20,30,40,50">
+          <h4 style="padding-top:5px">
+                <ion-icon name="arrow-forward"></ion-icon>
+                </h4>
+      </ion-datetime>
+      
+  </ion-col>
+    
+                
+    
+  <ion-col ion-item col-4>
+     <ion-label color="primary" stacked>종료</ion-label>
+        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="end"  (ionChange)="compare()" style="  margin-bottom:-5px;" minuteValues="0,10,20,30,40,50"></ion-datetime>
+   
+  </ion-col>
+     <ion-col ion-item col-4>
+     <ion-label color="primary" stacked>10분 전 알람</ion-label>
+       
+  </ion-col>
+
+   <ion-item>
+    <ion-label color="primary" stacked>내용</ion-label>
+        <ion-textarea elastic placeholder="내용 입력" [(ngModel)]="event.detail" ></ion-textarea>
+    </ion-item>
+
+ </ion-row>
+
+
+ 
+<ion-segment mode="md" [(ngModel)]="segmentView" color="blue2">
+    <ion-segment-button value="album">
+      <ion-icon name="ios-apps"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="comment" [disabled]="!event.mentor" (click)="setMessagesRead()">
+      <ion-icon name="chatbubbles">
+         
+      </ion-icon>
+      <ion-badge color="danger" *ngIf="unreadCommentsCount > 0" >{{unreadCommentsCount}}</ion-badge>
+    </ion-segment-button>
+    
+  </ion-segment>
+
+  <ion-grid *ngIf="segmentView==='album'">
+    <ion-row wrap color="gray">
+      <ion-col col-4 *ngFor="let image of imgGalleryArray  ,let i = index  ">
+        <img src={{image.url}} />
+      </ion-col>
+    </ion-row>
+    
+    <ion-fab right bottom>
+        <button ion-fab color="dark"><ion-icon name="add"></ion-icon></button>
+        <ion-fab-list side="top">
+          <button ion-fab><ion-icon name="camera" (click)="openGallery2()"></ion-icon></button>
+          <button ion-fab><ion-icon name="md-photos" (click)="openGallery()"></ion-icon></button>
+        </ion-fab-list>
+      </ion-fab>
+  </ion-grid>
+
+  <div *ngIf="segmentView==='comment'">
+      <div class="messages">
+    <p class="center" *ngIf="startIndex > 0"><span tappable (click)="loadPreviousMessages()">Load previous messages</span></p>
+    <ion-row *ngFor="let comment of commentsToShow">
+      <!--  Comment -->
+      <ion-col col-2 class="center" *ngIf="!isSender(comment)">
+        <img src="{{comment.avatar}}" (load)="doScroll()" />
+      </ion-col>
+      <ion-col col-1 *ngIf="isSender(comment)">
+      </ion-col>
+      <ion-col col-9 class="sender" *ngIf="!isSender(comment)">
+        <div class="left" *ngIf="comment.type == 'text'">
+          <p>{{comment.comment}}</p>
+          <span>{{comment.date | DateFormat}}</span>
+        </div>
+        <div class="right" *ngIf="comment.type == 'image'">
+          <img tappable (click)="enlargeImage(comment.url)" src="{{comment.url}}" (load)="doScroll()" />
+          <span>{{comment.date | DateFormat}}</span>
+        </div>
+      </ion-col>
+      <ion-col col-9 *ngIf="isSender(comment)">
+        <div class="right" *ngIf="comment.type == 'text'">
+          <p>{{comment.comment}}</p>
+          <span>{{comment.date | DateFormat}}</span>
+        </div>
+        <div class="left" *ngIf="comment.type == 'image'">
+          <img tappable (click)="enlargeImage(comment.url)" src="{{comment.url}}" (load)="doScroll()" />
+          <span>{{comment.date | DateFormat}}</span>
+        </div>
+      </ion-col>
+      <ion-col col-1 *ngIf="!isSender(comment)">
+      </ion-col>
+      <ion-col col-2 class="center" *ngIf="isSender(comment)">
+        <img src="{{comment.avatar}}" tappable (click)="viewUser(comment.sender)" (load)="doScroll()" />
+      </ion-col>
+    </ion-row>
+      </div>
+  </div>
+
+
+     
+</ion-list>
+
+
+
+    
+</ion-content>
+
+<ion-footer *ngIf="segmentView==='comment'">
+    <div class="bottom_bar">
+        <ion-input type="text" placeholder="코멘트 추가"   [(ngModel)]="comment" (focus)="scrollBottom()" (keypress)="onType($event.keyCode)"></ion-input>
+        <ion-fab middle right>
+        <button ion-fab mini tappable (click)="pushComment()" [disabled]="!comment">
+            <ion-icon name="md-create"></ion-icon>
+        </button>
+    </ion-fab>
+</div>
+   
+</ion-footer>

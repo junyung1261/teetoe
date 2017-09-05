@@ -4,6 +4,7 @@ import { LoadingProvider } from './loading';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import * as firebase from 'firebase';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { ImagePicker } from '@ionic-native/image-picker';
 
 @Injectable()
 export class ImageProvider {
@@ -21,7 +22,11 @@ export class ImageProvider {
   // This will return the imageURI which can then be processed and uploaded to Firebase.
   // For the list of cameraOptions, please refer to: https://github.com/apache/cordova-plugin-camera#module_camera.CameraOptions
 
-  constructor(public angularfireDatabase: AngularFireDatabase, public alertProvider: AlertProvider, public loadingProvider: LoadingProvider, public camera: Camera) {
+  constructor(public angularfireDatabase: AngularFireDatabase, 
+              public alertProvider: AlertProvider, 
+              public loadingProvider: LoadingProvider, 
+              public camera: Camera,
+              public imagePicker: ImagePicker) {
     console.log("Initializing Image Provider");
     this.profilePhotoOptions = {
       quality: 50,
@@ -175,6 +180,95 @@ export class ImageProvider {
       }).catch((error) => {
         this.loadingProvider.hide();
       });
+    });
+  }
+
+  uploadSchedulePhoto(event) {
+    let options = {
+      maximumImagesCount: 10,
+      width: 500,
+      height: 500,
+      quality: 75
+    }
+
+    this.loadingProvider.show();
+    // Get picture from camera or gallery.
+    this.imagePicker.getPictures(options).then((images) => {
+      // Process the returned imageURI.
+      let imageArray: any;
+      imageArray = [];
+      for (var i = 0; i < images.length; i++) {
+        console.log('Image URI: ' + images[i]);
+        let imgBlob = this.imgURItoBlob("data:image/jpeg;base64," + images[i]);
+        let metadata = {
+          'contentType': imgBlob.type
+        };
+        
+        firebase.storage().ref().child('images/' + firebase.auth().currentUser.uid + '/' + this.generateFilename()).put(imgBlob, metadata).then((snapshot) => {
+          
+          // URL of the uploaded image!
+          let url = snapshot.metadata.downloadURLs[0];
+          imageArray.push({url:url});
+          
+          // Update User Data on Database.
+          
+        }).catch((error) => {
+          this.loadingProvider.hide();
+          this.alertProvider.showErrorMessage('image/error-image-upload');
+        });
+      }
+      this.angularfireDatabase.object('/schedule/'+ firebase.auth().currentUser.uid +'/' + event.id).update({
+        album: imageArray
+      }).then((success) => {
+        this.loadingProvider.hide();
+        this.alertProvider.showImageUploaddMessage();
+      }).catch((error) => {
+        this.loadingProvider.hide();
+        this.alertProvider.showErrorMessage('profile/error-change-photo');
+      });           
+     
+    }).catch((error) => {
+      this.loadingProvider.hide();
+    });
+  }
+
+
+  uploadPhoto(sourceType, event) {
+    this.profilePhotoOptions.sourceType = sourceType;
+    this.loadingProvider.show();
+    // Get picture from camera or gallery.
+    this.camera.getPicture(this.profilePhotoOptions).then((imageData) => {
+      // Process the returned imageURI.
+      let imgBlob = this.imgURItoBlob("data:image/jpeg;base64," + imageData);
+      let metadata = {
+        'contentType': imgBlob.type
+      };
+      // Generate filename and upload to Firebase Storage.
+      firebase.storage().ref().child('images/' + firebase.auth().currentUser.uid + '/' + this.generateFilename()).put(imgBlob, metadata).then((snapshot) => {
+        let test;
+        test = [];
+        // URL of the uploaded image!
+        let url = snapshot.metadata.downloadURLs[0];
+        test.push({url: url});
+        // Update Firebase User.
+            
+            // Update User Data on Database.
+            this.angularfireDatabase.object('/schedule/' +  firebase.auth().currentUser.uid + '/' + event.id ).update({
+              album: test
+            }).then((success) => {
+              this.loadingProvider.hide();
+              this.alertProvider.showProfileUpdatedMessage();
+            }).catch((error) => {
+              this.loadingProvider.hide();
+              this.alertProvider.showErrorMessage('profile/error-change-photo');
+            });
+          
+      }).catch((error) => {
+        this.loadingProvider.hide();
+        this.alertProvider.showErrorMessage('image/error-image-upload');
+      });
+    }).catch((error) => {
+      this.loadingProvider.hide();
     });
   }
 

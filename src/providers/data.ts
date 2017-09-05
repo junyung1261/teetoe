@@ -79,6 +79,21 @@ export class DataProvider {
     return this.angularfireDatabase.object('/conversations/' + conversationId + '/messages');
   }
 
+  // Get conversation given the conversationId.
+  getScheduleComment(scheduleCommentId) {
+    return this.angularfireDatabase.object('/scheduleComments/' + scheduleCommentId);
+  }
+
+  // Get conversations of the current logged in user.
+  getScheduleComments() {
+    return this.angularfireDatabase.list('/users/' + firebase.auth().currentUser.uid + '/conversations');
+  }
+
+  // Get messages of the conversation given the Id.
+  getScheduleCommentMessages(scheduleCommentId) {
+    return this.angularfireDatabase.object('/scheduleComments/' + scheduleCommentId + '/comments');
+  }
+
   // Get messages of the group given the Id.
   getGroupMessages(groupId) {
     return this.angularfireDatabase.object('/groups/' + groupId + '/messages');

@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
 import { MenuController } from 'ionic-angular/index';
-
+import { DataProvider } from '../providers/data'
 
 
 @Component({
@@ -13,13 +13,13 @@ import { MenuController } from 'ionic-angular/index';
 })
 export class MyApp {
  
-  
+  private user;
   rootPage: any
   pages: Array<{title: string, component: any}>;
 @ViewChild(Nav) nav: Nav;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth, 
-  private menu: MenuController, private auth: AuthProvider) {
+  private menu: MenuController, private auth: AuthProvider, private dataProvider: DataProvider) {
 
     // here we determine, if user is aunthenticated/have data in our db
     // thats we make before platform ready
@@ -30,7 +30,16 @@ export class MyApp {
         return;
       }
       // page for auth. users
-      this.rootPage='TabsPage';
+      else {
+        this.dataProvider.getCurrentUser().subscribe((user) => {
+          
+          this.user = user;
+          if(user.isMentee === 'mentee') this.rootPage='TabsPage';
+          else if(user.isMentee ==='mentor') this.rootPage = 'MentorHomePage';
+          else this.rootPage = '';
+        });
+      }
+      
     });
 
     platform.ready().then(() => {

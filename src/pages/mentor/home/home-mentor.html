@@ -1,0 +1,149 @@
+
+
+
+<ion-header no-shadow no-border  >
+  <ion-navbar color="light"  >
+
+    <button ion-button menuToggle color="black">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    
+    <ion-title >
+       <img src="assets/img/logo-black2.png"  height="40px" >
+    </ion-title>
+
+      
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openNoticePage()" >
+        <ion-icon name="notifications" class="dark"></ion-icon>
+      </button>
+       <button ion-button icon-only (click)="openPeoplePage()">
+        <ion-icon name="person" class="dark"></ion-icon >
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+ 
+</ion-header>
+<ion-content  fullscreen >
+
+  <ion-row padding>
+    <ion-col col-3>
+      <!--<img src="{{(profile | async)?.imgProfile}}" class="avatar" alt="">-->
+         <ion-avatar >
+            
+              <img src="{{user.profileImg}}"/>  
+            
+        </ion-avatar>    
+    </ion-col>
+    <ion-col col-3 text-center>
+      <h5>21</h5>
+      <p no-padding no-margin>멘티(명)</p>
+    </ion-col>
+    <ion-col col-3 text-center>
+      <h5>114</h5>
+      <p no-paddin no-margin>일정 확인</p>
+    </ion-col>
+    <ion-col col-3 text-center>
+      <h5>119</h5>
+      <p no-paddin no-margin>질문</p>
+    </ion-col>
+  </ion-row>
+
+  <ion-row no-padding no-margin>
+    <ion-col no-padding no-margin text-center col-4> <p><b>멘토 - {{user.name}}</b></p></ion-col>
+    <ion-col no-padding no-margin text-center col-8>
+      <!--<button class="follow-button" icon-left (click)="goEditProfile()">Follow</button>-->
+      <button ion-button class="follow-button" *ngIf="!following"  block  (click)="follow()">소속학원 - A반</button>
+      <button ion-button class="follow-button-active" icon-left *ngIf="following"  block  (click)="follow()">
+        <ion-icon name="checkmark"></ion-icon>
+        Following
+      </button>
+    </ion-col>
+    <ion-col col-3></ion-col>
+  </ion-row>
+
+
+  <ion-grid no-padding no-margin>
+      
+   
+      <ion-row  >
+        <ion-col >
+            
+            <button class="square" ion-button full clear  (click)="openNoticePage()" >
+              <ion-icon name="notifications"><div class = title><br>공지사항</div></ion-icon>
+              </button>
+        </ion-col>
+        <ion-col >
+            
+            <button class="square" ion-button full clear (click)="openAttendancePage()" >
+                <ion-icon name="briefcase"><div class = title><br>출석부</div></ion-icon>
+              </button>
+            
+        </ion-col>
+        <ion-col>
+            
+           <button class="square" ion-button full clear  (click)="openCalendarPage()" >
+              <ion-icon name="calendar"><div class = title><br>일정관리</div></ion-icon>
+            </button>
+            
+        </ion-col>
+       
+      </ion-row>
+  
+      <ion-row >
+          <ion-col>
+              
+              <button class="square" ion-button full clear  (click)="openMenteeListPage()" >
+                <ion-icon name="people"><div class = title><br>수강생 목록</div></ion-icon>
+                </button>
+                
+              
+          </ion-col>
+          <ion-col >
+              
+              <button class="square" ion-button full clear (click)="openChartPage()" >
+                  <ion-icon name="stats"><div class = title><br>성적관리</div></ion-icon>
+                </button>
+              
+          </ion-col>
+          <ion-col>
+              
+             <button class="square" ion-button full clear  (click)="openQuestionPage()" >
+                <ion-icon name="hand"><div class = title><br>질의응답</div></ion-icon>
+              </button>
+              
+          </ion-col>
+         
+        </ion-row>
+
+        <ion-row >
+            <ion-col>
+                
+                <button class="square" ion-button full clear  (click)="openParentsPage()" >
+                  <ion-icon name="help"><div class = title><br>학부모QnA</div></ion-icon>
+                  </button>
+                  
+                
+            </ion-col>
+            <ion-col >
+                
+                <button class="square" ion-button full clear>
+                    
+                    </button>
+                
+            </ion-col>
+            <ion-col >
+                <button class="square" ion-button full clear >
+                    
+                    </button>
+              
+                
+            </ion-col>
+           
+          </ion-row>
+    </ion-grid>
+  
+  
+  
+</ion-content>

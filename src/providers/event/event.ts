@@ -63,7 +63,7 @@ export class EventProvider {
       title: eventData.title,
       tracks: eventData.tracks,
       color: eventData.color,
-     isDone: eventData.isDone
+      isDone: eventData.isDone
     });
   }
 

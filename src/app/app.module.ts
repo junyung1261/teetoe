@@ -17,7 +17,7 @@ import { Camera } from '@ionic-native/camera';
 import { HttpModule } from '@angular/http';
 // pages
 
-
+import { ImagePicker } from '@ionic-native/image-picker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // module & sharedmodule
@@ -48,7 +48,7 @@ import { FirebaseProvider } from '../providers/firebase';
 
 import { SearchPipe } from '../pipes/search';
 import { ConversationPipe } from '../pipes/conversation';
-import { DateFormatPipe } from '../pipes/date';
+
 import { GroupPipe } from '../pipes/group';
 
 @NgModule({
@@ -58,7 +58,7 @@ import { GroupPipe } from '../pipes/group';
     // pages
     ConversationPipe,
     SearchPipe,
-    DateFormatPipe,
+   
     GroupPipe
     // components
   
@@ -91,6 +91,7 @@ import { GroupPipe } from '../pipes/group';
     SplashScreen,
     Camera,
     Keyboard,
+    ImagePicker,
     { provide: ErrorHandler, useClass: IonicErrorHandler  },
    
     //{ provide: LOCALE_ID, useValue: "kr-KO" },

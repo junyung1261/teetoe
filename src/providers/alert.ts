@@ -53,7 +53,8 @@ const successMessages = {
   friendRequestSent: { title: 'Friend Request Sent!', subTitle: 'Your friend request has been successfully sent!' },
   friendRequestRemoved: { title: 'Friend Request Deleted!', subTitle: 'Your friend request has been successfully deleted.' },
   groupUpdated: { title: 'Group Updated!', subTitle: 'This group has been successfully updated!' },
-  groupLeft: { title: 'Leave Group', subTitle: 'You have successfully left this group.' }
+  groupLeft: { title: 'Leave Group', subTitle: 'You have successfully left this group.' },
+  imageUploaded:{ title: '이미지가 업로드', subTitle: '사진이 성공적으로 업로드 되었습니다.' }
 };
 
 @Injectable()
@@ -69,6 +70,14 @@ export class AlertProvider {
     this.alert = this.alertCtrl.create({
       title: successMessages.profileUpdated["title"],
       subTitle: successMessages.profileUpdated["subTitle"],
+      buttons: ['OK']
+    }).present();
+  }
+
+  showImageUploaddMessage() {
+    this.alert = this.alertCtrl.create({
+      title: successMessages.imageUploaded["title"],
+      subTitle: successMessages.imageUploaded["subTitle"],
       buttons: ['OK']
     }).present();
   }
