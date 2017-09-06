@@ -14,9 +14,73 @@
         계획성취도
       </ion-segment-button>
     </ion-segment>
-    
+ 
   </ion-toolbar>
-  <ion-toolbar no-border-top color="ios-blue">
+  <ion-toolbar no-padding no-border-top color="ios-blue">
+    <div *ngIf="chartView==='academic'">
+    <ion-row >
+      
+      <ion-select interface="popover">
+          <ion-option selected>
+              1학년
+          </ion-option>
+          <ion-option>
+              2학년
+          </ion-option>
+      </ion-select>
+      <ion-select interface="popover">
+          <ion-option selected>
+              1학기
+          </ion-option>
+          <ion-option>
+              2학기
+          </ion-option>
+      </ion-select>
+      <ion-select interface="popover">
+          <ion-option selected>
+              중간고사
+          </ion-option>
+          <ion-option>
+              기말고사
+          </ion-option>
+      </ion-select>
+      
+      <ion-col col-2>
+      <ion-buttons end>
+          <button ion-button icon-only (click)="addEvent(viewDate)" >
+              보기
+          </button>
+          </ion-buttons>
+      </ion-col>
+    </ion-row>
+   
+    </div>
+
+    <div *ngIf="chartView==='mock'">
+        <ion-row >
+          <ion-select interface="popover">
+              <ion-option selected>
+                  option1
+              </ion-option>
+              <ion-option>
+                  option2
+              </ion-option>
+          </ion-select>
+          <ion-select interface="popover">
+              <ion-option selected>
+                  3월
+              </ion-option>
+              <ion-option>
+                  6월
+              </ion-option>
+              <ion-option>
+                  9월
+              </ion-option>
+          </ion-select>
+          
+        </ion-row>
+        </div>
+
     </ion-toolbar>
 </ion-header>
 
