@@ -79,6 +79,7 @@ export class DataProvider {
     return this.angularfireDatabase.object('/conversations/' + conversationId + '/messages');
   }
 
+  ////////////////////////////////////// Schedule /////////////////////////////////////////////
   // Get conversation given the conversationId.
   getScheduleComment(scheduleCommentId) {
     return this.angularfireDatabase.object('/scheduleComments/' + scheduleCommentId);
@@ -108,4 +109,9 @@ export class DataProvider {
   getGroup(groupId) {
     return this.angularfireDatabase.object('/groups/' + groupId);
   }
+
+
+   ////////////////////////////////////// Chart /////////////////////////////////////////////
+
+   
 }

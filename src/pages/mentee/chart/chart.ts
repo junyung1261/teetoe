@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, LoadingController } from 'ionic-angular';
+import { IonicPage } from 'ionic-angular';
 import { Chart } from 'chart.js';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { DataProvider } from '../../../providers/data'
+import { LoadingProvider } from '../../../providers/loading';
 
 @IonicPage()
 @Component({
@@ -10,6 +12,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 })
 export class ChartPage {
     
+    private user: any;
     chartData: number[] =  [];
    
     chartLabels: string[] = [];
@@ -53,16 +56,19 @@ export class ChartPage {
     };
 
 
-    chartView: string = "Line";
+    chartView: string = "academic";
     isDataAvailable: boolean = false;  
     chartList: FirebaseListObservable<any[]>;
 
-    constructor(public afDB: AngularFireDatabase,public loadingCtrl: LoadingController ) {
-    let loadingPopup = this.loadingCtrl.create({
+    constructor(public afDB: AngularFireDatabase,
+                public loadingProvider: LoadingProvider,
+                public dataProvider: DataProvider ) {
+
+    /*let loadingPopup = this.loadingCtrl.create({
         spinner: 'crescent',
         content: ''
-    });
-    loadingPopup.present();      
+    });*/
+    //loadingPopup.present();      
         this.chartList = afDB.list('/chart/average', { preserveSnapshot: true });;
         this.chartList
         .subscribe(snapshots => {
@@ -75,9 +81,16 @@ export class ChartPage {
                 console.log("==================this.chartLabels = "+this.chartLabels);
                 console.log("==================this.pieChartLabels = "+this.chartData);
                 this.isDataAvailable = true;
-                loadingPopup.dismiss()
+                //loadingPopup.dismiss()
         })
     }
+
+
+
+    
+
+
+
     
    public lineChartData: Array<any> = [
    {data: this.chartData, label: 'Series A'},

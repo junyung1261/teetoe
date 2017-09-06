@@ -3,21 +3,21 @@
 <ion-header>
   
   <ion-toolbar no-border-top color="ios-blue">
-       <ion-segment mode="md" [(ngModel)]="chartView" color="dark">
-      <ion-segment-button value="Bar">
-        Bar
+       <ion-segment [(ngModel)]="chartView" color="dark">
+      <ion-segment-button value="academic">
+        내신성적
       </ion-segment-button>
-      <ion-segment-button value="Pie">
-        Pie
+      <ion-segment-button value="mock">
+        모의고사성적
       </ion-segment-button>
-      <ion-segment-button value="Line">
-        Line
-      </ion-segment-button>
-      <ion-segment-button value="More">
-        More
+      <ion-segment-button value="achievement">
+        계획성취도
       </ion-segment-button>
     </ion-segment>
+    
   </ion-toolbar>
+  <ion-toolbar no-border-top color="ios-blue">
+    </ion-toolbar>
 </ion-header>
 
 
@@ -26,9 +26,27 @@
 
     <div *ngIf="isDataAvailable">
     <!--*********** Bar chart  ***********-->
-      <div *ngIf="chartView==='Bar'">
+      <div *ngIf="chartView==='academic'">
 
         <!--*********** Vertical ***********-->
+
+        <ion-card>
+            <ion-card-header>
+              Line Chart
+            </ion-card-header>
+            <ion-card-content>
+                    <canvas baseChart 
+                [datasets]="lineChartData"
+                [labels]="lineChartLabels"
+                [options]="lineChartOptions"
+                [colors]="chartColor3"
+                [legend]="lineChartLegend"
+                chartType="line"
+                ></canvas>
+    
+            </ion-card-content>
+          </ion-card>
+
           <ion-card>
             <ion-card-header>
               Bar chart(vertical)
@@ -65,7 +83,7 @@
       
     <!--*********** Pie chart  ***********-->
 
-      <div *ngIf="chartView==='Pie'">
+      <div *ngIf="chartView==='mock'">
         <ion-card>
             <ion-card-header>
               Pie Chart
@@ -84,23 +102,8 @@
 
 
     <!--*********** Line chart  ***********-->
-        <div *ngIf="chartView==='Line'">
-        <ion-card>
-            <ion-card-header>
-              Line Chart
-            </ion-card-header>
-            <ion-card-content>
-                    <canvas baseChart width="400" height="400"
-                [datasets]="lineChartData"
-                [labels]="lineChartLabels"
-                [options]="lineChartOptions"
-                [colors]="chartColor3"
-                [legend]="lineChartLegend"
-                chartType="line"
-                ></canvas>
-    
-            </ion-card-content>
-          </ion-card>
+        <div *ngIf="chartView==='achievement'">
+        
       </div>
 
     <!--*********** More chart  ***********-->
@@ -169,4 +172,12 @@
 
       </div>
     </div>
+
+    <ion-fab right bottom>
+        <button ion-fab mini color="dark"><ion-icon name="add"></ion-icon></button>
+        <ion-fab-list side="top">
+          <button ion-fab (click)="openGallery2()"><ion-icon name="camera" ></ion-icon> <div class="label">내신성적 입력</div></button>
+          <button ion-fab (click)="openGallery()"><ion-icon name="md-photos" ></ion-icon> <div class="label">모의고사성적 입력</div></button>
+        </ion-fab-list>
+      </ion-fab>
 </ion-content>
