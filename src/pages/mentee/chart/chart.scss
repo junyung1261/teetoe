@@ -1,0 +1,50 @@
+page-chart {
+        .scroll-content {
+            background-color: map-get($colors, light);
+        }
+        ion-card-header {
+            font-weight: bold;
+        }
+
+        ion-card-content{
+          height:100%;
+          min-height: 400px;
+        }
+        ion-segement {
+          width: 95%;
+        }
+      
+        ion-fab {
+          button {
+              box-shadow: 0 4px 10px #6b6b6b;
+             
+          }
+      
+          ion-fab-list button[ion-fab] {
+              text-align: center;
+              overflow: visible;
+      
+              div.label {
+                position: absolute;
+                right: 48px;
+                background: rgba(248, 248, 248, 0.8);
+                height: 24px;
+                line-height: 16px;
+                padding-left: 8px;
+                padding-right: 8px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                margin-top: 0px;
+                border-radius: 5px;
+                box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1);
+              }
+          }
+      
+          .button-inner {
+              overflow: visible;
+          }
+      }
+      .fab {
+        contain: initial;
+      }
+}

@@ -8,7 +8,7 @@ export class LoadingProvider {
   // Set your spinner/loading indicator type here
   // List of Spinners: https://ionicframework.com/docs/v2/api/components/spinner/Spinner/
   private spinner = {
-    spinner: 'circles'
+    spinner: 'crescent'
   };
   private loading;
   constructor(public loadingController: LoadingController) {

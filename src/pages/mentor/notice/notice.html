@@ -1,0 +1,51 @@
+
+<ion-header >
+        <ion-navbar no-border-bottom color="ios-blue">
+         
+          <ion-title>
+             공지사항
+          </ion-title>
+          
+          <ion-buttons right>
+              <button ion-button icon-only>
+                  <ion-icon name="create"></ion-icon>
+              </button>
+          </ion-buttons>
+        </ion-navbar>
+      </ion-header>
+      
+      
+      <ion-content fullscreen no-padding>
+      
+       <ion-list>
+        <ion-item-group >
+            <div stlye="timelineBg" *ngFor="let notice of notices  | async" >
+                <!--***********  item divider  ***********-->
+                <ion-item-divider sticky>  <!-- *ngFor GroupTitle for feeds -->
+                  <ion-label>
+                    <h2>{{notice.date | amLocale:'ko' | amDateFormat:'LL'}}</h2>
+                  </ion-label>
+                </ion-item-divider>
+      
+                <ul class="timeline">
+                    <li   *ngFor="let list of  notice.lists | async ">
+                      <img src="{{list.profileImage}}" alt="" class="timeline-thumb pop-in">
+                      <div class="timeline-item" >
+                        <p><strong>흑인은 까맣다</strong></p>
+                        <p class="ellipsis">까맣기 때문이다.</p>
+                        <img data-src="{{list.images}}" class="imageTimeline">
+                        <div class="timeline-stats">
+                          <ion-icon name="md-eye"></ion-icon> 2,450
+                          <span class="pos-absolute-right"><ion-icon name="clock"></ion-icon> 2 mins ago</span>
+                        </div>
+                      </div>
+                    </li>
+                </ul>
+            </div>
+        </ion-item-group>
+      </ion-list>
+      
+      
+      
+      </ion-content>
+      

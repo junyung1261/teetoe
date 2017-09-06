@@ -1,0 +1,22 @@
+page-calendar-mentor{
+
+ .cal-month-view{
+  
+  display: block;
+    position: absolute;
+   
+    height: 100%;
+    width: 100%;
+   
+}
+  
+
+
+.cal-day-selected,
+    .cal-day-selected:hover {
+      background-color: deeppink !important;
+    }
+ .odd-cell {
+      background-color: pink !important;
+    }
+}

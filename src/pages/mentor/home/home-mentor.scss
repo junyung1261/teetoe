@@ -1,0 +1,88 @@
+page-home-mentor{
+    .follow-button {
+        background: #fff; 
+        border: 1px solid color($colors, dark); 
+        color:  color($colors, dark);
+        font-size: 13px; 
+        border-radius: 3px;
+        padding: 5px;
+        font-weight: bold;
+        width: 90%;
+        margin-right: 30px;
+      }
+        .follow-button-active {
+        background:color($colors, dark); 
+        border: 1px solid color($colors, dark); 
+        color:  color($colors, light);
+        font-size: 13px; 
+        border-radius: 3px;
+        padding: 5px;
+        font-weight: bold;
+        width: 90%;
+        margin-right: 30px;
+      }
+    
+      
+  .avatar {
+    border-radius: 100%;
+    position: absolute;
+    
+  }
+  ion-avatar {      
+    color:#fff;
+    margin-bottom: -0.625em;
+  }
+  ion-avatar img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    // border: 1px solid #ccc;
+  }   
+     
+ 
+
+  ion-grid {
+    
+    
+    
+    
+    ion-col {
+      
+        .square{
+        
+        border-inline-start: 1px solid #bdbdbd;
+        border-bottom: 1px solid #bdbdbd;
+    
+        width: 100% !important;
+        height:0 !important;
+        padding: 50% 0 50% 0 !important;
+        text-align: center;
+        margin:0;
+       
+      }
+      
+     
+    
+      p {
+        padding: 10px 0 0 10px !important;
+        margin: 0;
+      }
+
+      .title {
+        font-size: 15px;
+        position: relative;
+        color: black;
+        
+      }
+      ion-icon {
+        font-size: 55px; //Preferred size here
+    }
+  }
+}
+
+  
+  
+
+
+}
