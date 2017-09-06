@@ -28,21 +28,6 @@ import {
 } from 'date-fns';
 
 
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3'
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF'
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA'
-  }
-};
-
 
 
 
@@ -103,8 +88,6 @@ public event1 = {
     compare(){
         let start = new Date(this.start);
         let end = new Date(this.end);
-        
-        var swap = function (x){return x};
         
         
         if(start.getTime() > end.getTime()) {
