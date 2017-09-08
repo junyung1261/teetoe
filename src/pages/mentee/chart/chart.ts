@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { Chart } from 'chart.js';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { DataProvider } from '../../../providers/data'
@@ -36,7 +36,14 @@ export class ChartPage {
         responsive: true,
         maintainAspectRatio: false,
         scaleShowVerticalLines: false,
-        legend: {position: 'bottom'}
+        legend: {position: 'bottom'},
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
     };
     halfDonutOption: any = {
             responsive: true,
@@ -62,7 +69,8 @@ export class ChartPage {
 
     constructor(public afDB: AngularFireDatabase,
                 public loadingProvider: LoadingProvider,
-                public dataProvider: DataProvider ) {
+                public dataProvider: DataProvider,
+                public navCtrl: NavController ) {
 
     /*let loadingPopup = this.loadingCtrl.create({
         spinner: 'crescent',
@@ -125,5 +133,19 @@ export class ChartPage {
      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
    }
  ];
+
+
+ openChartAcademic(){
+     
+     this.navCtrl.push('ChartAddPage', {view: 'academic'});
+ }
+
+ openChartMock(){
     
+    this.navCtrl.push('ChartAddPage', {view: 'mock'});
+}
+
+
+
+
 }

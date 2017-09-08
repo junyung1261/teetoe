@@ -1,0 +1,45 @@
+<ion-header>
+        <ion-navbar>
+            <ion-title>
+                {{title}}
+            </ion-title>
+
+            <ion-buttons end>
+                    <button ion-button icon-only (click)="addEvent(viewDate)" >
+                        저장
+                    </button>
+                    </ion-buttons>
+        </ion-navbar>
+    </ion-header>
+ 
+<ion-content>
+        <ion-item>
+                <ion-label color="primary" fixed>국어</ion-label>
+                <ion-input type="number" min='0' max='100' placeholder="Number Input with no label" [(ngModel)]="korean" ></ion-input>
+        </ion-item>
+        <ion-item>
+                <ion-label color="primary" fixed>영어</ion-label>
+                <ion-input type="number" placeholder="Number Input with no label"></ion-input>
+        </ion-item>
+        <ion-item>
+                <ion-label color="primary" fixed>수학</ion-label>
+                <ion-input type="number" placeholder="Number Input with no label"></ion-input>
+        </ion-item>
+        <ion-item>
+                <ion-label color="primary" fixed>사회</ion-label>
+                <ion-input type="number" placeholder="Number Input with no label"></ion-input>
+        </ion-item>
+        <ion-item>
+                <ion-label color="primary" fixed>과학</ion-label>
+                <ion-input type="number" placeholder="Number Input with no label"></ion-input>
+        </ion-item>
+        
+
+        <ion-fab right bottom>
+                <button ion-fab mini color="dark"><ion-icon name="add"></ion-icon></button>
+                <ion-fab-list side="top">
+                  <button ion-fab (click)="test($event)" [value]="test"><ion-icon name="camera" ></ion-icon> <div class="label">내신성적 입력</div></button>
+                  <button ion-fab (click)="test($event)" [value]="test2"><ion-icon name="md-photos" ></ion-icon> <div class="label">모의고사성적 입력</div></button>
+                </ion-fab-list>
+        </ion-fab>
+</ion-content>
