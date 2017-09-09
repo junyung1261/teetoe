@@ -4,6 +4,7 @@ import { Chart } from 'chart.js';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { DataProvider } from '../../../providers/data'
 import { LoadingProvider } from '../../../providers/loading';
+import * as firebase from 'firebase';
 
 @IonicPage()
 @Component({
@@ -13,7 +14,7 @@ import { LoadingProvider } from '../../../providers/loading';
 export class ChartPage {
     
     private user: any;
-    chartData: number[] =  [];
+    academic: any = [];
    
     chartLabels: string[] = [];
     chartLegend:boolean = false;
@@ -65,7 +66,7 @@ export class ChartPage {
 
     chartView: string = "academic";
     isDataAvailable: boolean = false;  
-    chartList: FirebaseListObservable<any[]>;
+    
 
     constructor(public afDB: AngularFireDatabase,
                 public loadingProvider: LoadingProvider,
@@ -76,32 +77,33 @@ export class ChartPage {
         spinner: 'crescent',
         content: ''
     });*/
-    //loadingPopup.present();      
-        this.chartList = afDB.list('/chart/average', { preserveSnapshot: true });;
-        this.chartList
-        .subscribe(snapshots => {
-            snapshots.forEach(snapshot => {
-                this.chartLabels.push(snapshot.val().chartLabels);
-                console.log("this.chartLabels.push= "+snapshot.val().chartLabels);
-                this.chartData.push(parseInt(snapshot.val().chartData));
-                console.log("this.chartData.push= "+parseInt(snapshot.val().chartData));
-            });
-                console.log("==================this.chartLabels = "+this.chartLabels);
-                console.log("==================this.pieChartLabels = "+this.chartData);
+    //loadingPopup.present();     
+       
+    }
+
+
+
+    ionViewDidEnter() {
+        let user = firebase.auth().currentUser.uid; 
+        this.afDB.object('/chart/' + user + '/academic', { preserveSnapshot: true })       
+        .subscribe(snapshot => {
+            
+                console.log(snapshot.val());
+                this.academic.push(snapshot.val());
+               
+                //console.log("==================this.pieChartLabels = "+this.chartData);
                 this.isDataAvailable = true;
                 //loadingPopup.dismiss()
         })
+        
+        console.log(this.academic);
     }
 
 
 
     
-
-
-
-    
    public lineChartData: Array<any> = [
-   {data: this.chartData, label: 'Series A'},
+   
    {data: [70, 48, 40, 90, 86], label: 'Series B'},
    {data: [40, 48, 77, 60, 100], label: 'Series C'}
  ];

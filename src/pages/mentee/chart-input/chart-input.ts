@@ -4,6 +4,7 @@ import { IonicPage, NavParams } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { DataProvider } from '../../../providers/data'
 import { LoadingProvider } from '../../../providers/loading';
+import { ChartProvider } from '../../../providers/chart'
 
 @IonicPage()
 @Component({
@@ -16,18 +17,18 @@ export class ChartInputPage {
     private user: any;
     private data: any;
     private grade: any;
-    korean: any;
 
 
 
     constructor(public afDB: AngularFireDatabase,
                 public loadingProvider: LoadingProvider,
                 public dataProvider: DataProvider,
-                public NavParams: NavParams ) {
-                    
+                public NavParams: NavParams,
+                public chartProvider: ChartProvider ) {
+                this.grade =[];
                 this.data = NavParams.get('data');
                 console.log(this.data);
-                this.korean = 80;
+                this.grade.push({name:'korean', score:70}, {name:'math', score:70}, {name:'english', score:70});
                 this.matchTitle(this.data);      
                     
         }
@@ -65,7 +66,32 @@ export class ChartInputPage {
         
     }
 
-    test(event){
-        console.log(event.srcElement.value)
+    onChangeTime(value, subject){
+        console.log(value); 
+        if(value < 0) subject.score = 0;
+        if(value > 100) subject.score = 100;
     }
+
+    pushSubject(event){
+        if(this.grade.length < 6){
+        let check = 1;
+        this.grade.forEach(subject => {
+            if(subject.name == event) check = 0
+        })          
+        if(check)this.grade.push({name:event});
+        }
+    }
+
+    deleteSubject(subject){
+        this.grade.splice(this.grade.indexOf(subject),1);
+    }
+
+    saveScore(){
+       this.grade.meta= this.data.value;
+       console.log(this.grade);
+       this.chartProvider.updateScore(this.grade);
+    }
+
+
+
 }

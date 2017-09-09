@@ -43,7 +43,7 @@ import { AlertProvider } from '../providers/alert';
 import { ImageProvider } from '../providers/image';
 import { DataProvider } from '../providers/data';
 import { FirebaseProvider } from '../providers/firebase';
-
+import { ChartProvider } from '../providers/chart'
 
 
 import { SearchPipe } from '../pipes/search';
@@ -109,7 +109,8 @@ import { GroupPipe } from '../pipes/group';
     AlertProvider, 
     ImageProvider, 
     DataProvider, 
-    FirebaseProvider
+    FirebaseProvider,
+    ChartProvider
 
   ],
 

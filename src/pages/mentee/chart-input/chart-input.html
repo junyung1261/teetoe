@@ -5,7 +5,7 @@
             </ion-title>
 
             <ion-buttons end>
-                    <button ion-button icon-only (click)="addEvent(viewDate)" >
+                    <button ion-button icon-only (click)="saveScore()" >
                         저장
                     </button>
                     </ion-buttons>
@@ -13,33 +13,59 @@
     </ion-header>
  
 <ion-content>
-        <ion-item>
-                <ion-label color="primary" fixed>국어</ion-label>
-                <ion-input type="number" min='0' max='100' placeholder="Number Input with no label" [(ngModel)]="korean" ></ion-input>
-        </ion-item>
-        <ion-item>
-                <ion-label color="primary" fixed>영어</ion-label>
-                <ion-input type="number" placeholder="Number Input with no label"></ion-input>
-        </ion-item>
-        <ion-item>
-                <ion-label color="primary" fixed>수학</ion-label>
-                <ion-input type="number" placeholder="Number Input with no label"></ion-input>
-        </ion-item>
-        <ion-item>
-                <ion-label color="primary" fixed>사회</ion-label>
-                <ion-input type="number" placeholder="Number Input with no label"></ion-input>
-        </ion-item>
-        <ion-item>
-                <ion-label color="primary" fixed>과학</ion-label>
-                <ion-input type="number" placeholder="Number Input with no label"></ion-input>
-        </ion-item>
-        
 
+        
+<ion-list >
+                <ion-item-sliding *ngFor=" let subject of grade" >
+                  <ion-item>
+                                <ion-label color="primary" fixed>{{subject.name}}</ion-label>
+                                
+                                <ion-input type="number" min='0' max='100' (change)='onChangeTime($event.target.value, subject)' placeholder="Number Input with no label" [(ngModel)]="subject.score" ></ion-input>
+                               
+                                        
+                  </ion-item>
+                  <ion-item-options side="left">
+                    <button ion-button (click)="deleteSubject(subject)" color="danger">
+                        <ion-icon name="trash"></ion-icon>
+                    </button>
+                    
+                  </ion-item-options>
+              
+                </ion-item-sliding>
+              </ion-list>
+       
+        
+                
         <ion-fab right bottom>
-                <button ion-fab mini color="dark"><ion-icon name="add"></ion-icon></button>
-                <ion-fab-list side="top">
-                  <button ion-fab (click)="test($event)" [value]="test"><ion-icon name="camera" ></ion-icon> <div class="label">내신성적 입력</div></button>
-                  <button ion-fab (click)="test($event)" [value]="test2"><ion-icon name="md-photos" ></ion-icon> <div class="label">모의고사성적 입력</div></button>
+                <button ion-fab color="dark"><ion-icon name="add"></ion-icon></button>
+                <ion-fab-list side="left">
+                  <button ion-fab (click)="pushSubject('test')" [value]="test">지구1</button>
+                  <button ion-fab (click)="pushSubject('test1')" [value]="test2">생물1</button>
+                  <button ion-fab (click)="pushSubject('test2')" [value]="test">화학1</button>
+                  <button ion-fab (click)="pushSubject('test3')" [value]="test2">물리1</button>
                 </ion-fab-list>
+                <ion-fab-list side="left" style="margin-top:-50px;">
+                        <button ion-fab (click)="pushSubject($event)" [value]="test">지구2</button>
+                        <button ion-fab (click)="pushSubject($event)" [value]="test2">생물2</button>
+                        <button ion-fab (click)="pushSubject($event)" [value]="test">화학2</button>
+                        <button ion-fab (click)="pushSubject($event)" [value]="test2">물리2</button>
+                 </ion-fab-list>
         </ion-fab>
+
+        <!--<ion-fab right bottom>
+                        <button ion-fab color="dark"><ion-icon name="add"></ion-icon></button>
+                        <ion-fab-list side="left">
+                          <button ion-fab (click)="test($event)" [value]="test">세계지리</button>
+                          <button ion-fab (click)="test($event)" [value]="test2">한국지리</button>
+                          <button ion-fab (click)="test($event)" [value]="test">윤리와 사상</button>
+                          <button ion-fab (click)="test($event)" [value]="test2">생활과 윤리</button>
+                        </ion-fab-list>
+                        <ion-fab-list side="left" style="margin-top:-50px; margin-right: 10px">
+                                <button ion-fab (click)="test($event)" [value]="test">사회문화</button>
+                                <button ion-fab (click)="test($event)" [value]="test">경제</button>
+                                <button ion-fab (click)="test($event)" [value]="test2">법과 정치</button>
+                                <button ion-fab (click)="test($event)" [value]="test">세계사</button>
+                                <button ion-fab (click)="test($event)" [value]="test2">동아시아사</button>
+                         </ion-fab-list>
+                </ion-fab>-->
 </ion-content>
