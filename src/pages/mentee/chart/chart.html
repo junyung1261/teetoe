@@ -20,34 +20,37 @@
     <div *ngIf="chartView==='academic'">
     <ion-row >
       
-      <ion-select interface="popover">
-          <ion-option selected>
+      <ion-select interface="popover" [(ngModel)]="grade">
+          <ion-option  value="1st" selected>
               1학년
           </ion-option>
-          <ion-option>
+          <ion-option  value="2nd"> 
               2학년
           </ion-option>
+          <ion-option  value="3rd"> 
+              3학년
+        </ion-option>
       </ion-select>
-      <ion-select interface="popover">
-          <ion-option selected>
+      <ion-select interface="popover" [(ngModel)]="semester">
+          <ion-option value="1st" selected>
               1학기
           </ion-option>
-          <ion-option>
+          <ion-option value="2nd">
               2학기
           </ion-option>
       </ion-select>
-      <ion-select interface="popover">
-          <ion-option selected>
+      <ion-select interface="popover" [(ngModel)]="exam">
+          <ion-option value="middle" selected>
               중간고사
           </ion-option>
-          <ion-option>
+          <ion-option value="final">
               기말고사
           </ion-option>
       </ion-select>
       
       <ion-col col-2>
       <ion-buttons end>
-          <button ion-button icon-only (click)="addEvent(viewDate)" >
+          <button ion-button icon-only (click)="checkGrade()" >
               보기
           </button>
           </ion-buttons>
@@ -116,8 +119,9 @@
               Bar chart(vertical)
             </ion-card-header>
             <ion-card-content>
-              <canvas  baseChart                 
-                        [data]="chartData"
+              <canvas  baseChart
+                        id="myChart"                    
+                        [data]="chartDatas"
                         [labels]="chartLabels"
                         
                         [colors]="chartColor1"
@@ -134,7 +138,7 @@
             </ion-card-header>
             <ion-card-content>
               <canvas  baseChart                 
-                        [data]="chartData"
+                        [data]="chartDatas"
                         [labels]="chartLabels"
                         [legend]="chartLegend"
                         [colors]="chartColor1"

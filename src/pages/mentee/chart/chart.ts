@@ -14,9 +14,12 @@ import * as firebase from 'firebase';
 export class ChartPage {
     
     private user: any;
-    academic: any = [];
-   
-    chartLabels: string[] = [];
+    academic: any[] = [];
+    private grade: any;
+    private semester: any;
+    private exam: any;
+    private chartDatas: number[] = [];
+    private chartLabels: string[] = [];
     chartLegend:boolean = false;
 
     //*********** chart color theme   **************//
@@ -84,18 +87,9 @@ export class ChartPage {
 
 
     ionViewDidEnter() {
-        let user = firebase.auth().currentUser.uid; 
-        this.afDB.object('/chart/' + user + '/academic', { preserveSnapshot: true })       
-        .subscribe(snapshot => {
-            
-                console.log(snapshot.val());
-                this.academic.push(snapshot.val());
-               
-                //console.log("==================this.pieChartLabels = "+this.chartData);
-                this.isDataAvailable = true;
-                //loadingPopup.dismiss()
-        })
         
+        
+
         console.log(this.academic);
     }
 
@@ -103,7 +97,7 @@ export class ChartPage {
 
     
    public lineChartData: Array<any> = [
-   
+   {data: this.chartDatas, label: 'test'},
    {data: [70, 48, 40, 90, 86], label: 'Series B'},
    {data: [40, 48, 77, 60, 100], label: 'Series C'}
  ];
@@ -147,6 +141,28 @@ export class ChartPage {
     this.navCtrl.push('ChartAddPage', {view: 'mock'});
 }
 
+checkGrade(){
+    let user = firebase.auth().currentUser.uid; 
+    this.afDB.object('/chart/' + user + '/academic/' + this.grade + '/' + this.semester + '/' + this.exam, { preserveSnapshot: true })       
+    .subscribe(snapshots => {
+                this.chartDatas = [];
+                this.chartLabels = [];
+                console.log(snapshots.val().lenght);
+                snapshots.forEach( snapshot => {
+                    this.chartDatas.push(parseInt(snapshot.val().score));
+                    this.chartLabels.push(snapshot.val().name);
+                    
+                })
+               
+           
+           
+            //console.log("==================this.pieChartLabels = "+this.chartData);
+            this.isDataAvailable = true;
+            //loadingPopup.dismiss()
+    });
+    
+    
+}
 
 
 
