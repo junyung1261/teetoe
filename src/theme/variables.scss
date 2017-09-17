@@ -56,6 +56,16 @@ $google-active: #ff563f;
 // iOS only Sass variables can go here
 
 
+  
+$action-sheet-ios-title-color:                          #8f8f8f !default;
+
+/// @prop - Font size of the action sheet title
+$action-sheet-ios-title-font-size:                      1.8rem !default;
+
+$action-sheet-ios-button-text-color:                    #111 !default;
+
+/// @prop - Font size of the action sheet button
+$action-sheet-ios-button-font-size:                     2rem !default;
 
 
 // App Material Design Variables

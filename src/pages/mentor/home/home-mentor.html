@@ -54,7 +54,7 @@
     <ion-col no-padding no-margin text-center col-4> <p><b>멘토 - {{user.name}}</b></p></ion-col>
     <ion-col no-padding no-margin text-center col-8>
       <!--<button class="follow-button" icon-left (click)="goEditProfile()">Follow</button>-->
-      <button ion-button class="follow-button" *ngIf="!following"  block  (click)="follow()">소속학원 - A반</button>
+      <button ion-button class="follow-button" *ngIf="!following"  block  (click)="test()">소속학원 - A반</button>
       <button ion-button class="follow-button-active" icon-left *ngIf="following"  block  (click)="follow()">
         <ion-icon name="checkmark"></ion-icon>
         Following
@@ -128,9 +128,10 @@
             </ion-col>
             <ion-col >
                 
-                <button class="square" ion-button full clear>
-                    
-                    </button>
+               
+              <button class="square" ion-button full clear  (click)="openTestPage()" >
+                <ion-icon name="help"><div class = title><br>Test</div></ion-icon>
+                </button>
                 
             </ion-col>
             <ion-col >

@@ -1,67 +1,75 @@
 <ion-header  >
     
    <ion-navbar color="light"  >
+    <ion-title>
+        청솔학원 - 고3 A반
+      </ion-title>
+  
+  
+  
+ </ion-navbar>
 
-  <ion-row>
-    <ion-col col-md-4>
-        <ion-buttons first>
-            <button ion-button  icon-only 
-                mwlCalendarPreviousView
-                [view]="view"
+ <ion-toolbar  style="z-index: 2 ">
+    <ion-row>
+        <ion-col col-md-4>
+            <ion-buttons first>
+                <button ion-button  icon-only 
+                    mwlCalendarPreviousView
+                    [view]="view"
+                    [(viewDate)]="viewDate"
+                    (click)="activeDayIsOpen=false"
+                    (viewDateChange)="viewDateChange.next(viewDate)"
+                    >  
+                <ion-icon name="arrow-dropleft"></ion-icon>
+                </button>
+                <button ion-button  icon-only 
+                    mwlCalendarNextView
+                    [view]="view"
+                    [(viewDate)]="viewDate"
+                    (click)="activeDayIsOpen=false"
+                    (viewDateChange)="viewDateChange.next(viewDate)"
+                    >
+                    <ion-icon name="arrow-dropright"></ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-col>
+      
+        
+            <ion-title 
+                mwlCalendarToday
                 [(viewDate)]="viewDate"
-                (click)="activeDayIsOpen=false"
-                (viewDateChange)="viewDateChange.next(viewDate)"
-                >  
-            <ion-icon name="arrow-dropleft"></ion-icon>
-            </button>
-            <button ion-button  icon-only 
-                mwlCalendarNextView
-                [view]="view"
-                [(viewDate)]="viewDate"
-                (click)="activeDayIsOpen=false"
                 (viewDateChange)="viewDateChange.next(viewDate)"
                 >
-                <ion-icon name="arrow-dropright"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-col>
-  
+                {{ viewDate | calendarDate:(view + 'ViewTitle'):'kr' }}
+            </ion-title>
+        
     
-        <ion-title 
-            mwlCalendarToday
-            [(viewDate)]="viewDate"
-            (viewDateChange)="viewDateChange.next(viewDate)"
-            >
-            {{ viewDate | calendarDate:(view + 'ViewTitle'):'kr' }}
-        </ion-title>
-    
-
-    <ion-col col-md-4>
-        <div [ngSwitch]="view">
-            <ion-buttons end>
-            
-                <button ion-button icon-only *ngSwitchCase="'month'" 
-                    (click)="view='day'"
-                    [class.active]="view === 'day'">
-                    <ion-icon name="calendar" class="dark"></ion-icon>
-                </button>
-               
-                <button ion-button icon-only *ngSwitchCase="'day'" 
-                    
-                    (click)="view='month'"
-                    [class.active]="view === 'month'">
-                    <ion-icon name="list" class="dark"></ion-icon>
-                </button>
-                    
-                <button ion-button icon-only (click)="addEvent(viewDate)" >
-                    <ion-icon name="create" class="dark"></ion-icon>
-                </button>
-            
-            </ion-buttons>
-        </div>
-    </ion-col>
-  </ion-row>
- </ion-navbar>
+        <ion-col col-md-4>
+            <div [ngSwitch]="view">
+                <ion-buttons end>
+                
+                    <button ion-button icon-only *ngSwitchCase="'month'" 
+                        (click)="view='day'"
+                        [class.active]="view === 'day'">
+                        <ion-icon name="calendar" class="dark"></ion-icon>
+                    </button>
+                   
+                    <button ion-button icon-only *ngSwitchCase="'day'" 
+                        
+                        (click)="view='month'"
+                        [class.active]="view === 'month'">
+                        <ion-icon name="list" class="dark"></ion-icon>
+                    </button>
+                        
+                    <button ion-button icon-only (click)="addEvent(viewDate)" >
+                        <ion-icon name="create" class="dark"></ion-icon>
+                    </button>
+                
+                </ion-buttons>
+            </div>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
    
 </ion-header>
 

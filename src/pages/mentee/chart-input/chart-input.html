@@ -39,16 +39,16 @@
         <ion-fab right bottom>
                 <button ion-fab color="dark"><ion-icon name="add"></ion-icon></button>
                 <ion-fab-list side="left">
-                  <button ion-fab (click)="pushSubject('test')" [value]="test">지구1</button>
-                  <button ion-fab (click)="pushSubject('test1')" [value]="test2">생물1</button>
-                  <button ion-fab (click)="pushSubject('test2')" [value]="test">화학1</button>
-                  <button ion-fab (click)="pushSubject('test3')" [value]="test2">물리1</button>
+                  <button ion-fab (click)="pushSubject('지구과학1')" [value]="test1">지구1</button>
+                  <button ion-fab (click)="pushSubject('생물1')" [value]="test1">생물1</button>
+                  <button ion-fab (click)="pushSubject('화학1')" [value]="test1">화학1</button>
+                  <button ion-fab (click)="pushSubject('물리1')" [value]="test1">물리1</button>
                 </ion-fab-list>
                 <ion-fab-list side="left" style="margin-top:-50px;">
-                        <button ion-fab (click)="pushSubject($event)" [value]="test">지구2</button>
-                        <button ion-fab (click)="pushSubject($event)" [value]="test2">생물2</button>
-                        <button ion-fab (click)="pushSubject($event)" [value]="test">화학2</button>
-                        <button ion-fab (click)="pushSubject($event)" [value]="test2">물리2</button>
+                        <button ion-fab (click)="pushSubject('지구과학2')" [value]="test1">지구2</button>
+                        <button ion-fab (click)="pushSubject('생물2')" [value]="test1">생물2</button>
+                        <button ion-fab (click)="pushSubject('화학2')" [value]="test1">화학2</button>
+                        <button ion-fab (click)="pushSubject('물리2')" [value]="test1">물리2</button>
                  </ion-fab-list>
         </ion-fab>
 

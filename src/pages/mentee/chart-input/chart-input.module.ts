@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { ChartInputPage } from './chart-input';
 import { IonicPageModule } from 'ionic-angular';
 
+
 // Import Chart 
 
 
@@ -17,6 +18,7 @@ import { IonicPageModule } from 'ionic-angular';
   ],
   exports: [
     ChartInputPage
-  ]
+  ],
+ 
 })
 export class ChartPageModule {}

@@ -6,6 +6,7 @@ import { DataProvider } from '../../../providers/data'
 import { LoadingProvider } from '../../../providers/loading';
 import { ChartProvider } from '../../../providers/chart'
 
+
 @IonicPage()
 @Component({
   selector: 'page-chart-input',
@@ -24,11 +25,31 @@ export class ChartInputPage {
                 public loadingProvider: LoadingProvider,
                 public dataProvider: DataProvider,
                 public NavParams: NavParams,
-                public chartProvider: ChartProvider ) {
+                public chartProvider: ChartProvider,
+                 ) {
                 this.grade =[];
                 this.data = NavParams.get('data');
                 console.log(this.data);
-                this.grade.push({name:'korean', score:70}, {name:'math', score:70}, {name:'english', score:70});
+                
+                        
+                if(this.data.score != undefined){
+                    this.data.score.forEach( data => {
+                        this.grade.push({name: data.name, score: data.score});
+                    })
+                }else{
+                    if(this.data.value.grade =='1st' && this.data.value.class =='academic')
+                    this.grade.push({name: '국어'},{name: '영어'},{name: '수학'},{name: '사회'},{name: '과학'});
+                    else if (this.data.value.grade !='1st' && this.data.value.class =='academic'){
+                        this.grade.push({name: '국어'},{name: '영어'},{name: '수학'});
+                    }
+                    else if (this.data.value.grade =='1st' && this.data.value.class =='mock'){
+                        this.grade.push({name: '국어'},{name: '영어'},{name: '수학'},{name: '한국사'},{name: '사회탐구'},{name: '과학탐구'});
+                    }
+                    else {
+                        this.grade.push({name: '국어'},{name: '영어'},{name: '수학'},{name: '한국사'});
+                    }
+                }  
+                
                 this.matchTitle(this.data);      
                     
         }
@@ -67,7 +88,7 @@ export class ChartInputPage {
     }
 
     onChangeTime(value, subject){
-        console.log(value); 
+        
         if(value < 0) subject.score = 0;
         if(value > 100) subject.score = 100;
     }
@@ -84,14 +105,17 @@ export class ChartInputPage {
 
     deleteSubject(subject){
         this.grade.splice(this.grade.indexOf(subject),1);
+        this.data.score.splice(this.data.score.indexOf({name:subject.name, score:subject.score}));
+        
+        if(this.grade.length == 0 ) this.data.score = null;
     }
 
     saveScore(){
-       this.grade.meta= this.data.value;
-       console.log(this.grade);
+       this.grade.meta = this.data.value;
+       
        this.chartProvider.updateScore(this.grade);
     }
 
 
-
+    
 }

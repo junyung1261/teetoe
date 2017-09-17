@@ -2,7 +2,7 @@
 <ion-header>
     <ion-navbar>
         <ion-title>
-            {{title}}
+            {{academy}}
         </ion-title>
     </ion-navbar>
 </ion-header>
@@ -29,12 +29,13 @@
                                 {{ child.name }}
                               </button>
                      
-                              <!-- Direct Add Button as Fallback 
+                             <!-- Direct Add Button as Fallback -->
                               <ion-item *ngIf="!child.children" ion-item detail-none class="child-item" text-wrap>
                                 <h2>{{ child.name }}</h2>
                                 <p text-lowercase>{{ child.information }}</p>
-                                <button ion-button outline item-end (click)="buyItem(child)">작성</button>
-                              </ion-item> -->
+                                <button ion-button outline item-end (click)="addClass(child)" *ngIf="child.exist == -1">추가</button>
+                                <button ion-button outline item-end (click)="openInputPage(item)" *ngIf="child.exist != -1">등록됨</button>
+                              </ion-item> 
                               
                               <ion-list *ngIf="child.children && child.open">
                                 <!-- Third Level -->
@@ -42,8 +43,8 @@
                                   <h2 style="margin-left:20px;">{{ item.name }}</h2>
                                   <p text-lowercase>{{ item.information }}</p>
                                   <!-- Direct Add Button -->
-                                  <button ion-button outline item-end (click)="openInputPage(item)" *ngIf="!item.score">작성</button>
-                                  <button ion-button outline item-end (click)="openInputPage(item)" *ngIf="item.score">수정</button>
+                                  <button ion-button outline item-end (click)="addClass(item)" *ngIf="item.exist == -1">추가</button>
+                                  <button ion-button outline item-end (click)="openInputPage(item)" *ngIf="item.exist != -1">등록됨</button>
                                 </ion-item>
                               </ion-list>
                             </ion-list-header>

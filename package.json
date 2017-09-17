@@ -31,14 +31,16 @@
         "@ionic-native/status-bar": "3.13.1",
         "@ionic-native/toast": "^4.2.1",
         "@ionic/storage": "2.0.1",
-        "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.3",
+        "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.4",
+        "@types/chartjs": "0.0.30",
         "angular": "^1.6.6",
-        "angular-calendar": "^0.21.1",
+        "angular-calendar": "^0.21.2",
         "angular-svg-round-progressbar": "^1.1.0",
         "angular2-moment": "^1.7.0",
         "angularfire": "^2.3.0",
         "angularfire2": "^4.0.0-rc0",
-        "chart.js": "^2.6.0",
+        "calendar-utils": "0.0.57",
+        "chart.js": "^2.7.0",
         "cordova-android": "^6.2.3",
         "cordova-browser": "^4.1.0",
         "cordova-fetch-plugins": "0.0.12",
@@ -56,7 +58,7 @@
         "cordova-sqlite-storage": "^2.0.4",
         "d3": "^4.10.2",
         "intl": "^1.2.5",
-        "ionic": "^3.9.2",
+        "ionic": "^3.10.3",
         "ionic-angular": "3.6.0",
         "ionic-gallery-modal": "^0.2.2",
         "ionic-img-viewer": "^2.6.1",
@@ -67,12 +69,12 @@
         "ng2-charts": "^1.6.0",
         "rxjs": "5.4.0",
         "sw-toolbox": "3.6.0",
-        "zone.js": "0.8.12",
-        "com.synconset.imagepicker": "~2.1.8"
+        "zone.js": "0.8.12"
     },
     "devDependencies": {
         "@ionic/app-scripts": "2.1.3",
         "@ionic/cli-plugin-ionic-angular": "1.4.1",
+        "@types/node": "^8.0.28",
         "typescript": "2.3.4"
     },
     "cordovaPlugins": [

@@ -1,10 +1,13 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { IonicPage, NavController, NavParams, FabContainer } from 'ionic-angular';
 import { Chart } from 'chart.js';
+
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { DataProvider } from '../../../providers/data'
 import { LoadingProvider } from '../../../providers/loading';
+import { ChartProvider } from '../../../providers/chart';
 import * as firebase from 'firebase';
+
 
 @IonicPage()
 @Component({
@@ -13,17 +16,60 @@ import * as firebase from 'firebase';
 })
 export class ChartPage {
     
-    private user: any;
-    academic: any[] = [];
-    private grade: any;
-    private semester: any;
-    private exam: any;
-    private chartDatas: number[] = [];
-    private chartLabels: string[] = [];
+    
+
+
+   
+    private academic: any[] = [];
+    private a_grade: any;
+    private a_semester: any;
+    private a_exam: any;
+    private m_grade: any;
+    private m_host: any;
+    private m_month: any;
+    private a_chartDatas: any[];
+    private a_chartLabels: any[];
+    private m_chartDatas: any[];
+    private m_chartLabels: any[];
+    private events: any[];
+    private fromChild: any;
+    private a_meta: any;
+    private m_meta: any;
     chartLegend:boolean = false;
 
+    
+   public lineChartData: Array<any> ;
+   public lineChartLabels:Array<any> ;
+   
+   public a_radarChartData: Array<any> ;
+   public a_radarChartLabels:Array<any> ;
+   
+   public m_radarChartData: Array<any> ;
+   public m_radarChartLabels:Array<any> ;
+   
+   private m_title: string;
+   private a_title: string;
+   
+   
+  
     //*********** chart color theme   **************//
-    chartColor1: any[] = [{backgroundColor:['#d53e4f','#f46d43','#fdae61','#e6f598','#abdda4','#66c2a5','#3288bd','#5e4fa2']}]; 
+    chartColor1: any[] = [{backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+    ],
+    borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+    ],
+    borderWidth: 1}]; 
     
     chartColor2: any[] = [{backgroundColor:['rgba(127,0,0, 0.2)','rgba(215,48,39,0.2)','rgba(244,109,67,0.2)','rgba(253,174,97,0.2)','rgba(254,224,139,0.2)','rgba(255,255,191,0.2)','rgba(217,239,139,0.2)','rgba(166,217,106,0.2)','rgba(102,189,99,0.2)','rgba(26,152,80,0.2)','rgba(0,104,55,0.2)']}]; 
     
@@ -35,6 +81,9 @@ export class ChartPage {
     
     chartColorForLine: any[] = [{ backgroundColor:'rgba(127,0,0, 0.8)'  }];  
     //**********************************************//
+
+
+    
 
     lineChartOptions: any = {
         responsive: true,
@@ -56,7 +105,8 @@ export class ChartPage {
             circumference: 1 * Math.PI
     };
     radarOption: any = {
-            
+        responsive: true,
+        maintainAspectRatio: false,
             scale: {
                 ticks: {
                     
@@ -67,42 +117,114 @@ export class ChartPage {
     };
 
 
-    chartView: string = "academic";
-    isDataAvailable: boolean = false;  
+    chartView: string;
+    public isDataAvailable: boolean = false;  
     
 
     constructor(public afDB: AngularFireDatabase,
                 public loadingProvider: LoadingProvider,
                 public dataProvider: DataProvider,
-                public navCtrl: NavController ) {
+                public navCtrl: NavController,
+                public chartProvider: ChartProvider,
+                public navParams: NavParams
+              
+                ) {
 
+                    
+                    this.a_grade = '1st';
+                    this.a_semester = '1st';
+                    this.a_exam = 'middle';
+                    this.m_grade = '1st';
+                    this.m_host = '교육청';
+                    this.m_month = '3';
+                    this.chartView = 'academic';
+                   
+                    
+            
     /*let loadingPopup = this.loadingCtrl.create({
         spinner: 'crescent',
         content: ''
     });*/
     //loadingPopup.present();     
        
+    
+  
+    }
+    ionViewDidLoad(){
+        this.checkGrade('academic');
+        this.checkGrade('mock');
     }
 
-
-
-    ionViewDidEnter() {
+    ionViewDidEnter(){
         
+        let val = this.navCtrl.last().id;
+        if(val == 'ChartAddPage'){
+            console.log('tttt');
+            this.isDataAvailable=false;
+            setTimeout(()=>{this.isDataAvailable = true}, 0);
+        }
+
+        
+            this.a_grade = this.a_meta.grade;
+            this.a_semester =  this.a_meta.semester;
+            this.a_exam = this.a_meta.exam;
+            this.m_grade = this.m_meta.m_grade;
+            this.m_host =  this.m_meta.m_host;
+            this.m_month = this.m_meta.m_month;
         
 
-        console.log(this.academic);
+       /*this.barChart = new Chart(this.barCanvas.nativeElement, {
+        
+                   type: 'bar',
+                   data: {
+                       labels: this.chartLabels,
+                       datasets: [{
+                           label: '# of Votes',
+                           data: this.chartDatas,
+                           backgroundColor: [
+                               'rgba(255, 99, 132, 0.2)',
+                               'rgba(54, 162, 235, 0.2)',
+                               'rgba(255, 206, 86, 0.2)',
+                               'rgba(75, 192, 192, 0.2)',
+                               'rgba(153, 102, 255, 0.2)',
+                               'rgba(255, 159, 64, 0.2)'
+                           ],
+                           borderColor: [
+                               'rgba(255,99,132,1)',
+                               'rgba(54, 162, 235, 1)',
+                               'rgba(255, 206, 86, 1)',
+                               'rgba(75, 192, 192, 1)',
+                               'rgba(153, 102, 255, 1)',
+                               'rgba(255, 159, 64, 1)'
+                           ],
+                           borderWidth: 1
+                       }]
+                   },
+                   options: {
+                       scales: {
+                           yAxes: [{
+                               ticks: {
+                                   beginAtZero:true
+                               }
+                           }]
+                       }, 
+                       responsive: true,
+                       maintainAspectRatio: false,
+                   }
+        
+               });
+
+               this.barChart.update();*/
+          
     }
-
-
 
     
-   public lineChartData: Array<any> = [
-   {data: this.chartDatas, label: 'test'},
-   {data: [70, 48, 40, 90, 86], label: 'Series B'},
-   {data: [40, 48, 77, 60, 100], label: 'Series C'}
- ];
- public lineChartLabels:Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
- 
+
+
+       
+       
+                
+
  public lineChartColors:Array<any> = [
    { // grey
      backgroundColor: 'rgba(148,159,177,0.2)',
@@ -131,39 +253,125 @@ export class ChartPage {
  ];
 
 
- openChartAcademic(){
-     
-     this.navCtrl.push('ChartAddPage', {view: 'academic'});
+ openChartAddPage(fab: FabContainer, pageName){
+   
+        this.navCtrl.push('ChartAddPage', {view: pageName});
+        fab.close();
+    
+        
  }
 
- openChartMock(){
-    
-    this.navCtrl.push('ChartAddPage', {view: 'mock'});
-}
 
-checkGrade(){
+checkGrade(view){
+  
+    this.loadingProvider.show();
     let user = firebase.auth().currentUser.uid; 
-    this.afDB.object('/chart/' + user + '/academic/' + this.grade + '/' + this.semester + '/' + this.exam, { preserveSnapshot: true })       
+    this.isDataAvailable=false;
+
+
+    if(view == 'academic'){
+        
+    this.afDB.object('/chart/' + user + '/academic/' + this.a_grade + '/' + this.a_semester + '/' + this.a_exam, { preserveSnapshot: true })       
     .subscribe(snapshots => {
-                this.chartDatas = [];
-                this.chartLabels = [];
-                console.log(snapshots.val().lenght);
+        
+        this.a_chartDatas = [];
+        this.a_chartLabels = [];
+        
                 snapshots.forEach( snapshot => {
-                    this.chartDatas.push(parseInt(snapshot.val().score));
-                    this.chartLabels.push(snapshot.val().name);
+                    
+                    this.a_chartDatas.push(parseInt(snapshot.val().score));
+                    this.a_chartLabels.push(snapshot.val().name);
                     
                 })
-               
-           
+                this.a_title = this.matchLabel(this.a_grade, this.a_semester, this.a_exam);
+
+                this.a_radarChartData =[
+                    {data: this.a_chartDatas, label: this.a_title}
+                ];
+                this.a_radarChartLabels = this.a_chartLabels;
+                
+                this.lineChartData = [
+                    {data: this.a_chartDatas, label: this.a_title},
+                    {data: [70, 48, 40, 90, 86], label: 'Series B'},
+                    {data: [40, 48, 77, 60, 100], label: 'Series C'}
+                  ];
+                  this.lineChartLabels = this.a_chartLabels;
+
+                setTimeout(()=>{this.isDataAvailable = true}, 0);
+                this.loadingProvider.hide();
+            
+                
            
             //console.log("==================this.pieChartLabels = "+this.chartData);
-            this.isDataAvailable = true;
+            
             //loadingPopup.dismiss()
+            
     });
+    this.a_meta = {grade: this.a_grade, semester: this.a_semester, exam: this.a_exam};
+
+    }else {
+        
+    this.afDB.object('/chart/' + user + '/mock/' + this.m_grade + '/' + this.m_host + '/' + this.m_month, { preserveSnapshot: true })       
+    .subscribe(snapshots => {
+        
+        this.m_chartDatas = [];
+        this.m_chartLabels = [];
+        
+                snapshots.forEach( snapshot => {
+                    
+                    this.m_chartDatas.push(parseInt(snapshot.val().score));
+                    this.m_chartLabels.push(snapshot.val().name);
+                    
+                })
+
+                this.m_title = this.matchLabel(this.m_grade, this.m_host, this.m_month);
+                this.m_radarChartData =[
+                    {data: this.m_chartDatas, label: this.m_title}
+                ];
+                this.m_radarChartLabels = this.m_chartLabels;
+                
+                this.lineChartData = [
+                    {data: this.m_chartDatas, label: this.m_title},
+                    {data: [70, 48, 40, 90, 86], label: 'Series B'},
+                    {data: [40, 48, 77, 60, 100], label: 'Series C'}
+                  ];
+                  this.lineChartLabels = this.m_chartLabels;
+
+                setTimeout(()=>{this.isDataAvailable = true}, 0);
+                this.loadingProvider.hide();
+            
+                
+           
+            //console.log("==================this.pieChartLabels = "+this.chartData);
+            
+            //loadingPopup.dismiss()
+            
+    });
+        
+        this.m_meta = {m_grade: this.m_grade, m_host: this.m_host, m_month: this.m_month};
+    }
     
-    
+
+   
 }
 
+matchLabel(grade: string, semester: string, exam: string){
+    console.log(grade + ' ' + semester + ' ' + exam);
+    let label = '';
+    if(grade =='1st') label += '1학년 ';
+    else if(grade =='2nd') label += '2학년 ';
+    else label += '3학년 ';
 
+    if(semester =='1st') label += '1학기 ';
+    else if(semester =='2nd') label += '2학기 ';
+    else label += semester +' ';
+    
+    if(exam =='middle') label += '중간고사';
+    else if(exam =='final') label += '기말고사';
+    else label += exam + '월 모의고사'
+
+    return label;
+
+} 
 
 }

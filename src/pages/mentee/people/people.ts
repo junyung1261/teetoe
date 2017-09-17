@@ -36,7 +36,7 @@ export class PeoplePage {
    
    
     this.nowUser = this.dataProvider.getCurrentUser().subscribe((user) => {
-        this.status = user.isMentee;
+        
       
     });
       
@@ -66,8 +66,7 @@ export class PeoplePage {
         this.friends = [];
       }
 
-      if(user.isMentee === 'mentee') {
-        
+     
         if (user.mentors) {
           for (var i = 0; i < user.mentors.length; i++) {
             this.dataProvider.getUser(user.mentors[i]).subscribe((mentors) => {
@@ -77,18 +76,7 @@ export class PeoplePage {
         } else {
         this.mentors = [];
         }
-      } else{
-         
-         if (user.mentees) {
-          for (var i = 0; i < user.mentees.length; i++) {
-            this.dataProvider.getUser(user.mentees[i]).subscribe((mentees) => {
-              this.addOrUpdateMentee(mentees);
-            });
-          }
-        } else {
-          this.mentees = [];
-        }
-      }
+      
       //this.loadingProvider.hide();
     });
 

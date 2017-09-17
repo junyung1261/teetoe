@@ -1,25 +1,24 @@
 import { NgModule } from '@angular/core';
-import { ChartAddPage } from './chart-add';
+import { ClassAddPage } from './class-add';
 import { IonicPageModule } from 'ionic-angular';
 
 // Import Chart 
 
 
-
 @NgModule({
   declarations: [
-    ChartAddPage,
+    ClassAddPage,
+    
   ],
   imports: [
-    IonicPageModule.forChild(ChartAddPage),
+    IonicPageModule.forChild(ClassAddPage),
     
     // Importing ChartsModule
     
   ],
   exports: [
-    ChartAddPage
-  ],
-  
-
+    ClassAddPage,
+    
+  ]
 })
-export class ChartPageModule {}
+export class ClassADDPageModule {}

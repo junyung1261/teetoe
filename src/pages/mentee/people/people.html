@@ -22,11 +22,7 @@
           친구
       </ion-segment-button>
 
-      <ion-segment-button value="mentee" (click)="searchInit()" [hidden] ="status==='mentee'">
-         멘티
-      </ion-segment-button>
-
-      <ion-segment-button value="mentor" (click)="searchInit()" [hidden] ="status=='mentor'">
+      <ion-segment-button value="mentor" (click)="searchInit()" >
           멘토
       </ion-segment-button>
       
@@ -82,27 +78,6 @@
         </ion-avatar>
         <h2>{{mentor.name}}</h2>
         <p>@{{mentor.username}}</p>
-      </ion-item>
-    </ion-list>
-  </div>
-
-  <div  *ngIf="peopleView==='mentee'" >
-    <div class="empty-list" *ngIf="mentees && mentees.length == 0">
-      <h1><ion-icon name="md-contacts"></ion-icon></h1>
-      <p>Uh-oh! You have not added any friends right now.</p>
-      
-    </div>
-    <ion-list class="avatar-list" *ngIf="mentees && mentees.length > 0">
-      
-      <ion-item *ngFor="let mentee of mentees | friendFilter:searchFriend" no-lines tappable (click)="viewUser(mentee.$key)">
-        <ion-fab middle right>
-          <button ion-fab mini tappable (click)="message(mentee.$key); $event.stopPropagation();"><ion-icon name="md-text" class="success"></ion-icon></button>
-        </ion-fab>
-        <ion-avatar item-left>
-          <img src="{{mentee.profileImg}}">
-        </ion-avatar>
-        <h2>{{mentee.name}}</h2>
-        <p>@{{mentee.username}}</p>
       </ion-item>
     </ion-list>
   </div>

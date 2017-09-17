@@ -1,0 +1,58 @@
+
+<ion-header no-border>
+    <ion-navbar  style="background: none; border-bottom: none"  >
+        <ion-title>
+            청솔학원 - 고3 A반
+          </ion-title>
+      
+        <ion-buttons end>
+              
+          <button ion-button icon-only (click)="searchUser()" >
+              <ion-icon name="search" class="dark"></ion-icon>
+          </button>
+          <button ion-button icon-only >
+              <ion-icon name="md-more" class="dark"></ion-icon>
+          </button>
+      </ion-buttons>
+    </ion-navbar>
+  
+    <ion-toolbar  style="z-index: 2 ">
+        <ion-title>
+            멘티 리스트
+          </ion-title>
+      </ion-toolbar>
+  
+  <ion-toolbar  class="people-header"  style="z-index: 1; border-bottom: none">
+      <ion-searchbar [(ngModel)]="searchFriend" placeholder="Search for friend or username" ></ion-searchbar>
+  </ion-toolbar>
+      
+  </ion-header>
+  
+  <ion-content  fullscreen="true"   no-paddding shrink-header  [headerToHide]="'people-header'">
+    
+    
+  
+  
+      <div class="empty-list" *ngIf="mentees && mentees.length == 0">
+        <h1><ion-icon name="md-contacts"></ion-icon></h1>
+        <p>Uh-oh! You have not added any friends right now.</p>
+        
+      </div>
+      <ion-list class="avatar-list" *ngIf="mentees && mentees.length > 0">
+        
+        <ion-item *ngFor="let mentee of mentees | friendFilter:searchFriend" no-lines tappable (click)="viewUser(mentee.$key)">
+          <ion-fab middle right>
+            <button ion-fab mini tappable (click)="message(mentee.$key); $event.stopPropagation();"><ion-icon name="md-text" class="success"></ion-icon></button>
+          </ion-fab>
+          <ion-avatar item-left>
+            <img src="{{mentee.profileImg}}">
+          </ion-avatar>
+          <h2>{{mentee.name}}</h2>
+          <p>@{{mentee.username}}</p>
+        </ion-item>
+      </ion-list>
+    
+    
+  
+  
+  </ion-content>

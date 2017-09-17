@@ -7,7 +7,7 @@
       <ion-segment-button value="academic">
         내신성적
       </ion-segment-button>
-      <ion-segment-button value="mock">
+      <ion-segment-button value="mock" >
         모의고사성적
       </ion-segment-button>
       <ion-segment-button value="achievement">
@@ -20,7 +20,7 @@
     <div *ngIf="chartView==='academic'">
     <ion-row >
       
-      <ion-select interface="popover" [(ngModel)]="grade">
+      <ion-select interface="popover" [(ngModel)]="a_grade">
           <ion-option  value="1st" selected>
               1학년
           </ion-option>
@@ -31,7 +31,7 @@
               3학년
         </ion-option>
       </ion-select>
-      <ion-select interface="popover" [(ngModel)]="semester">
+      <ion-select interface="popover" [(ngModel)]="a_semester">
           <ion-option value="1st" selected>
               1학기
           </ion-option>
@@ -39,7 +39,7 @@
               2학기
           </ion-option>
       </ion-select>
-      <ion-select interface="popover" [(ngModel)]="exam">
+      <ion-select interface="popover" [(ngModel)]="a_exam">
           <ion-option value="middle" selected>
               중간고사
           </ion-option>
@@ -50,7 +50,7 @@
       
       <ion-col col-2>
       <ion-buttons end>
-          <button ion-button icon-only (click)="checkGrade()" >
+          <button ion-button icon-only (click)="checkGrade(chartView)" >
               보기
           </button>
           </ion-buttons>
@@ -61,26 +61,82 @@
 
     <div *ngIf="chartView==='mock'">
         <ion-row >
-          <ion-select interface="popover">
-              <ion-option selected>
-                  option1
+            <ion-select interface="popover" [(ngModel)]="m_grade">
+                    <ion-option  value="1st" selected>
+                        1학년
+                    </ion-option>
+                    <ion-option  value="2nd"> 
+                        2학년
+                    </ion-option>
+                    <ion-option  value="3rd"> 
+                        3학년
+                    </ion-option>
+            </ion-select>
+          <ion-select interface="popover" *ngIf="m_grade != '3rd'" [(ngModel)]="m_host" placeholder="주최기관">
+              <ion-option selected value="교육청">
+                  교육청
               </ion-option>
-              <ion-option>
-                  option2
+              <ion-option value="사설">
+                  사설모의고사
               </ion-option>
           </ion-select>
-          <ion-select interface="popover">
-              <ion-option selected>
-                  3월
-              </ion-option>
-              <ion-option>
-                  6월
-              </ion-option>
-              <ion-option>
-                  9월
-              </ion-option>
-          </ion-select>
-          
+          <ion-select interface="popover" *ngIf="m_grade == '3rd'" [(ngModel)]="m_host" placeholder="주최기관">
+                <ion-option selected value="교육청">
+                    교육청
+                </ion-option>
+                <ion-option value="평가원">
+                    평가원
+                </ion-option>
+                <ion-option value="사설">
+                    사설모의고사
+                </ion-option>
+            </ion-select>
+            <ion-select interface="popover" *ngIf="m_grade != '3rd' && m_host == '교육청'" [(ngModel)]="m_month" placeholder="월 선택">
+                    <ion-option selected value="3">
+                        3월
+                    </ion-option>
+                    <ion-option value="6"> 
+                        6월
+                    </ion-option>
+                    <ion-option value="9">
+                        9월
+                    </ion-option>
+                    <ion-option value="11">
+                        11월
+                    </ion-option>
+                </ion-select>
+                <ion-select interface="popover" *ngIf="m_grade == '3rd' && m_host == '교육청'" [(ngModel)]="m_month" placeholder="월 선택">
+                        <ion-option selected value="3">
+                            3월
+                        </ion-option>
+                        <ion-option value="4">
+                            4월
+                        </ion-option>
+                        <ion-option value="7">
+                            7월
+                        </ion-option>
+                        <ion-option value="10">
+                            10월
+                        </ion-option>
+                    </ion-select>  
+                    <ion-select interface="popover" *ngIf="m_grade == '3rd' && m_host == '평가원'" [(ngModel)]="m_month" placeholder="월 선택">
+                            <ion-option selected value="6">
+                               6월
+                            </ion-option>
+                            <ion-option value="9">
+                               9월
+                            </ion-option>
+                            <ion-option value="11">
+                                수능
+                            </ion-option>
+                        </ion-select>  
+          <ion-col col-2>
+                <ion-buttons end>
+                    <button ion-button icon-only (click)="checkGrade(chartView)" >
+                        보기
+                    </button>
+                    </ion-buttons>
+                </ion-col>
         </ion-row>
         </div>
 
@@ -90,6 +146,7 @@
 
 
 <ion-content>
+    
 
     <div *ngIf="isDataAvailable">
     <!--*********** Bar chart  ***********-->
@@ -97,6 +154,129 @@
 
         <!--*********** Vertical ***********-->
 
+        <ion-card>
+                <ion-card-header>
+                  <strong> {{a_title}}</strong>
+                </ion-card-header>
+                <ion-card-content>
+                  <canvas baseChart *ngIf="isDataAvailable"             
+                  [data]="a_chartDatas"
+                  [labels]="a_chartLabels"
+                  [legend]="chartLegend"
+                  [colors]="chartColor1"
+                  [options]="lineChartOptions"
+                  chartType="bar">
+                      
+                  </canvas>
+                </ion-card-content>
+              </ion-card>
+
+        
+
+          
+          <ion-card>
+            <ion-card-header>
+              전과목 점수 분포
+            </ion-card-header>
+            <ion-card-content>
+                <canvas baseChart
+                      [datasets]="a_radarChartData"
+                      [labels]="a_radarChartLabels"
+                      [colors]="lineChartColors"
+                      [options]="radarOption"
+                      chartType="radar"
+                      
+                      >
+                </canvas>
+            </ion-card-content>
+        </ion-card>
+      
+        <!--*********** Horizontal  ***********-->
+
+
+        <ion-card>
+            <ion-card-header>
+              Bar chart(horizontal)
+            </ion-card-header>
+            <ion-card-content>
+              <canvas  baseChart                
+                        [data]="a_chartDatas"
+                        [labels]="a_chartLabels"
+                        [legend]="chartLegend"
+                        [colors]="chartColor1"
+                        [options]="lineChartOptions"
+                        chartType="horizontalBar">
+                </canvas>
+            </ion-card-content>
+          </ion-card>
+      </div>
+      
+    <!--*********** Pie chart  ***********-->
+
+      <div *ngIf="chartView==='mock'">
+
+            <ion-card>
+                    <ion-card-header>
+                        <strong> {{m_title}}</strong>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <canvas baseChart *ngIf="isDataAvailable"             
+                      [data]="m_chartDatas"
+                      [labels]="m_chartLabels"
+                      [legend]="chartLegend"
+                      [colors]="chartColor1"
+                      [options]="lineChartOptions"
+                      chartType="bar">
+                          
+                      </canvas>
+                    </ion-card-content>
+                  </ion-card>
+    
+            <ion-card>
+                <ion-card-header>
+                  Line Chart
+                </ion-card-header>
+                <ion-card-content>
+                        <canvas baseChart 
+                    [datasets]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [options]="lineChartOptions"
+                    [colors]="chartColor3"
+                    [legend]="lineChartLegend"
+                    chartType="line"
+                    ></canvas>
+        
+                </ion-card-content>
+              </ion-card>
+    
+              
+              <ion-card>
+                <ion-card-header>
+                    <strong> 전과목 점수 분포</strong>
+                </ion-card-header>
+                <ion-card-content>
+                    <canvas baseChart
+                          [datasets]="m_radarChartData"
+                          [labels]="m_radarChartLabels"
+                          [colors]="lineChartColors"
+                          [options]="radarOption"
+                          chartType="radar"
+                          
+                          >
+                    </canvas>
+                </ion-card-content>
+            </ion-card>
+
+
+      </div>
+
+
+    <!--*********** Line chart  ***********-->
+        
+        
+
+    <!--*********** More chart  ***********-->
+      <div *ngIf="chartView==='achievement'">
         <ion-card>
             <ion-card-header>
               Line Chart
@@ -114,69 +294,22 @@
             </ion-card-content>
           </ion-card>
 
-          <ion-card>
-            <ion-card-header>
-              Bar chart(vertical)
-            </ion-card-header>
-            <ion-card-content>
-              <canvas  baseChart
-                        id="myChart"                    
-                        [data]="chartDatas"
-                        [labels]="chartLabels"
-                        
-                        [colors]="chartColor1"
-                        [options]="lineChartOptions"
-                        chartType="bar">
-                </canvas>
-            </ion-card-content>
-          </ion-card>
-      
-        <!--*********** Horizontal  ***********-->
-        <ion-card>
-            <ion-card-header>
-              Bar chart(horizontal)
-            </ion-card-header>
-            <ion-card-content>
-              <canvas  baseChart                 
-                        [data]="chartDatas"
-                        [labels]="chartLabels"
-                        [legend]="chartLegend"
-                        [colors]="chartColor1"
-                        [options]="lineChartOptions"
-                        chartType="horizontalBar">
-                </canvas>
-            </ion-card-content>
-          </ion-card>
-      </div>
-      
-    <!--*********** Pie chart  ***********-->
-
-      <div *ngIf="chartView==='mock'">
-        <ion-card>
-            <ion-card-header>
-              Pie Chart
-            </ion-card-header>
-            <ion-card-content  no-padding>
-              <canvas baseChart
-                      [data]="chartData"
-                      [labels]="chartLabels"
-                      [colors]="chartColor1"
-                      chartType="pie">
-              </canvas>
-            </ion-card-content>
-            
-          </ion-card>
-      </div>
-
-
-    <!--*********** Line chart  ***********-->
-        <div *ngIf="chartView==='achievement'">
         
-      </div>
-
-    <!--*********** More chart  ***********-->
-      <div *ngIf="chartView==='More'">
-        
+            <ion-card>
+                    <ion-card-header>
+                      Pie Chart
+                    </ion-card-header>
+                    <ion-card-content  no-padding>
+                      <canvas baseChart
+                              [data]="a_chartDatas"
+                              [labels]="a_chartLabels"
+                              [colors]="chartColor1"
+                             
+                              chartType="pie">
+                      </canvas>
+                    </ion-card-content>
+                    
+                  </ion-card>
       <!--*********** Doughnut chart  ***********-->    
             <ion-card>
                 <ion-card-header>
@@ -241,11 +374,11 @@
       </div>
     </div>
 
-    <ion-fab right bottom>
+    <ion-fab right bottom #fab>
         <button ion-fab mini color="dark"><ion-icon name="add"></ion-icon></button>
         <ion-fab-list side="top">
-          <button ion-fab (click)="openChartAcademic()"><ion-icon name="camera" ></ion-icon> <div class="label">내신성적 입력</div></button>
-          <button ion-fab (click)="openChartMock()"><ion-icon name="md-photos" ></ion-icon> <div class="label">모의고사성적 입력</div></button>
+          <button ion-fab (click)="openChartAddPage(fab,'academic')"><ion-icon name="camera" ></ion-icon> <div class="label">내신성적 입력</div></button>
+          <button ion-fab (click)="openChartAddPage(fab,'mock')"><ion-icon name="md-photos" ></ion-icon> <div class="label">모의고사성적 입력</div></button>
         </ion-fab-list>
       </ion-fab>
 </ion-content>

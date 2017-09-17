@@ -111,7 +111,23 @@ export class DataProvider {
   }
 
 
+
    ////////////////////////////////////// Chart /////////////////////////////////////////////
 
    
+
+
+   ////////////////////////////////////// Academy ////////////////////////////////////////////
+
+   getAcademy(academyId){
+    return this.angularfireDatabase.object('/academy/' + academyId);
+   }
+
+   getClasses(academyId){
+    return this.angularfireDatabase.list('/academy/' + academyId +'/class');
+   }
+
+   getClass(academyId, classId){
+    return this.angularfireDatabase.object('/academy/' + academyId +'/class/' + classId);
+   }
 }

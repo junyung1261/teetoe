@@ -1,0 +1,47 @@
+
+<ion-header no-border>
+        <ion-navbar  style="background: none; border-bottom: none"  >
+            <ion-title>
+                반 관리
+              </ion-title>
+          
+            <ion-buttons end>
+                  
+              <button ion-button icon-only (click)="openClassAddPage()" >
+                  <ion-icon name="search" class="dark"></ion-icon>
+              </button>
+              <button ion-button icon-only >
+                  <ion-icon name="md-more" class="dark"></ion-icon>
+              </button>
+          </ion-buttons>
+        </ion-navbar>
+      
+    
+      </ion-header>
+      
+      <ion-content  fullscreen="true"   no-paddding  >
+        
+        
+      
+      
+          <div class="empty-list" *ngIf="myClass && myClass.length == 0">
+            <h1><ion-icon name="md-contacts"></ion-icon></h1>
+            <p>Uh-oh! You have not added any friends right now.</p>
+            
+          </div>
+          <ion-list class="avatar-list" *ngIf="myClass && myClass.length > 0">
+            
+            <ion-item *ngFor="let class of myClass " no-lines tappable (click)="viewUser(class.$key)">
+              <ion-fab middle right>
+                <button ion-fab mini tappable (click)="message(class.$key); $event.stopPropagation();"><ion-icon name="md-text" class="success"></ion-icon></button>
+              </ion-fab>
+              
+              <h2>{{class.name}}</h2>
+              <p>@{{class.grade}}</p>
+            </ion-item>
+          </ion-list>
+        
+        
+      
+      
+      </ion-content>
