@@ -17,14 +17,14 @@ export class ChartAddPage {
     private data: any[];
     private academic: any[] = [
             {name: '1학년', children: [
-                {name: '1학기', children:[{name:'중간고사', value:{grade: '1st', semester:'1st', name:'middle', class: 'academic'}},{name:'기말고사', value:{grade: '1st', semester:'1st', name:'final', class: 'academic'}}]}, 
-                {name:'2학기', children:[{name:'중간고사', value:{grade: '1st', semester:'2nd', name:'middle', class: 'academic'}},{name:'기말고사', value:{grade: '1st', semester:'2nd', name:'final', class: 'academic'}}]}]}, 
+                {name: '1학기', children:[{name:'중간고사', value:{grade: '1st', semester:'1st', name:'0_middle', class: 'academic'}},{name:'기말고사', value:{grade: '1st', semester:'1st', name:'1_final', class: 'academic'}}]}, 
+                {name:'2학기', children:[{name:'중간고사', value:{grade: '1st', semester:'2nd', name:'0_middle', class: 'academic'}},{name:'기말고사', value:{grade: '1st', semester:'2nd', name:'1_final', class: 'academic'}}]}]}, 
             {name: '2학년',children: [
-                {name: '1학기', children:[{name:'중간고사', value:{grade: '2nd', semester:'1st', name:'middle', class: 'academic'}},{name:'기말고사', value:{grade: '2nd', semester:'1st', name:'final', class: 'academic'}}]}, 
-                {name:'2학기', children:[{name:'중간고사', value:{grade: '2nd', semester:'2nd', name:'middle', class: 'academic'}},{name:'기말고사', value:{grade: '2nd', semester:'2nd', name:'final', class: 'academic'}}]}]},  
+                {name: '1학기', children:[{name:'중간고사', value:{grade: '2nd', semester:'1st', name:'0_middle', class: 'academic'}},{name:'기말고사', value:{grade: '2nd', semester:'1st', name:'1_final', class: 'academic'}}]}, 
+                {name:'2학기', children:[{name:'중간고사', value:{grade: '2nd', semester:'2nd', name:'0_middle', class: 'academic'}},{name:'기말고사', value:{grade: '2nd', semester:'2nd', name:'1_final', class: 'academic'}}]}]},  
             {name: '3학년', children: [
-                {name: '1학기', children:[{name:'중간고사', value:{grade: '3rd', semester:'1st', name:'middle', class: 'academic'}},{name:'기말고사', value:{grade: '3rd', semester:'1st', name:'final', class: 'academic'}}]}, 
-                {name:'2학기', children:[{name:'중간고사', value:{grade: '3rd', semester:'2nd', name:'middle', class: 'academic'}},{name:'기말고사', value:{grade: '3rd', semester:'2nd', name:'final', class: 'academic'}}]}]}];
+                {name: '1학기', children:[{name:'중간고사', value:{grade: '3rd', semester:'1st', name:'0_middle', class: 'academic'}},{name:'기말고사', value:{grade: '3rd', semester:'1st', name:'1_final', class: 'academic'}}]}, 
+                {name:'2학기', children:[{name:'중간고사', value:{grade: '3rd', semester:'2nd', name:'0_middle', class: 'academic'}},{name:'기말고사', value:{grade: '3rd', semester:'2nd', name:'1_final', class: 'academic'}}]}]}];
 
     private mock: any[] = [
             {name: '1학년', children: [
@@ -73,7 +73,7 @@ export class ChartAddPage {
                             if(snap.key == '2nd') semester = 1;
                             snap.forEach( test => {
                                 let name = 0;
-                                if(test.key == 'final') name = 1;
+                                if(test.key == '1_final') name = 1;
                                 
                                 this.academic[grade].children[semester].children[name].score= test.val();
                                 

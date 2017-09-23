@@ -21,6 +21,7 @@ export class Knob implements OnInit {
   valueElem: any;
   defaultOptions: {};
   animations: any;
+  firstDelay = 1500;
 
   constructor(private el: ElementRef) {
 
@@ -99,14 +100,19 @@ export class Knob implements OnInit {
    * Actions when value or options change in host component
    */
   ngOnChanges(changes) {
-
+    
+    
     if (this.defaultOptions != null && changes.options != null && changes.options.currentValue != null && this.value != null) {
+     
       this.options = Object.assign(this.defaultOptions, changes.options.currentValue);
       this.draw();
     }
 
     if (this.defaultOptions != null && this.options != null && changes.value.currentValue != null && changes.value.previousValue != null && changes.value.currentValue !== changes.value.previousValue) {
+      console.log('변경');
+      this.firstDelay = 0;
       this.setValue(changes.value.currentValue);
+      this.draw();
     }
   }
 
@@ -377,7 +383,7 @@ export class Knob implements OnInit {
     that.drawArcs(clickInteraction, dragBehavior);
 
     if (that.options.animate.enabled) {
-      that.valueElem.transition().ease(that.options.animate.ease).duration(that.options.animate.duration).delay(1500).tween("", function() {
+      that.valueElem.transition().ease(that.options.animate.ease).duration(that.options.animate.duration).delay(this.firstDelay).tween("", function() {
         var i = d3.interpolate(that.valueToRadians(that.options.startAngle, 360), that.valueToRadians(that.value, that.options.max, that.options.endAngle, that.options.startAngle, that.options.min));
         return function (t) {
           var val = i(t);

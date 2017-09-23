@@ -9,10 +9,28 @@
    
 
 
-    <ion-item>
-    <ion-label color="primary" stacked>일정</ion-label>
-        <ion-input placeholder="일정입력" [(ngModel)]="event.title" clearInput></ion-input>
-    </ion-item>
+   
+    
+      <ion-row>
+        <ion-col ion-item col-8>
+            <ion-label color="primary" stacked>일정</ion-label>
+        <ion-input placeholder="일정입력" [(ngModel)]="event.title" clearInput style="position:relative"></ion-input>
+      </ion-col>
+      <ion-col ion-item col-4>
+          <ion-label color="primary" stacked>과목</ion-label>
+        <ion-select interface="popover" [(ngModel)]="subject" style="position:relative">
+          <ion-option  value="1st" selected>
+            국어
+        </ion-option>
+        <ion-option  value="2nd"> 
+            영어
+        </ion-option>
+        <ion-option  value="3rd"> 
+            수학
+        </ion-option>
+        </ion-select>
+      </ion-col>
+      </ion-row>
 
           <ion-row>
   <ion-col ion-item col-4>
@@ -34,8 +52,18 @@
    
   </ion-col>
      <ion-col ion-item col-4>
-     <ion-label color="primary" stacked>10분 전 알람</ion-label>
-       
+     <ion-label color="primary" stacked>알람</ion-label>
+     <ion-select interface="popover" [(ngModel)]="alarm" style="position:relative">
+        <ion-option  value="1st" selected>
+          5분전
+      </ion-option>
+      <ion-option  value="2nd"> 
+          10분전
+      </ion-option>
+      <ion-option  value="3rd"> 
+          15분전
+      </ion-option>
+      </ion-select>  
   </ion-col>
 
    <ion-item>
@@ -59,7 +87,7 @@
     </ion-segment-button>
     
   </ion-segment>
-
+  
   <ion-grid *ngIf="segmentView==='album'">
     <ion-row wrap color="gray">
       <ion-col col-4 *ngFor="let image of imgGalleryArray  ,let i = index  ">
@@ -67,14 +95,13 @@
       </ion-col>
     </ion-row>
     
-    <ion-fab right bottom>
-        <button ion-fab color="dark"><ion-icon name="add"></ion-icon></button>
-        <ion-fab-list side="top">
-          <button ion-fab><ion-icon name="camera" (click)="openGallery2()"></ion-icon></button>
-          <button ion-fab><ion-icon name="md-photos" (click)="openGallery()"></ion-icon></button>
-        </ion-fab-list>
-      </ion-fab>
+
+    
   </ion-grid>
+
+
+
+  
 
   <div *ngIf="segmentView==='comment'">
       <div class="messages">
@@ -120,6 +147,13 @@
 </ion-list>
 
 
+<ion-fab right bottom [hidden]="segmentView==='comment'">
+  <button ion-fab color="dark"><ion-icon name="add"></ion-icon></button>
+  <ion-fab-list side="top">
+    <button ion-fab  (click)="openGallery2()"><ion-icon name="camera"></ion-icon></button>
+    <button ion-fab (click)="openGallery()"><ion-icon name="md-photos" ></ion-icon></button>
+  </ion-fab-list>
+</ion-fab>
 
     
 </ion-content>

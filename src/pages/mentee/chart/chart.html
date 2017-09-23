@@ -1,8 +1,8 @@
 
 <!--***********  Header with segment  ***********-->
-<ion-header>
+<ion-header no-shadow no-border>
+  <ion-navbar  no-border-top >
   
-  <ion-toolbar no-border-top color="ios-blue">
        <ion-segment [(ngModel)]="chartView" color="dark">
       <ion-segment-button value="academic">
         내신성적
@@ -13,13 +13,17 @@
       <ion-segment-button value="achievement">
         계획성취도
       </ion-segment-button>
+      <ion-segment-button value="term">
+        통계
+      </ion-segment-button>
+      
     </ion-segment>
  
-  </ion-toolbar>
-  <ion-toolbar no-padding no-border-top color="ios-blue">
+  </ion-navbar >
+  <ion-toolbar no-padding no-border-top >
     <div *ngIf="chartView==='academic'">
     <ion-row >
-      
+
       <ion-select interface="popover" [(ngModel)]="a_grade">
           <ion-option  value="1st" selected>
               1학년
@@ -40,10 +44,10 @@
           </ion-option>
       </ion-select>
       <ion-select interface="popover" [(ngModel)]="a_exam">
-          <ion-option value="middle" selected>
+          <ion-option value="0_middle" selected>
               중간고사
           </ion-option>
-          <ion-option value="final">
+          <ion-option value="1_final">
               기말고사
           </ion-option>
       </ion-select>
@@ -140,7 +144,89 @@
         </ion-row>
         </div>
 
-    </ion-toolbar>
+        <div *ngIf="chartView==='achievement'">
+                
+                
+            <ion-row >
+                <ion-col col-3>
+                <ion-buttons end >
+                    <button ion-button  icon-only  (click)="leftArrow(view)">  
+                            <ion-icon name="arrow-dropleft"></ion-icon>
+                    </button>
+                </ion-buttons>
+                </ion-col>
+            
+                <div [ngSwitch]="view">
+                <ion-title  *ngSwitchCase="'day'" >
+                일간 계획 성취도
+                </ion-title>
+                <ion-title  *ngSwitchCase="'week'" >
+                주간 계획 성취도
+                </ion-title>
+                <ion-title  *ngSwitchCase="'month'" >
+                월간 계획 성취도
+                </ion-title>
+                </div>
+            
+                <ion-col col-9 push-6>
+                <ion-buttons start >
+                        <button ion-button  icon-only  (click)="rightArrow(view)">  
+                                <ion-icon name="arrow-dropright"></ion-icon>
+                        </button>
+                </ion-buttons>
+                </ion-col>
+            </ion-row>
+
+        </div>
+
+        <div *ngIf="chartView==='term'">
+                <ion-row >
+                        <ion-select  class="term" interface="popover"  [(ngModel)]="term_v1" >
+                                <ion-option  value="academic" selected>
+                                        내신성적
+                                    </ion-option>
+                                    <ion-option  value="mock"> 
+                                        모의고사
+                                    </ion-option>
+                                    
+                              </ion-select>
+                
+                <ion-select class="term" interface="popover"  [(ngModel)]="term_v2" >
+                        <ion-option  value="1st" selected>
+                                1학년
+                            </ion-option>
+                            <ion-option  value="2nd"> 
+                                2학년
+                            </ion-option>
+                            <ion-option  value="3rd"> 
+                                3학년
+                            </ion-option>
+                      </ion-select>
+                   
+                    
+                          <ion-col col-2 >
+                                <ion-buttons end>
+                                    <button ion-button icon-only (click)="termGrade()" >
+                                        보기
+                                    </button>
+                                    </ion-buttons>
+                                </ion-col>
+                        </ion-row>
+           
+            </div>
+
+ 
+    <!--<ion-row >
+            <ion-select interface="popover"  [(ngModel)]="test" >
+                <ion-option *ngFor="let test of category_academic" [value]="test">{{test.name}}</ion-option>
+              </ion-select>
+
+              <ion-select *ngIf="test" interface="popover"  [(ngModel)]="test2" >
+                <ion-option *ngFor="let test2 of test.children" [value]="test2">{{test2.name}}</ion-option>
+              </ion-select>
+        </ion-row>
+    -->
+</ion-toolbar>
 </ion-header>
 
 
@@ -160,10 +246,10 @@
                 </ion-card-header>
                 <ion-card-content>
                   <canvas baseChart *ngIf="isDataAvailable"             
-                  [data]="a_chartDatas"
+                  [datasets]="a_chartDatas"
                   [labels]="a_chartLabels"
                   [legend]="chartLegend"
-                  [colors]="chartColor1"
+                  [colors]="barChartColor"
                   [options]="lineChartOptions"
                   chartType="bar">
                       
@@ -180,7 +266,7 @@
             </ion-card-header>
             <ion-card-content>
                 <canvas baseChart
-                      [datasets]="a_radarChartData"
+                      [datasets]="a_chartDatas"
                       [labels]="a_radarChartLabels"
                       [colors]="lineChartColors"
                       [options]="radarOption"
@@ -221,10 +307,10 @@
                     </ion-card-header>
                     <ion-card-content>
                       <canvas baseChart *ngIf="isDataAvailable"             
-                      [data]="m_chartDatas"
+                      [datasets]="m_chartDatas"
                       [labels]="m_chartLabels"
                       [legend]="chartLegend"
-                      [colors]="chartColor1"
+                      [colors]="barChartColor"
                       [options]="lineChartOptions"
                       chartType="bar">
                           
@@ -238,8 +324,8 @@
                 </ion-card-header>
                 <ion-card-content>
                         <canvas baseChart 
-                    [datasets]="lineChartData"
-                    [labels]="lineChartLabels"
+                    [datasets]="testData"
+                    [labels]="testLabel"
                     [options]="lineChartOptions"
                     [colors]="chartColor3"
                     [legend]="lineChartLegend"
@@ -256,7 +342,7 @@
                 </ion-card-header>
                 <ion-card-content>
                     <canvas baseChart
-                          [datasets]="m_radarChartData"
+                          [datasets]="m_chartDatas"
                           [labels]="m_radarChartLabels"
                           [colors]="lineChartColors"
                           [options]="radarOption"
@@ -277,22 +363,72 @@
 
     <!--*********** More chart  ***********-->
       <div *ngIf="chartView==='achievement'">
-        <ion-card>
-            <ion-card-header>
-              Line Chart
-            </ion-card-header>
-            <ion-card-content>
-                    <canvas baseChart 
-                [datasets]="lineChartData"
-                [labels]="lineChartLabels"
-                [options]="lineChartOptions"
-                [colors]="chartColor3"
-                [legend]="lineChartLegend"
-                chartType="line"
-                ></canvas>
-    
-            </ion-card-content>
-          </ion-card>
+        
+
+        <div [ngSwitch]="view">
+          
+            <ion-card *ngSwitchCase="'day'">
+            <ion-card-header >
+                
+              </ion-card-header>
+              <ion-card-content>
+                  <ui-knob *ngIf="_DHT22KnobHumidityValue != -1" [options]="_DHT22KnobHumidityOptions[0]" [(value)]="_DHT22KnobHumidityValue"   (click)="changeRange()"></ui-knob>
+      
+              </ion-card-content>
+            </ion-card>
+            
+            <ion-card *ngSwitchCase="'week'">
+                <ion-card-header>
+                    <ion-row >
+                        <ion-label no-padding no-margin>{{t_title}}</ion-label>
+                        <ion-select style="padding-top:0; padding-left:0"  [(ngModel)]="numOfWeek" (ionChange)="refresh()">
+                                
+                                    <ion-option *ngFor="let week of weeksOfMonth" [value]="weeksOfMonth.indexOf(week)">{{week[6].month}}월 {{weeksOfMonth.indexOf(week)+1}}째주</ion-option>
+                              </ion-select>
+                    </ion-row>    
+        
+                </ion-card-header>
+                <ion-card-content>
+                        <canvas baseChart 
+                    [datasets]="weeksOfMonth[numOfWeek].datasets"
+                    [labels]="weeksOfMonth[numOfWeek].labels"
+                    [options]="lineChartOptions"
+                    [colors]="lineChartColors"
+                    [legend]="lineChartLegend"
+                    chartType="line"
+                    ></canvas>
+        
+                </ion-card-content>
+              </ion-card>
+              <ion-card *ngSwitchCase="'month'">
+                <ion-card-header>
+                     
+        
+                </ion-card-header>
+                <ion-card-content>
+                        <canvas baseChart 
+                    [datasets]="monthDatasets.datasets"
+                    [labels]="monthDatasets.labels"
+                    [options]="lineChartOptions"
+                    [colors]="lineChartColors"
+                    [legend]="lineChartLegend"
+                    chartType="line"
+                    ></canvas>
+        
+                </ion-card-content>
+              </ion-card>
+
+           
+        </div>
+
+
+            
+                  
+
+
+
+
+        
 
         
             <ion-card>
@@ -372,7 +508,47 @@
             </ion-card>
 
       </div>
+
+      <div *ngIf="chartView==='term'">
+            
+                
+                        <ion-card>
+                            <ion-card-header>
+                                    <ion-row >
+                                            <ion-label no-padding no-margin>{{t_title}}</ion-label>
+                                            <ion-select style="padding-top:0; padding-left:0"  [(ngModel)]="subject"  (ionChange)="choiceSubject(subject)">
+                                                    
+                                                        <ion-option *ngFor="let subject of mySubjects" [value]="subject">{{subject}}</ion-option>
+                                                  </ion-select>
+                                     </ion-row>    
+                            
+                             
+                           
+                            </ion-card-header>
+                            <ion-card-content>
+                                    <canvas baseChart 
+                                [datasets]="lineChartData"
+                                [labels]="lineChartLabels"
+                                [options]="lineChartOptions"
+                                [colors]="lineChartColors"
+                                [legend]="lineChartLegend"
+                                chartType="line"
+                                ></canvas>
+                    
+                            </ion-card-content>
+                          </ion-card>
+                
+                           <!--[colors]="chartColor1"-->
+                         
+            
+            
+                  </div>
+
+
     </div>
+
+
+
 
     <ion-fab right bottom #fab>
         <button ion-fab mini color="dark"><ion-icon name="add"></ion-icon></button>

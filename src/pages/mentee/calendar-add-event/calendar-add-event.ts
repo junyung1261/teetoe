@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ViewController, NavController, ActionSheetController, IonicPage, NavParams, Content, App, ModalController } from 'ionic-angular';
+import { ViewController, NavController, ActionSheetController, IonicPage, NavParams, Content, App, ModalController, ItemSliding  } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import { CommunityProvider } from '../../../providers/community/community';
 import { UtilProvider } from '../../../providers/util/util';
@@ -161,7 +161,7 @@ export class CalendarAddEventPage {
     deleteEvent(event){
             
         this.events.splice(this.events.indexOf(event),1);
-        this.eventProvider.deleteEvent(event.id);
+        this.eventProvider.deleteEvent(event);
     }
 
     
@@ -193,7 +193,12 @@ export class CalendarAddEventPage {
   }
 
 
+  checkEvent(event, sldingItem: ItemSliding){
+    console.log(event);
+    this.eventProvider.checkEvent(event);
+    sldingItem.close();
 
+  }
 
 
     reset() {

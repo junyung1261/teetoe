@@ -28,11 +28,16 @@
    
       
 <ion-list  *ngIf="segment==='all'">
-  <ion-item-sliding *ngFor=" let event of events" [attr.track]="event.tracks[0] | lowercase">
+  <ion-item-sliding *ngFor=" let event of events" [attr.track]="event.tracks[0] | lowercase" #slidingItem>
     <ion-item>
         <div (click)="goToEventDetail(event)">
-        <h3>
-        <ion-icon *ngIf="event.isDone"  name="checkmark"></ion-icon>
+        <h3 *ngIf="event.isDone" style="text-decoration:line-through" >
+        <ion-icon   name="checkmark"></ion-icon>
+        {{event.title}}
+        </h3>
+
+        <h3 *ngIf="!event.isDone" >
+           
             {{event.title}}
         </h3>
         
@@ -60,8 +65,8 @@
     </ion-item-options>
 
     <ion-item-options side="right">
-      <button ion-button (click)="unread(item)">
-          <ion-icon name="color-palette"></ion-icon>
+      <button ion-button icon-only (click)="checkEvent(event, slidingItem)">
+          <ion-icon name="checkmark"></ion-icon>
       </button>
         <button ion-button (click)="unread(item)">
           <ion-icon name="camera"></ion-icon>

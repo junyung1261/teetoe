@@ -49,9 +49,22 @@ page-chart {
       }
 
       ion-select{
+          
           width: 30%;
           position: relative;
           text-align: center;
           margin-left: -10px;
+          
+
+         
       }
+      ion-select.term{
+        
+        
+          width: 43.5%;
+          position: relative;
+          text-align: center;
+          margin-left: -10px;
+     
+    }
 }

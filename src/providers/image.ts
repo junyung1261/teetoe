@@ -247,6 +247,10 @@ export class ImageProvider {
       firebase.storage().ref().child('images/' + firebase.auth().currentUser.uid + '/' + this.generateFilename()).put(imgBlob, metadata).then((snapshot) => {
         let test;
         test = [];
+        this.angularfireDatabase.list('/schedule/' +  firebase.auth().currentUser.uid + '/' + event.id + '/album' ).subscribe((album)=> {
+          test = album;
+        })
+
         // URL of the uploaded image!
         let url = snapshot.metadata.downloadURLs[0];
         test.push({url: url});

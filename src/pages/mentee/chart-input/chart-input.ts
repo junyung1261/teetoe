@@ -64,8 +64,8 @@ export class ChartInputPage {
         else if(data.value.semester =='2nd')this.title += '2학기 ';
         else this.title += this.data.value.semester + '월 '
         
-        if(data.value.name =='middle') this.title += '중간고사';
-        else if(data.value.name =='final') this.title += '기말고사';
+        if(data.value.name =='0_middle') this.title += '중간고사';
+        else if(data.value.name =='1_final') this.title += '기말고사';
         else this.title += '모의고사'
 
     } 
