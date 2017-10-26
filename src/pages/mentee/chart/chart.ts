@@ -50,7 +50,6 @@ export class ChartPage {
     private m_chartDatas: any[];
     private m_chartLabels: any[];
     private t_chartDatas: any[];
-    
     private t_chartLabels: any[];
     
    
@@ -62,9 +61,7 @@ export class ChartPage {
    public lineChartData: any[];
    public lineChartLabels: any[];
 
-   public testData = [{data:[50], label:'test'}];
-   public testLabel = ['test'];
-
+  
    
    public a_radarChartData: Array<any> ;
    public a_radarChartLabels:Array<any> ;
@@ -421,8 +418,9 @@ export class ChartPage {
         let month = today.getMonth();
         let date = today.getDate();
         let day = today.getDay();
+        let lastMonth = new Date(year, month, date)
         this.numOfWeek = this.getSecofWeek(year,month,date)-1;
-        console.log(this.numOfWeek);
+        
         this.checkGrade('academic');
         this.checkGrade('mock');
         this.getWeeksOfMonth(year, month, date, day);
@@ -437,11 +435,10 @@ export class ChartPage {
         let val = this.navCtrl.last().id;
         if(val == 'ChartAddPage'){
             console.log('tttt');
-            this.isDataAvailable=false;
-            setTimeout(()=>{this.isDataAvailable = true}, 0);
+            this.refresh();
         }
 
-        
+            this.chartView = 'academic';
             this.a_grade = this.a_meta.grade;
             this.a_semester =  this.a_meta.semester;
             this.a_exam = this.a_meta.exam;
@@ -450,69 +447,13 @@ export class ChartPage {
             this.m_month = this.m_meta.m_month;
         
 
-       /*this.barChart = new Chart(this.barCanvas.nativeElement, {
-        
-                   type: 'bar',
-                   data: {
-                       labels: this.chartLabels,
-                       datasets: [{
-                           label: '# of Votes',
-                           data: this.chartDatas,
-                           backgroundColor: [
-                               'rgba(255, 99, 132, 0.2)',
-                               'rgba(54, 162, 235, 0.2)',
-                               'rgba(255, 206, 86, 0.2)',
-                               'rgba(75, 192, 192, 0.2)',
-                               'rgba(153, 102, 255, 0.2)',
-                               'rgba(255, 159, 64, 0.2)'
-                           ],
-                           borderColor: [
-                               'rgba(255,99,132,1)',
-                               'rgba(54, 162, 235, 1)',
-                               'rgba(255, 206, 86, 1)',
-                               'rgba(75, 192, 192, 1)',
-                               'rgba(153, 102, 255, 1)',
-                               'rgba(255, 159, 64, 1)'
-                           ],
-                           borderWidth: 1
-                       }]
-                   },
-                   options: {
-                       scales: {
-                           yAxes: [{
-                               ticks: {
-                                   beginAtZero:true
-                               }
-                           }]
-                       }, 
-                       responsive: true,
-                       maintainAspectRatio: false,
-                   }
-        
-               });
-
-               this.barChart.update();*/
-          
     }
 
-    
+openChartAddPage(fab: FabContainer, pageName){
 
-
-       
-       
-                
-
- 
-
-
- openChartAddPage(fab: FabContainer, pageName){
-   
         this.navCtrl.push('ChartAddPage', {view: pageName});
         fab.close();
-    
-        
  }
-
 
 checkGrade(view){
   
@@ -725,6 +666,7 @@ matchLabel(grade: string, semester: string, exam: string){
 
 loadAchievement(basicDate){
     let user = firebase.auth().currentUser.uid; 
+    let today = new Date();
     let year = basicDate.getFullYear();
     let month = basicDate.getMonth();
     let date = basicDate.getDate();
@@ -746,7 +688,6 @@ loadAchievement(basicDate){
                 let index = 0;
                 let percent = 0;
                 let events = [];
-                
                 let numOfthisWeek;
                 let fullDay;
                 if(snapshot.val()){
@@ -766,8 +707,16 @@ loadAchievement(basicDate){
                     
                     this.weeksOfMonth[numOfthisWeek-1][getDay(fullDay)].schedule = events;
                     this.weeksOfMonth[numOfthisWeek-1][getDay(fullDay)].percent = percent;
-                    monthPercent.push(percent);
-                    monthLabels.push(snapshot.key + '일');
+
+
+                    if( month < today.getMonth()){
+                        monthPercent.push(percent);
+                        monthLabels.push(snapshot.key + '일');
+                    }else if(month == today.getMonth() && snapshot.key <= today.getDate()){
+                        monthPercent.push(percent);
+                        monthLabels.push(snapshot.key + '일');
+                    }
+                    
 
                     if(date == snapshot.key)this._DHT22KnobHumidityValue = percent;      
                     
@@ -779,25 +728,18 @@ loadAchievement(basicDate){
             });
             
             //setTimeout(()=>{this.isDataAvailable = true}, 0);
-            console.log(this.weeksOfMonth);
-            this.makeWeekData();
             
+            this.makeWeekData();
             this.monthDatasets.datasets = [{data: monthPercent, label: '달성도'}];
             this.monthDatasets.labels = monthLabels;
 
-        
     });
-    
-
 }
 
 leftArrow(view){
     if(view == 'day') this.view  = 'month';
     else if(view == 'week') this.view  = 'day';
     else this.view  = 'week';
-
-    
-
 }
 
 rightArrow(view){
@@ -807,9 +749,11 @@ rightArrow(view){
 }
 
 makeWeekData(){
+    console.log(this.weeksOfMonth);
     let weekPercent;
     let weekLabels;
     let index = 0;
+    let today = new Date();
     
     
 
@@ -818,49 +762,55 @@ makeWeekData(){
         weekLabels = [];
         week.forEach(day => {
            if(day.schedule){
+            if( day.month < today.getMonth() + 1){
                weekPercent.push(day.percent);
                weekLabels.push(day.month + '/' + day.date);
+            }else if(day.month == today.getMonth() + 1 && day.date <= today.getDate()){
+                weekPercent.push(day.percent);
+                weekLabels.push(day.month + '/' + day.date);
+            }
                
-              
            }
+
         })
         this.weeksOfMonth[index].datasets = [{data: weekPercent, label: '달성도'}];
         this.weeksOfMonth[index++].labels = weekLabels;
     })
    
-
+    console.log(this.weeksOfMonth);
 }
 
 getWeeksOfMonth(year, month, date, day){
-
-    var today = new Date();
-    var basicDate = new Date( year, month, date );
-    var thisWeek;
-    var firstDate = 1;
-    var firstDay = startOfMonth(basicDate).getDay();
+   
+    let today = new Date();
+    let basicDate = new Date( year, month, date );
+    let thisWeek;
+    let firstDate = 1;
+    let firstDay = startOfMonth(basicDate).getDay();
     this.weeksOfMonth = [];
 
     //basic month < today month
     if(today.getMonth() > basicDate.getMonth()){
-        
+        console.log('진입');
         
         do{
             thisWeek = [];
-            for(var i=0; i<7; i++) {
+            for(let i=0; i<7; i++) {
             
-            var resultDay = new Date(year, month, firstDate + (i - firstDay));
-            var yyyy = resultDay.getFullYear();
-            var mm = (Number(resultDay.getMonth()) + 1).toString();
-            var dd = resultDay.getDate().toString();
-            var ddd = dd;
+            let resultDay = new Date(year, month, firstDate + (i - firstDay));
+            let yyyy = resultDay.getFullYear();
+            let mm = (Number(resultDay.getMonth()) + 1).toString();
+            let dd = resultDay.getDate().toString();
+            let mmm = mm;
+            let ddd = dd;
             mm = mm.length === 1 ? '0' + mm : mm;
             dd = dd.length === 1 ? '0' + dd : dd;
-            var fullDay = yyyy.toString() + mm + dd;
+            let fullDay = yyyy.toString() + mm + dd;
             if(!isSameMonth(fullDay,basicDate)) {
-                this.getLastMonthSchedule(year,month,ddd);
-                thisWeek.push({fullDay: fullDay, year: yyyy, month: month, date: ddd});
+                this.getLastMonthSchedule(year,mmm,ddd, basicDate);
+                thisWeek.push({fullDay: fullDay, year: yyyy, month: mmm, date: ddd});
             }
-            else thisWeek.push({fullDay: fullDay, year: yyyy, month: month+1, date: ddd});
+            else thisWeek.push({fullDay: fullDay, year: yyyy, month: mmm, date: ddd});
 
         }
          
@@ -875,21 +825,22 @@ getWeeksOfMonth(year, month, date, day){
 
         do{
             thisWeek = [];
-            for(var i=0; i<7; i++) {
+            for(let i=0; i<7; i++) {
             
-            var resultDay = new Date(year, month, firstDate + (i - firstDay));
-            var yyyy = resultDay.getFullYear();
-            var mm = (Number(resultDay.getMonth()) + 1).toString();
-            var dd = resultDay.getDate().toString();
-            var ddd = dd;
+            let resultDay = new Date(year, month, firstDate + (i - firstDay));
+            let yyyy = resultDay.getFullYear();
+            let mm = (Number(resultDay.getMonth()) + 1).toString();
+            let dd = resultDay.getDate().toString();
+            let mmm = mm;
+            let ddd = dd;
             mm = mm.length === 1 ? '0' + mm : mm;
             dd = dd.length === 1 ? '0' + dd : dd;
-            var fullDay = yyyy.toString() + mm + dd;
+            let fullDay = yyyy.toString() + mm + dd;
             if(!isSameMonth(fullDay,basicDate)) {
-                this.getLastMonthSchedule(year,month,ddd);
-                thisWeek.push({fullDay: fullDay, year: yyyy, month: month, date: ddd});
+                this.getLastMonthSchedule(year,mmm,ddd, basicDate);
+                thisWeek.push({fullDay: fullDay, year: yyyy, month: mmm, date: ddd});
             }
-            else thisWeek.push({fullDay: fullDay, year: yyyy, month: month+1, date: ddd});
+            else thisWeek.push({fullDay: fullDay, year: yyyy, month: mmm, date: ddd});
             }
          
         
@@ -901,19 +852,16 @@ getWeeksOfMonth(year, month, date, day){
     }
     
    //console.log(this.thisWeek);
-
-   
-   
 }
 
 getSecofWeek(year, month, date){
-    
-    var fd = new Date( year, month, 1 );
+    let fd = new Date( year, month, 1 );
     return Math.ceil((date+fd.getDay())/7);
 }
 
-getLastMonthSchedule(year, month, date){
-    
+getLastMonthSchedule(year, month, date, basicDate){
+    console.log(month);
+    console.log(basicDate.getMonth());
     let user = firebase.auth().currentUser.uid; 
     this.afDB.object('/chart/' + user + '/schedule/' + year + '/' + month + '/' + date)       
     .subscribe(snapshot => {
@@ -928,6 +876,7 @@ getLastMonthSchedule(year, month, date){
         let percent = 0;
         let events = [];
         let fullDay;
+        let lastWeek = this.weeksOfMonth.length;
         
         
         eventId.forEach( event => {
@@ -938,14 +887,19 @@ getLastMonthSchedule(year, month, date){
             percent = parseInt((percent / eventIsDone.length * 100).toFixed(0));
             
             
-            let mm = month.toString();
+            let mm = month;
             let dd = snapshot.$key;
             mm = mm.length === 1 ? '0' + mm : mm;
             dd = dd.length === 1 ? '0' + dd : dd;
             fullDay = year.toString() + mm + dd;
-            
-            this.weeksOfMonth[0][getDay(fullDay)].schedule = events;
-            this.weeksOfMonth[0][getDay(fullDay)].percent = percent;
+            if(basicDate.getMonth() + 1 > month ){
+                this.weeksOfMonth[0][getDay(fullDay)].schedule = events;
+                this.weeksOfMonth[0][getDay(fullDay)].percent = percent;
+            }
+            else{
+                this.weeksOfMonth[lastWeek-1][getDay(fullDay)].schedule = events;
+                this.weeksOfMonth[lastWeek-1][getDay(fullDay)].percent = percent;
+            }
             //setTimeout(()=>{this.isDataAvailable = true}, 0);
            
     }
@@ -958,12 +912,6 @@ refresh(){
     this.isDataAvailable=false;
     setTimeout(()=>{this.isDataAvailable = true}, 0);
 }
-changeRange(){
-    
-    
-    
-          
-  }
 
 
 }

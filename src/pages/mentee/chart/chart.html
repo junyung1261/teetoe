@@ -383,7 +383,7 @@
                         <ion-label no-padding no-margin>{{t_title}}</ion-label>
                         <ion-select style="padding-top:0; padding-left:0"  [(ngModel)]="numOfWeek" (ionChange)="refresh()">
                                 
-                                    <ion-option *ngFor="let week of weeksOfMonth" [value]="weeksOfMonth.indexOf(week)">{{week[6].month}}월 {{weeksOfMonth.indexOf(week)+1}}째주</ion-option>
+                                    <ion-option *ngFor="let week of weeksOfMonth" [value]="weeksOfMonth.indexOf(week)">{{weeksOfMonth[0][6].month}}월 {{weeksOfMonth.indexOf(week)+1}}째주</ion-option>
                               </ion-select>
                     </ion-row>    
         
