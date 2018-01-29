@@ -73,6 +73,8 @@ export class CommunityPage {
   }
 
   onInfiniteScroll(infiniteScroll) {
+
+    
         this.limit += 5; // or however many more you want to load
         firebase.database().ref(`/posts`).limitToLast(this.limit)
        .once('value', (snapshot) => {
